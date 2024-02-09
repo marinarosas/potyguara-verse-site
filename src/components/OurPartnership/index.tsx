@@ -3,7 +3,7 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
-import { EffectCoverflow } from "swiper/modules";
+import { Pagination, EffectCoverflow } from "swiper/modules";
 import "./styles.css";
 import { useEffect, useState } from "react";
 import ReactPlayer from "react-player";
@@ -91,7 +91,7 @@ export default function OurPartnership() {
             slideShadows: true,
           }}
           pagination={true}
-          modules={[EffectCoverflow]}
+          modules={[EffectCoverflow, Pagination]}
           className="mySwiper"
         >
           {slides.map((slide, index) => (
