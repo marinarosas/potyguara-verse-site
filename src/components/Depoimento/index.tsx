@@ -51,17 +51,20 @@ export default function OurPartnership() {
 
   return (
     <div
-      className="h-screen bg-background flex flex-col gap-4 items-center justify-center"
+      className="h-screen bg-background flex flex-col gap-4 border-2 border-orange-logo"
       id="ourpartnership"
-      style={{
-        backgroundImage: `url(/Waveosund.png)`,
-        backgroundSize: "contain",
-        backgroundRepeat: "no-repeat",
-        backgroundPositionY: "center",
-      }}
     >
-      <h2
-        className="
+      <div
+      className="border-2 border-green-neon"
+        style={{
+          backgroundImage: `url(/Waveosund.png)`,
+          backgroundSize: "contain",
+          backgroundRepeat: "no-repeat",
+          backgroundPositionY: "center",
+        }}
+      >
+        <h2
+          className="
         p-4 
         pl-10 
         text-green-neon 
@@ -69,36 +72,47 @@ export default function OurPartnership() {
         font-bold 
         text-center
         "
-      >
-        Nossos parceiros
-      </h2>
-      <Swiper
-        slidesPerView={3}
-        spaceBetween={30}
-        navigation={true}
-        loop={true}
-        effect={"coverflow"}
-        grabCursor={true}
-        centeredSlides={true}
-        coverflowEffect={{
-          rotate: 50,
-          stretch: 0,
-          depth: 100,
-          modifier: 1,
-          slideShadows: true,
-        }}
-        pagination={true}
-        modules={[EffectCoverflow, Pagination]}
-        className="mySwiper"
-      >
-        {slides.map((slide, index) => (
-          <SwiperSlide key={index}>
-            <div className="text-foreground items-center justify-center h-auto w-fit">
-              <img src={slide.image} alt="Logos" />
-            </div>
-          </SwiperSlide>
-        ))}
-      </Swiper>
+        >
+          Nossos parceiros
+        </h2>
+        <Swiper
+          slidesPerView={3}
+          spaceBetween={30}
+          navigation={true}
+          loop={true}
+          effect={"coverflow"}
+          grabCursor={true}
+          centeredSlides={true}
+          coverflowEffect={{
+            rotate: 50,
+            stretch: 0,
+            depth: 100,
+            modifier: 1,
+            slideShadows: true,
+          }}
+          pagination={true}
+          modules={[EffectCoverflow, Pagination]}
+          className="mySwiper"
+        >
+          {slides.map((slide, index) => (
+            <SwiperSlide key={index}>
+              <div className="text-foreground items-center justify-center">
+                <img src={slide.image} alt="Logos" />
+              </div>
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      </div>
+      <ReactPlayer
+        className="h-screen w-40 sm:w-40 md:w-40 lg:w-full"
+        height="full"
+        width="100%"
+        url="https://youtu.be/v-M28eX_WvY"
+        controls={isHovered}
+        playing={isHovered}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+      />
     </div>
   );
 }

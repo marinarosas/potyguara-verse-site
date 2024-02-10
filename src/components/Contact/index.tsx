@@ -1,14 +1,13 @@
 "use client";
 
-import { PhotoIcon, UserCircleIcon } from "@heroicons/react/24/solid";
 import { Button } from "../ui/button";
 
 export function Contact() {
   return (
     <div className="h-screen bg-background flex" id="contact">
       {/* Contatos */}
-      <div className="w-1/2 flex justify-center items-center border-2">
-        <div className="w-7/12 h-5/6 rounded-l-3xl bg-gradient-to-b from-green-neon to-background text-background">
+      <div className="w-1/2 flex justify-center items-center">
+        <div className="w-7/12 h-5/6 rounded-l-3xl bg-gradient-to-b from-green-neon to-foreground text-background">
           <form className="p-4">
             <div className="space-y-4">
               <div>
@@ -45,7 +44,7 @@ export function Contact() {
                     >
                       E-mail
                     </label>
-                    <div className="mt-2"> 
+                    <div className="mt-2">
                       <input
                         id="email"
                         name="email"
@@ -101,48 +100,24 @@ export function Contact() {
         </div>
       </div>
 
-      <div className="w-1/2 border-2 border-green-neon"></div>
+      <div className="w-1/2 ustify-center align-middle space-y-8 m-auto">
+        <h1 className="text-foreground text-3xl text-center items-center">
+          Bora curtir o <br/> primeiro show?
+        </h1>
+        <div className="flex flex-col gap-8 items-center ">
+          <Button className="text-foreground  w-6/12 text-lg">Baixe a plataforma</Button>
+          <Button className="text-background w-6/12 text-lg" variant="secondary">
+            Cadastre-se
+          </Button>
+          <Button className="text-foreground w-6/12 text-lg">Comunidade Steam</Button>
+        </div>
+      </div>
     </div>
 
     //
-    //       <Text color="#000" fontSize="14px" pl="1vw" fontWeight="400">
-    //         Suas informações não serão compartilhadas. Campos obrigatórios*
-    //       </Text>
-    //       <InputContact name="name" placeholder="Nome:*" />
-    //       <InputContact name="email" placeholder="E-mail:*" />
-    //       <InputContact name="phone" placeholder="Telefone:*" />
-    //       <InputContact
-    //         name="message"
-    //         placeholder="Mensagem:*"
-    //         _placeholder={{
-    //           color: '#000',
-    //           top: '2vh',
-    //           position: 'absolute',
-    //         }}
-    //         h="26vh"
-    //         justifyContent="flex-start"
-    //         alignContent="flex-start"
-    //       />
-    //       <HStack w="100%" ml="1vw" mr="1vw" mt="1vh">
-    //         <OrangeButton
-    //           title="Enviar"
-    //           w="8vw"
-    //           // onClick={}
-    //         />
-    //       </HStack>
-    //     </VStack>
-    //   </Stack>
+    //
     //   {/* Buttons */}
-    //   <VStack w="50%" gap="8vh" justifyContent="center" pr="8vw">
-    //     <Text
-    //       color="#fff"
-    //       fontSize="42px"
-    //       fontWeight="700"
-    //       w="50%"
-    //       textAlign="center"
-    //     >
-    //       Bora curtir o primeiro show?
-    //     </Text>
+    //
     //     <VStack h="40vh" justifyContent="space-between">
     //       <OrangeButton
     //         title="Entrar na plataforma"

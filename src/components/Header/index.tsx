@@ -25,7 +25,6 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import Image from "next/image";
 
 const products = [
   {
@@ -88,7 +87,7 @@ export function Header() {
           <a href="#" className="-m-1.5 p-1.5">
             <span className="sr-only">Your Company</span>
             <div className="h-auto w-32">
-              <Image src="/LogoRetangular.png" alt="Logo Potyguara" />
+              <img src="/LogoRetangular.png" alt="Logo Potyguara" />
             </div>
           </a>
         </div>
