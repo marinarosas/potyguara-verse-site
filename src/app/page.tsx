@@ -1,5 +1,7 @@
 import { Aboutus } from "@/components/AboutUs";
+import { Carrousel } from "@/components/Caroussel";
 import { Contact } from "@/components/Contact";
+import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 import { Homepage } from "@/components/HomePage";
 import OurPartnership from "@/components/OurPartnership";
@@ -10,8 +12,10 @@ export default function Home() {
       <Header />
       <Homepage/>
       <Aboutus />
+      <Carrousel/>
       <OurPartnership/>
-      <Contact/>
+      {/* <Contact/>
+      <Footer/> */}
     </main>
   );
 }

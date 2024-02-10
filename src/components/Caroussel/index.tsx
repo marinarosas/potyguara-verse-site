@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { Chrono } from "react-chrono";
 
-export function Aboutus() {
+export function Carrousel() {
   const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
@@ -83,55 +83,12 @@ export function Aboutus() {
 
   return (
     <div
-      className="h-screen flex bg-background flex-col md:flex-row lg:flex-row spacing-y-10"
+      className="h-screen flex bg-background flex-col md:flex-row lg:flex-row spacing-y-10 md:hidden" 
       id="aboutus"
     >
-      {/* Description */}
-      <div
-        className="
-      flex 
-      flex-col
-      justify-center 
-      gap-8 
-      md:w-1/2 
-      lg:w-1/2
-      h-screen 
-      "
-      >
-        <h2
-          className="
-        p-4 
-        pl-10 
-        text-green-neon 
-        text-2xl 
-        font-bold 
-        "
-        >
-          Sobre nós
-        </h2>
-        <p className="p-4 pl-10 text-start tracking-wider leading-loose">
-          A plataforma surgiu em 2020 quando vimos nossos familiares e amigos
-          artistas tendo suas rendas reduzidas a zero devido ao distânciamento
-          social. E através de nossas pesquisas (link), descobrimos a
-          dificuldade que eles têm em monetizar online, além do distânciamento
-          com o público, devido o show ser através de uma tela.
-        </p>
-        <p className="p-4 pl-10 text-start tracking-wider leading-loose">
-          A Potyguara Verse é uma plataforma de transmissão de eventos online em
-          realidade virtual (RV), temos a versão normal da plataforma caso você
-          ainda não tenha um óculos para RV. A idéia é trazer o espectador mais
-          próximo do seu evento favorito, sem filas, multidão e ver seu artista
-          pertinho de você de uma maneira diferente e realista.
-        </p>
-      </div>
-
       {/* Carrousel */}
       <div
         className="
-        hidden
-        sm:hidden
-        md:block
-        lg:block
         h-screen
       flex 
       flex-col 
