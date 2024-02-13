@@ -1,14 +1,40 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
+import { useRouter } from "next/navigation";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogOverlay,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
 export default function Login() {
+  const router = useRouter();
+
+  function handleNavigateToHomePage() {
+    router.push(`/`);
+  }
+
+  function handleNavigateToSingupPage() {
+    router.push(`/app/singup-page`);
+  }
+
   return (
     <main className="h-screen text-foreground bg-background">
-        <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
+      <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <img
-            className="h-auto w-36 m-auto"
+            className="h-auto w-36 m-auto hover:cursor-pointer"
             src="/LogoRetangular.png"
             alt="Potyguara Logo"
+            onClick={() => handleNavigateToHomePage()}
           />
           <h2 className="text-center text-xl font-bold leading-4 tracking-tight text-gray-900">
             Entre na sua conta
@@ -18,7 +44,10 @@ export default function Login() {
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
           <form className="space-y-6" action="#" method="POST">
             <div>
-              <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
+              <label
+                htmlFor="email"
+                className="block text-sm font-medium leading-6 text-gray-900"
+              >
                 E-mail
               </label>
               <div className="mt-2">
@@ -35,11 +64,17 @@ export default function Login() {
 
             <div>
               <div className="flex items-center justify-between">
-                <label htmlFor="password" className="block text-sm font-medium leading-6 text-gray-900">
+                <label
+                  htmlFor="password"
+                  className="block text-sm font-medium leading-6 text-gray-900"
+                >
                   Password
                 </label>
                 <div className="text-sm">
-                  <a href="#" className="font-semibold text-indigo-600 hover:text-indigo-500">
+                  <a
+                    href="#"
+                    className="font-semibold text-indigo-600 hover:text-indigo-500"
+                  >
                     Forgot password?
                   </a>
                 </div>
@@ -67,10 +102,35 @@ export default function Login() {
           </form>
 
           <p className="mt-10 text-center text-sm text-gray-500">
-            Not a member?{' '}
-            <a href="#" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
-              Start a 14 day free trial
-            </a>
+            Não é um membro?{" "}
+            <Dialog>
+              <DialogTrigger asChild>
+                <Button variant="ghost" className="hover:bg-transparent">
+                  Cadastre-se.
+                </Button>
+              </DialogTrigger>
+              <DialogOverlay className="bg-background opacity-90" />
+              <DialogContent className="sm:max-w-[425px] md:h-52">
+                <DialogHeader>
+                  <DialogTitle className="text-md text-foreground">
+                    Gostariamos de saber qual é o seu perfil?
+                  </DialogTitle>
+                  <DialogDescription className="text-justify">
+                    No Potyguara você pode escolher dois caminhos... <br />O
+                    criador de conteúdo (O artista) ou o consumidor de cultura
+                    (O espectador).
+                  </DialogDescription>
+                </DialogHeader>
+                <DialogFooter className="flex justify-around sm:justify-around">
+                  <Button className="w-32 hover:text-foreground" onClick={()=>handleNavigateToSingupPage()}>
+                    Artista
+                  </Button>
+                  <Button className="w-32 hover:text-foreground">
+                    Espectador
+                  </Button>
+                </DialogFooter>
+              </DialogContent>
+            </Dialog>
           </p>
         </div>
       </div>

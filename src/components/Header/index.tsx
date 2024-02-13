@@ -45,7 +45,9 @@ const callsToAction = [
   { name: "Fale conosco", href: "#", icon: PhoneIcon },
 ];
 
-function classNames(...classes: (string | boolean | undefined | null)[]): string {
+function classNames(
+  ...classes: (string | boolean | undefined | null)[]
+): string {
   return classes.filter(Boolean).join(" ");
 }
 
@@ -107,7 +109,10 @@ export function Header() {
           >
             <span className="sr-only">Open main menu</span>
             {!mobileMenuOpen && (
-              <Bars3Icon className="h-6 w-6 border-transparent" aria-hidden="true" />
+              <Bars3Icon
+                className="h-6 w-6 border-transparent hover:cursor-pointer"
+                aria-hidden="true"
+              />
             )}
           </button>
         </div>
@@ -240,7 +245,7 @@ export function Header() {
           <a
             href="#"
             className="text-sm font-semibold leading-6 text-gray-900 hover:text-orange-md"
-            onClick={()=>handleNavigateToLoginPage()}
+            onClick={() => handleNavigateToLoginPage()}
           >
             Log in <span aria-hidden="true">&rarr;</span>
           </a>
@@ -326,7 +331,7 @@ export function Header() {
                 <a
                   href="#"
                   className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:text-orange-md"
-                  onClick={()=>handleNavigateToLoginPage()}
+                  onClick={() => handleNavigateToLoginPage()}
                 >
                   Log in
                 </a>
