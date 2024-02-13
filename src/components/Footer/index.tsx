@@ -61,10 +61,12 @@ export function Footer() {
             <RiInstagramFill
               size={30}
               onClick={() => handleNavigateToInstaLink()}
+              className="hover:cursor-pointer"
             />
             <RiLinkedinBoxFill
               size={30}
               onClick={() => handleNavigateToLinkedinLink()}
+              className="hover:cursor-pointer"
             />
           </div>
         </div>
@@ -101,10 +103,12 @@ export function Footer() {
             <RiInstagramFill
               size={30}
               onClick={() => handleNavigateToInstaLink()}
+              className="hover:cursor-pointer"
             />
             <RiLinkedinBoxFill
               size={30}
               onClick={() => handleNavigateToLinkedinLink()}
+              className="hover:cursor-pointer"
             />
           </div>
           <p className="md:hidden lg:hidden text-xs w-full py-6">
