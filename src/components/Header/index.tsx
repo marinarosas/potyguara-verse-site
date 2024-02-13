@@ -41,8 +41,8 @@ const products = [
   },
 ];
 const callsToAction = [
-  { name: "Watch demo", href: "#", icon: PlayCircleIcon },
-  { name: "Contact sales", href: "#", icon: PhoneIcon },
+  { name: "Assita o trailer", href: "#", icon: PlayCircleIcon },
+  { name: "Fale conosco", href: "#", icon: PhoneIcon },
 ];
 
 function classNames(...classes: (string | boolean | undefined | null)[]): string {
@@ -240,6 +240,7 @@ export function Header() {
           <a
             href="#"
             className="text-sm font-semibold leading-6 text-gray-900 hover:text-orange-md"
+            onClick={()=>handleNavigateToLoginPage()}
           >
             Log in <span aria-hidden="true">&rarr;</span>
           </a>
@@ -249,12 +250,12 @@ export function Header() {
       {/* MOBILE */}
       <Dialog
         as="div"
-        className="lg:hidden"
+        className="lg:hidden bg-background"
         open={mobileMenuOpen}
         onClose={setMobileMenuOpen}
       >
         <div className="fixed inset-0 z-10" />
-        <Dialog.Panel className="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-black px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
+        <Dialog.Panel className="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-black px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10 bg-background text-foreground">
           <div className="flex items-center justify-end">
             <button
               type="button"
@@ -325,6 +326,7 @@ export function Header() {
                 <a
                   href="#"
                   className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:text-orange-md"
+                  onClick={()=>handleNavigateToLoginPage()}
                 >
                   Log in
                 </a>
