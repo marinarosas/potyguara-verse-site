@@ -67,7 +67,7 @@ export function Homepage() {
           Cadastre-se
         </Button>
       </div>
-      <div className="lg:hidden w-full h-28 mt-10 bg-gradient-to-b from-black-000 to-background"></div>
+      <div className="lg:hidden w-full h-28 mt-12 bg-gradient-to-b from-black-000 to-background"></div>
     </div>
   );
 }

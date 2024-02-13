@@ -83,7 +83,7 @@ export function Aboutus() {
 
   return (
     <div
-      className="h-screen flex bg-background flex-col md:flex-row lg:flex-row spacing-y-10"
+      className="h-full flex bg-background flex-col md:flex-row lg:flex-row -mt-12 md:mt-0 lg:mt-0"
       id="aboutus"
     >
       {/* Description */}
@@ -100,7 +100,6 @@ export function Aboutus() {
       >
         <h2
           className="
-        p-4 
         pl-10 
         text-green-neon 
         text-2xl 
@@ -128,17 +127,11 @@ export function Aboutus() {
       {/* Carrousel */}
       <div
         className="
-        hidden
-        sm:hidden
-        md:block
-        lg:block
         h-screen
-      flex 
-      flex-col 
-      md:w-1/2
-      lg:w-1/2
-      pt-4
-      bg-background
+        flex-col 
+        md:w-1/2
+        lg:w-1/2
+        bg-background
        "
       >
         {isClient && (
@@ -166,6 +159,7 @@ export function Aboutus() {
               cardTitle: "1rem",
               title: "1rem",
             }}
+            hideControls
           />
         )}
       </div>

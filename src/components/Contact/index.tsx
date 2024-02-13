@@ -4,17 +4,20 @@ import { Button } from "../ui/button";
 
 export function Contact() {
   return (
-    <div className="h-screen bg-background flex" id="contact">
+    <div
+      className="h-full bg-background flex flex-col md:flex-row lg:flex-row"
+      id="contact"
+    >
       {/* Contatos */}
-      <div className="w-1/2 flex justify-center items-center">
-        <div className="w-7/12 h-5/6 rounded-l-3xl bg-gradient-to-b from-green-neon to-foreground text-background">
-          <form className="p-4">
+      <div className="h-screen md:w-1/2 lg:w-1/2 flex justify-center items-center -mt-10 md:mt-0 lg:mt-0">
+        <div className="w-9/12 md:w-7/12 lg:w-7/12 md:h-5/6 lg:5/6 rounded-l-3xl bg-gradient-to-b from-green-neon to-foreground text-background">
+          <form className="p-2 md:p-4 lg:p-4">
             <div className="space-y-4">
               <div>
                 <h2 className="text-base font-semibold leading-7 text-gray-900">
                   Deixe o seu contato e falaremos com você!
                 </h2>
-                <p className="mt-1 text-xs leading-6 text-gray-600">
+                <p className="mt-1 text-xs leading-4 md:leading-6 lg:leading-6 text-gray-600">
                   Suas informações não serão compartilhadas. Campos
                   obrigatórios*
                 </p>
@@ -100,48 +103,26 @@ export function Contact() {
         </div>
       </div>
 
-      <div className="w-1/2 ustify-center align-middle space-y-8 m-auto">
+      {/* Final call singup */}
+      <div className="h-96 md:h-full lg:h-full w-1/2 justify-center align-middle space-y-8 m-auto">
         <h1 className="text-foreground text-3xl text-center items-center">
-          Bora curtir o <br/> primeiro show?
+          Bora curtir o <br /> primeiro show?
         </h1>
         <div className="flex flex-col gap-8 items-center ">
-          <Button className="text-foreground  w-6/12 text-lg">Baixe a plataforma</Button>
-          <Button className="text-background w-6/12 text-lg" variant="secondary">
+          <Button className="text-foreground w-full md:w-6/12 lg:w-6/12 text-lg">
+            Baixe a plataforma
+          </Button>
+          <Button
+            className="text-background w-full md:w-6/12 lg:w-6/12 text-lg"
+            variant="secondary"
+          >
             Cadastre-se
           </Button>
-          <Button className="text-foreground w-6/12 text-lg">Comunidade Steam</Button>
+          <Button className="text-foreground  w-full md:w-6/12 lg:w-6/12 text-lg">
+            Comunidade Steam
+          </Button>
         </div>
       </div>
     </div>
-
-    //
-    //
-    //   {/* Buttons */}
-    //
-    //     <VStack h="40vh" justifyContent="space-between">
-    //       <OrangeButton
-    //         title="Entrar na plataforma"
-    //         w="20vw"
-    //         h="8vh"
-    //         fontSize="24px"
-    //         // onClick={}
-    //       />
-    //       <GreenButton
-    //         title="Cadastre-se"
-    //         w="20vw"
-    //         h="8vh"
-    //         fontSize="24px"
-    //         // onClick={}
-    //       />
-    //       <OrangeButton
-    //         title="Baixe a plataforma"
-    //         w="20vw"
-    //         h="8vh"
-    //         fontSize="24px"
-    //         // onClick={}
-    //       />
-    //     </VStack>
-    //   </VStack>
-    // </Flex>
   );
 }
