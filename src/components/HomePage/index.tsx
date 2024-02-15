@@ -4,6 +4,7 @@ export function Homepage() {
   
   return (
     <div
+    id="homepage"
       className=" 
       h-screen
       align-middle 

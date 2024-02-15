@@ -12,8 +12,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 
 export default function Login() {
   const router = useRouter();
@@ -68,14 +66,14 @@ export default function Login() {
                   htmlFor="password"
                   className="block text-sm font-medium leading-6 text-gray-900"
                 >
-                  Password
+                  Senha
                 </label>
                 <div className="text-sm">
                   <a
                     href="#"
                     className="font-semibold text-indigo-600 hover:text-indigo-500"
                   >
-                    Forgot password?
+                    Esqueceu sua senha?
                   </a>
                 </div>
               </div>
@@ -122,7 +120,10 @@ export default function Login() {
                   </DialogDescription>
                 </DialogHeader>
                 <DialogFooter className="flex justify-around sm:justify-around">
-                  <Button className="w-32 hover:text-foreground" onClick={()=>handleNavigateToSingupPage()}>
+                  <Button
+                    className="w-32 hover:text-foreground"
+                    onClick={() => handleNavigateToSingupPage()}
+                  >
                     Artista
                   </Button>
                   <Button className="w-32 hover:text-foreground">
