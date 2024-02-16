@@ -12,8 +12,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 
 export default function Login() {
   const router = useRouter();
@@ -22,8 +20,16 @@ export default function Login() {
     router.push(`/`);
   }
 
-  function handleNavigateToSingupPage() {
-    router.push(`/app/singup-page`);
+  function handleNavigateToSingupPageArtist() {
+    router.push(`/app/singup-artist`);
+  }
+
+  function handleNavigateToSingupPageViewer() {
+    router.push(`/app/singup-viewer`);
+  }
+
+  function handleNavigateToDashboard() {
+    router.push(`/app/dashboard`);
   }
 
   return (
@@ -42,7 +48,11 @@ export default function Login() {
         </div>
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form className="space-y-6" action="#" method="POST">
+          <form
+            className="space-y-6"
+            action="/dashboard"
+            // method="POST"
+          >
             <div>
               <label
                 htmlFor="email"
@@ -68,14 +78,14 @@ export default function Login() {
                   htmlFor="password"
                   className="block text-sm font-medium leading-6 text-gray-900"
                 >
-                  Password
+                  Senha
                 </label>
                 <div className="text-sm">
                   <a
                     href="#"
                     className="font-semibold text-indigo-600 hover:text-indigo-500"
                   >
-                    Forgot password?
+                    Esqueceu sua senha?
                   </a>
                 </div>
               </div>
@@ -92,15 +102,20 @@ export default function Login() {
             </div>
 
             <div>
-              <Button
-                type="submit"
-                className="flex w-full justify-center rounded-md bg-orange-logo md:bg-transparent lg:bg-transparent px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-orange-logo focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+              {/* <Button
+                onClick={() => handleNavigateToDashboard()}
+                className="flex w-full justify-center rounded-md px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
-                Sign in
-              </Button>
+                Entrar
+              </Button> */}
             </div>
           </form>
-
+          <Button
+            onClick={() => handleNavigateToDashboard()}
+            className="flex w-full justify-center rounded-md px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+          >
+            Entrar
+          </Button>
           <p className="mt-10 text-center text-sm text-gray-500">
             Não é um membro?{" "}
             <Dialog>
@@ -122,10 +137,16 @@ export default function Login() {
                   </DialogDescription>
                 </DialogHeader>
                 <DialogFooter className="flex justify-around sm:justify-around">
-                  <Button className="w-32 hover:text-foreground" onClick={()=>handleNavigateToSingupPage()}>
+                  <Button
+                    className="w-32 hover:text-foreground"
+                    onClick={() => handleNavigateToSingupPageArtist()}
+                  >
                     Artista
                   </Button>
-                  <Button className="w-32 hover:text-foreground">
+                  <Button
+                    className="w-32 hover:text-foreground"
+                    onClick={() => handleNavigateToSingupPageViewer()}
+                  >
                     Espectador
                   </Button>
                 </DialogFooter>

@@ -58,15 +58,19 @@ export function Header() {
 
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  const scrollToSection = (sectionId: string) => {
-    const section = document.getElementById(sectionId);
-    if (section) {
-      section.scrollIntoView({ behavior: "smooth" });
-    }
-  };
+  // const scrollToSection = (sectionId: string) => {
+  //   const section = document.getElementById(sectionId);
+  //   if (section) {
+  //     section.scrollIntoView({ behavior: "smooth" });
+  //   }
+  // };
 
   function handleNavigateToLoginPage() {
     router.push(`/app/login-page`);
+  }
+
+  function handleNavigateToHomePage(path: string) {
+    router.push(`/${path}`);
   }
 
   return (
@@ -118,30 +122,38 @@ export function Header() {
         </div>
         <Popover.Group className="hidden lg:flex lg:gap-x-12 h-20 items-center">
           <a
-            href="#"
+            href="#homepage"
             className="text-sm font-semibold leading-6 text-gray-900"
-            onClick={() => scrollToSection("homepage")}
+            onClick={() => {
+              handleNavigateToHomePage("#homepage");
+            }}
           >
             Home
           </a>
           <a
-            href="#"
+            href="#aboutus"
             className="text-sm font-semibold leading-6 text-gray-900"
-            onClick={() => scrollToSection("aboutus")}
+            onClick={() => {
+              handleNavigateToHomePage("#aboutus");
+            }}
           >
             Sobre nós
           </a>
           <a
-            href="#"
+            href="#ourpartnership"
             className="text-sm font-semibold leading-6 text-gray-900"
-            onClick={() => scrollToSection("ourpartnership")}
+            onClick={() => {
+              handleNavigateToHomePage("#ourpartnership");
+            }}
           >
             Nossos parceiros
           </a>
           <a
-            href="#"
+            href="#contact"
             className="text-sm font-semibold leading-6 text-gray-900"
-            onClick={() => scrollToSection("contact")}
+            onClick={() => {
+              handleNavigateToHomePage("#contact");
+            }}
           >
             Contato
           </a>
@@ -275,26 +287,30 @@ export function Header() {
             <div className="-my-6 divide-y divide-gray-500/10">
               <div className="space-y-2 py-6">
                 <a
-                  href="#"
+                  href="#homepage"
                   className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                  onClick={() => handleNavigateToHomePage("#homepage")}
                 >
                   Home
                 </a>
                 <a
-                  href="#"
+                  href="#aboutus"
                   className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                  onClick={() => handleNavigateToHomePage("#aboutus")}
                 >
                   Sobre nós
                 </a>
                 <a
-                  href="#"
+                  href="#ourpartnership"
                   className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                  onClick={() => handleNavigateToHomePage("#ourpartnership")}
                 >
                   Nosso parceiros
                 </a>
                 <a
-                  href="#"
+                  href="#contact"
                   className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                  onClick={() => handleNavigateToHomePage("#contact")}
                 >
                   Contato
                 </a>

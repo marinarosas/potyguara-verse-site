@@ -4,6 +4,7 @@ export function Homepage() {
   
   return (
     <div
+    id="homepage"
       className=" 
       h-screen
       align-middle 
@@ -32,6 +33,7 @@ export function Homepage() {
       flex 
       justify-center 
       text-center 
+      text-white
       font-bold 
       text-4xl
       sm:text-4xl
@@ -62,8 +64,8 @@ export function Homepage() {
       sm:space-x-0
       md:space-x-8
       ">
-        <Button className="text-foreground">Baixe a plataforma</Button>
-        <Button className="text-background" variant="secondary">
+        <Button className="text-white">Baixe a plataforma</Button>
+        <Button className="text-black-000" variant="secondary">
           Cadastre-se
         </Button>
       </div>
