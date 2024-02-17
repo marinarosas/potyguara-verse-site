@@ -1,5 +1,6 @@
 "use client";
 
+import { SideBar } from "@/components/SideBar";
 import { useRouter } from "next/navigation";
 
 export default function Dashboard() {
@@ -18,8 +19,8 @@ export default function Dashboard() {
   }
 
   return (
-    <main className="h-screen text-foreground bg-background">
-     <h1>Dashboard</h1>
-    </main>
+   <>
+   <SideBar/>
+   </>
   );
 }
