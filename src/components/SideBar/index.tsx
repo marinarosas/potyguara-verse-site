@@ -31,6 +31,11 @@ import { HiOutlineInboxIn } from "react-icons/hi";
 import { RxAvatar } from "react-icons/rx";
 import { FaUsers } from "react-icons/fa";
 import { PiMicrophoneStage } from "react-icons/pi";
+import { IoWalletOutline } from "react-icons/io5";
+import { GoGear } from "react-icons/go";
+import { FiHelpCircle } from "react-icons/fi";
+import { IoIosLogOut } from "react-icons/io";
+import { CiStar } from "react-icons/ci";
 
 const products = [
   {
@@ -163,7 +168,7 @@ export function SideBar() {
                       name="email"
                       id="topbar-search"
                       className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full pl-10 p-2.5"
-                      placeholder="Search"
+                      placeholder="Procurar"
                     />
                   </div>
                 </form>
@@ -188,20 +193,10 @@ export function SideBar() {
                     ></path>
                   </svg>
                 </button>
-                <div className="hidden lg:flex items-center">
-                  <div className="-mb-1">
-                    <a
-                      className="github-button"
-                      href="#"
-                      data-color-scheme="no-preference: dark; light: light; dark: light;"
-                      data-icon="octicon-star"
-                      data-size="large"
-                      data-show-count="true"
-                      aria-label="Star themesberg/windster-tailwind-css-dashboard on GitHub"
-                    >
-                      Star
-                    </a>
-                  </div>
+               
+                <div className="flex justify-between w-20 items-center px-2">
+                  <img src="/brasao_preto.png" alt="Iamgem da moeda" className="w-auto h-10"/>
+                  <h3>1650</h3>
                 </div>
                 <Button className="hidden sm:inline-flex ml-5 text-white text-sm px-5 py-2.5 text-center items-center mr-3">
                   Criar evento
@@ -253,7 +248,7 @@ export function SideBar() {
 
                     {/* Perfil */}
                     <li>
-                      <div id="profile" className="space-y-3">
+                      <div id="profile" className="space-y-3 pt-2">
                         <img
                           src="https://images.unsplash.com/photo-1628157588553-5eeea00af15c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80"
                           alt="Avatar user"
@@ -286,7 +281,7 @@ export function SideBar() {
                         target="_blank"
                         className="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group "
                       >
-                       <RxCalendar />
+                        <RxCalendar />
                         <span className="ml-3 flex-1 whitespace-nowrap">
                           Meus Eventos
                         </span>
@@ -298,7 +293,7 @@ export function SideBar() {
                         target="_blank"
                         className="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group "
                       >
-                      <HiOutlineInboxIn size={18}/>
+                        <HiOutlineInboxIn size={18} />
                         <span className="ml-3 flex-1 whitespace-nowrap">
                           Menssagens
                         </span>
@@ -309,8 +304,8 @@ export function SideBar() {
                         href="#"
                         className="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group "
                       >
-                        <FaUsers size={18}/>
-                       
+                        <FaUsers size={18} />
+
                         <span className="ml-3 flex-1 whitespace-nowrap">
                           Meus avatares
                         </span>
@@ -321,99 +316,61 @@ export function SideBar() {
                         href="#"
                         className="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group "
                       >
-                       <PiMicrophoneStage size={18}/>
+                        <PiMicrophoneStage size={18} />
                         <span className="ml-3 flex-1 whitespace-nowrap">
                           Meu palco
                         </span>
                       </a>
                     </li>
-                    
                     <li>
                       <a
                         href="#"
                         className="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group "
                       >
-                        <svg
-                          className="w-6 h-6 text-gray-500 flex-shrink-0 group-hover:text-gray-900 transition duration-75"
-                          fill="currentColor"
-                          viewBox="0 0 20 20"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            fill-rule="evenodd"
-                            d="M5 4a3 3 0 00-3 3v6a3 3 0 003 3h10a3 3 0 003-3V7a3 3 0 00-3-3H5zm-1 9v-1h5v2H5a1 1 0 01-1-1zm7 1h4a1 1 0 001-1v-1h-5v2zm0-4h5V8h-5v2zM9 8H4v2h5V8z"
-                            clip-rule="evenodd"
-                          ></path>
-                        </svg>
+                        <IoWalletOutline size={18} />
                         <span className="ml-3 flex-1 whitespace-nowrap">
-                          Sign Up
+                          Carteira
                         </span>
                       </a>
                     </li>
                   </ul>
+
                   <div className="space-y-2 pt-2">
                     <a
                       href="#"
                       className="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 group transition duration-75 flex items-center p-2"
                     >
-                      <RxAvatar size={18}/>
-                        <span className="ml-3 flex-1 whitespace-nowrap">
-                         Perfil
-                        </span>
+                      <RxAvatar size={18} />
+                      <span className="ml-3 flex-1 whitespace-nowrap">
+                        Perfil
+                      </span>
                     </a>
                     <a
                       href="#"
-                      target="_blank"
                       className="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 group transition duration-75 flex items-center p-2"
                     >
-                      <svg
-                        className="w-6 h-6 text-gray-500 flex-shrink-0 group-hover:text-gray-900 transition duration-75"
-                        fill="currentColor"
-                        viewBox="0 0 20 20"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"></path>
-                        <path
-                          fill-rule="evenodd"
-                          d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z"
-                          clip-rule="evenodd"
-                        ></path>
-                      </svg>
-                      <span className="ml-3">Documentation</span>
+                      <GoGear size={18} />
+                      <span className="ml-3 flex-1 whitespace-nowrap">
+                        Configuração
+                      </span>
                     </a>
                     <a
                       href="#"
-                      target="_blank"
                       className="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 group transition duration-75 flex items-center p-2"
                     >
-                      <svg
-                        className="w-6 h-6 text-gray-500 flex-shrink-0 group-hover:text-gray-900 transition duration-75"
-                        fill="currentColor"
-                        viewBox="0 0 20 20"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path d="M7 3a1 1 0 000 2h6a1 1 0 100-2H7zM4 7a1 1 0 011-1h10a1 1 0 110 2H5a1 1 0 01-1-1zM2 11a2 2 0 012-2h12a2 2 0 012 2v4a2 2 0 01-2 2H4a2 2 0 01-2-2v-4z"></path>
-                      </svg>
-                      <span className="ml-3">Components</span>
+                      <FiHelpCircle size={18} />
+                      <span className="ml-3 flex-1 whitespace-nowrap">
+                        Ajuda
+                      </span>
                     </a>
                     <a
                       href="#"
-                      target="_blank"
                       className="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 group transition duration-75 flex items-center p-2"
                     >
-                      <svg
-                        className="w-6 h-6 text-gray-500 flex-shrink-0 group-hover:text-gray-900 transition duration-75"
-                        fill="currentColor"
-                        viewBox="0 0 20 20"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          fill-rule="evenodd"
-                          d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-2 0c0 .993-.241 1.929-.668 2.754l-1.524-1.525a3.997 3.997 0 00.078-2.183l1.562-1.562C15.802 8.249 16 9.1 16 10zm-5.165 3.913l1.58 1.58A5.98 5.98 0 0110 16a5.976 5.976 0 01-2.516-.552l1.562-1.562a4.006 4.006 0 001.789.027zm-4.677-2.796a4.002 4.002 0 01-.041-2.08l-.08.08-1.53-1.533A5.98 5.98 0 004 10c0 .954.223 1.856.619 2.657l1.54-1.54zm1.088-6.45A5.974 5.974 0 0110 4c.954 0 1.856.223 2.657.619l-1.54 1.54a4.002 4.002 0 00-2.346.033L7.246 4.668zM12 10a2 2 0 11-4 0 2 2 0 014 0z"
-                          clip-rule="evenodd"
-                        ></path>
-                      </svg>
-                      <span className="ml-3">Help</span>
+                      <IoIosLogOut size={18} />
+                      <span className="ml-3 flex-1 whitespace-nowrap">
+                        Sair
+                      </span>
                     </a>
                   </div>
                 </div>
@@ -430,7 +387,8 @@ export function SideBar() {
           >
             {/* CONTEUDO */}
 
-            <footer className="bg-white md:flex md:items-center md:justify-between shadow rounded-lg p-4 md:p-6 xl:p-8 my-6 mx-4">
+            {/* Footer */}
+            <footer className="bg-background md:flex md:items-center md:justify-between shadow rounded-lg p-4 md:p-6 xl:p-8 my-6 mx-4">
               <ul className="flex items-center flex-wrap mb-6 md:mb-0">
                 <li>
                   <a
@@ -469,11 +427,32 @@ export function SideBar() {
                     href="#"
                     className="text-sm font-normal text-gray-500 hover:underline"
                   >
-                    Contact
+                    Contato
                   </a>
                 </li>
               </ul>
-              <div className="flex sm:justify-center space-x-6">
+              <div className="flex sm:justify-center space-x-6 items-center">
+                 {/* Button Dark/Light Mode */}
+                 <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="outline" size="icon">
+                      <SunIcon className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+                      <MoonIcon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+                      <span className="sr-only">Toggle theme</span>
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end">
+                    <DropdownMenuItem onClick={() => setTheme("light")}>
+                      Light
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => setTheme("dark")}>
+                      Dark
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => setTheme("system")}>
+                      System
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
                 <a href="#" className="text-gray-500 hover:text-gray-900">
                   <svg
                     className="h-5 w-5"
@@ -543,11 +522,11 @@ export function SideBar() {
               </div>
             </footer>
             <p className="text-center text-sm text-gray-500 my-10">
-              &copy; 2019-2021{" "}
+              &copy; 2024{" "}
               <a href="#" className="hover:underline" target="_blank">
-                Themesberg
+                Live Plus
               </a>
-              . All rights reserved.
+              . Todos os direitos reservados.
             </p>
           </div>
         </div>
