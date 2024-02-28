@@ -21,11 +21,11 @@ export default function Login() {
   }
 
   function handleNavigateToSingupPageArtist() {
-    router.push(`/app/singup-artist`);
+    router.push(`/singup-artist`);
   }
 
   function handleNavigateToSingupPageViewer() {
-    router.push(`/app/singup-viewer`);
+    router.push(`/singup-viewer`);
   }
 
   function handleNavigateToDashboard() {

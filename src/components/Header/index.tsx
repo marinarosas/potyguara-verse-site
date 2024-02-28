@@ -66,11 +66,15 @@ export function Header() {
   // };
 
   function handleNavigateToLoginPage() {
-    router.push(`/app/login-page`);
+    router.push(`/login-page`);
   }
 
   function handleNavigateToHomePage(path: string) {
     router.push(`/${path}`);
+  }
+
+  function handleNavigateToHome(path: string) {
+    router.push(`/`);
   }
 
   return (
@@ -93,7 +97,7 @@ export function Header() {
           <a href="#" className="-m-1.5 p-1.5">
             <span className="sr-only">Your Company</span>
             <div className="h-auto w-32">
-              <img src="/LogoRetangular.png" alt="Logo Potyguara" />
+              <img src="/LogoRetangular.png" alt="Logo Potyguara" onClick={()=>handleNavigateToHome()}/>
             </div>
           </a>
         </div>
