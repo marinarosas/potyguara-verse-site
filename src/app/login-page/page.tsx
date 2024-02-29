@@ -138,13 +138,13 @@ export default function Login() {
                 </DialogHeader>
                 <DialogFooter className="flex justify-around sm:justify-around">
                   <Button
-                    className="w-32 hover:text-foreground"
+                    className="w-32 text-foreground"
                     onClick={() => handleNavigateToSingupPageArtist()}
                   >
                     Artista
                   </Button>
                   <Button
-                    className="w-32 hover:text-foreground"
+                    className="w-32 text-foreground"
                     onClick={() => handleNavigateToSingupPageViewer()}
                   >
                     Espectador

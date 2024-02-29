@@ -15,6 +15,16 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import axios from "axios";
+import { useForm } from "react-hook-form";
+import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 export default function SingupArtist() {
   const router = useRouter();
@@ -23,19 +33,50 @@ export default function SingupArtist() {
     router.push(`/`);
   }
 
+  const { register, handleSubmit, setValue } = useForm();
+
+  const onSubmit = async (data) => {
+    try {
+      const response = await axios.post(
+        "https://api.ycodify.com/v2/persistence/c/s/no-ac",
+        {
+          action: "CREATE",
+          data: [data],
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "X-Tenant-Id": "19379587-75b0-3aec-9717-46c6e26757e3",
+            "X-API-Master-Key": "ed950147-a6fc-3d45-a69c-bfc55f414ae6",
+          },
+        }
+      );
+
+      if (response.status === 201) {
+        alert("Artista cadastrado com sucesso!");
+        console.log(response.data);
+      } else {
+        throw new Error("Error: " + JSON.stringify(response.data));
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <main className="text-foreground bg-background ">
       <Header />
-      <form className="px-28 py-8">
+      <form className="px-28 py-8" onSubmit={handleSubmit(onSubmit)}>
         <div className="space-y-12">
           <div className="border-b border-gray-900/10 pb-12">
             <h2 className="text-green-neon text-xl font-semibold leading-7 text-gray-900 pb-4">
               Perfil do Artista
             </h2>
             <p className="mt-1 text-sm leading-6 text-gray-600">
-              Olá. <br/> É aqui que sua jornada artística começa! <br/> Primeiro, precisamos
-              saber um pouco mais sobre você e o seu trabalho. Preencha os dados
-              a seguir, para poder avançar para a próxima etapa.
+              Olá. <br /> É aqui que sua jornada artística começa! <br />{" "}
+              Primeiro, precisamos saber um pouco mais sobre você e o seu
+              trabalho. Preencha os dados a seguir, para poder avançar para a
+              próxima etapa.
             </p>
 
             <div className="col-span-full pt-8">
@@ -62,17 +103,14 @@ export default function SingupArtist() {
                   htmlFor="username"
                   className="block text-sm font-medium leading-6 text-gray-900"
                 >
-                  Nome artístico
+                  Nome artístico (username)
                 </label>
                 <div className="mt-2">
                   <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                    <input
-                      type="text"
-                      name="username"
-                      id="username"
-                      autoComplete="username"
-                      className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                      placeholder="janesmith"
+                    <Input
+                      className="text-background placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 bg-foreground"
+                      {...register("username")}
+                      placeholder="Nome artístico"
                     />
                   </div>
                 </div>
@@ -86,11 +124,9 @@ export default function SingupArtist() {
                   Sobre
                 </label>
                 <div className="mt-2">
-                  <textarea
-                    id="about"
-                    name="about"
-                    rows={3}
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  <Input
+                    {...register("aboutartist")}
+                    className="text-background placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 h-32 bg-foreground"
                     defaultValue={""}
                   />
                 </div>
@@ -103,7 +139,7 @@ export default function SingupArtist() {
 
           <div className="border-b border-gray-900/10 pb-12">
             <h2 className="text-base font-semibold leading-7 text-gray-900">
-              Informação pessoal
+              Informação pessoal (Criador da conta)
             </h2>
             <p className="mt-1 text-sm leading-6 text-gray-600">
               Use um endereço permanente a onde você consiga receber o correio.
@@ -118,52 +154,13 @@ export default function SingupArtist() {
                   Nome
                 </label>
                 <div className="mt-2">
-                  <input
+                  <Input
                     type="text"
-                    name="first-name"
-                    id="first-name"
+                    {...register("name")}
                     autoComplete="given-name"
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    className="text-background placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 bg-foreground"
                   />
                 </div>
-              </div>
-
-              <div className="sm:col-span-3">
-                <label
-                  htmlFor="last-name"
-                  className="block text-sm font-medium leading-6 text-gray-900"
-                >
-                  Sobrenome
-                </label>
-                <div className="mt-2">
-                  <input
-                    type="text"
-                    name="last-name"
-                    id="last-name"
-                    autoComplete="family-name"
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  />
-                </div>
-              </div>
-
-              <div className="sm:col-span-3">
-                <label
-                  htmlFor="email"
-                  className="block text-sm font-medium leading-6 text-gray-900"
-                >
-                  E-mail
-                </label>
-                <div className="mt-2">
-                  <input
-                    id="email"
-                    name="email"
-                    type="email"
-                    autoComplete="email"
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                  />
-                </div>
-
-             
               </div>
 
               <div className="sm:col-span-3">
@@ -174,36 +171,48 @@ export default function SingupArtist() {
                   CPF
                 </label>
                 <div className="mt-2">
-                  <input
-                    id="cpf"
+                  <Input
+                    {...register("documentnumber")}
                     name="cpf"
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    className="text-background placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 bg-foreground"
                   />
                 </div>
-
-             
+              </div>
+              <div className="sm:col-span-3">
+                <label
+                  htmlFor="email"
+                  className="block text-sm font-medium leading-6 text-gray-900"
+                >
+                  E-mail
+                </label>
+                <div className="mt-2">
+                  <Input
+                    {...register("email")}
+                    type="email"
+                    autoComplete="email"
+                    className="text-background placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 bg-foreground"
+                  />
+                </div>
               </div>
 
               <div className="sm:col-span-3">
                 <label
-                  htmlFor="country"
+                  htmlFor="email"
                   className="block text-sm font-medium leading-6 text-gray-900"
                 >
-                  País
+                  Confirmar E-mail
                 </label>
                 <div className="mt-2">
-                  <select
-                    id="country"
-                    name="country"
-                    autoComplete="country-name"
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
-                  >
-                    <option>Brasil</option>
-                  </select>
+                  <Input
+                    {...register("email")}
+                    type="email"
+                    autoComplete="email"
+                    className="text-background placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 bg-foreground"
+                  />
                 </div>
               </div>
 
-              <div className="col-span-full">
+              <div className="sm:col-span-3">
                 <label
                   htmlFor="street-address"
                   className="block text-sm font-medium leading-6 text-gray-900"
@@ -211,30 +220,27 @@ export default function SingupArtist() {
                   Endereço
                 </label>
                 <div className="mt-2">
-                  <input
+                  <Input
+                    {...register("address")}
                     type="text"
-                    name="street-address"
-                    id="street-address"
                     autoComplete="street-address"
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    className="text-background placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 bg-foreground"
                   />
                 </div>
               </div>
-
-              <div className="sm:col-span-2 sm:col-start-1">
+              <div className="sm:col-span-3">
                 <label
-                  htmlFor="city"
+                  htmlFor="street-address"
                   className="block text-sm font-medium leading-6 text-gray-900"
                 >
-                  Cidade
+                  Número
                 </label>
                 <div className="mt-2">
-                  <input
+                  <Input
+                    {...register("number")}
                     type="text"
-                    name="city"
-                    id="city"
-                    autoComplete="address-level2"
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    autoComplete="street-address"
+                    className="text-background placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 bg-foreground"
                   />
                 </div>
               </div>
@@ -244,33 +250,98 @@ export default function SingupArtist() {
                   htmlFor="region"
                   className="block text-sm font-medium leading-6 text-gray-900"
                 >
-                  Estado
+                  Complemento
                 </label>
                 <div className="mt-2">
-                  <input
-                    type="text"
-                    name="region"
-                    id="region"
+                  <Input
+                    {...register("complement")}
                     autoComplete="address-level1"
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    className="text-background placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 bg-foreground"
                   />
                 </div>
               </div>
 
               <div className="sm:col-span-2">
                 <label
-                  htmlFor="postal-code"
+                  htmlFor="country"
+                  className="block text-sm font-medium leading-6 text-gray-900"
+                >
+                  País
+                </label>
+                <div className="mt-2">
+                  <Select>
+                    <SelectTrigger className="text-background placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 bg-foreground">
+                      <SelectValue
+                        placeholder="País"
+                        {...register("country")}
+                      />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="Brasil">Brasil</SelectItem>
+                      <SelectItem value="dark">Dark</SelectItem>
+                      <SelectItem value="system">System</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+
+              <div className="sm:col-span-2">
+                <label
+                  htmlFor="city"
+                  className="block text-sm font-medium leading-6 text-gray-900"
+                >
+                  Estado
+                </label>
+                <div className="mt-2">
+                  <Select>
+                    <SelectTrigger className="text-background placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 bg-foreground">
+                      <SelectValue
+                        placeholder="Cidade"
+                        {...register("state")}
+                      />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="Brasil">Natal</SelectItem>
+                      <SelectItem value="dark">Dark</SelectItem>
+                      <SelectItem value="system">System</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+
+              <div className="sm:col-span-2">
+                <label
+                  htmlFor="city"
+                  className="block text-sm font-medium leading-6 text-gray-900"
+                >
+                  Cidade
+                </label>
+                <div className="mt-2">
+                  <Select>
+                    <SelectTrigger className="text-background placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 bg-foreground">
+                      <SelectValue placeholder="Cidade" {...register("city")} />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="Brasil">Natal</SelectItem>
+                      <SelectItem value="dark">Dark</SelectItem>
+                      <SelectItem value="system">System</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+
+              <div className="sm:col-span-2">
+                <label
+                  htmlFor="region"
                   className="block text-sm font-medium leading-6 text-gray-900"
                 >
                   CEP
                 </label>
                 <div className="mt-2">
-                  <input
-                    type="text"
-                    name="postal-code"
-                    id="postal-code"
-                    autoComplete="postal-code"
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  <Input
+                    {...register("zipcode")}
+                    autoComplete="address-level1"
+                    className="text-background placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 bg-foreground"
                   />
                 </div>
               </div>
@@ -358,7 +429,14 @@ export default function SingupArtist() {
                         htmlFor="comments"
                         className="font-medium text-gray-900"
                       >
-                        Li e aceito a <a href="https://www.mozilla.org/pt-BR/" className="text-blue-500 underline">Política de privacidade</a> do Potyguara Verse
+                        Li e aceito a{" "}
+                        <a
+                          href="https://www.mozilla.org/pt-BR/"
+                          className="text-blue-500 underline"
+                        >
+                          Política de privacidade
+                        </a>{" "}
+                        do Potyguara Verse
                       </label>
                     </div>
                   </div>
@@ -378,7 +456,11 @@ export default function SingupArtist() {
           </button>
           <Dialog>
             <DialogTrigger asChild>
-              <Button variant="ghost" className="hover:bg-transparent  hover:text-green-neon">
+              <Button
+                type="submit"
+                variant="ghost"
+                className="hover:bg-transparent  hover:text-green-neon"
+              >
                 Save
               </Button>
             </DialogTrigger>

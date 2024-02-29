@@ -1,8 +1,12 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { RiInstagramFill, RiLinkedinBoxFill } from "react-icons/ri";
 
 export function Footer() {
+
+  const router = useRouter();
+
   const scrollToSection = (sectionId: string) => {
     const section = document.getElementById(sectionId);
     if (section) {
@@ -18,6 +22,10 @@ export function Footer() {
     window.open("https://www.linkedin.com/company/liveplusbr/", "_blank");
   }
 
+  function handleNavigateToHomePage(path: string) {
+    router.push(`/${path}`);
+  }
+
   return (
     <div className="h-full md:h-60 lg:h-60 flex flex-col md:justify-between lg:justify-between gap-10 md:gap-0 lg:gap-0 bg-background items-center pl-2 md:pl-20 lg:pl-20 pr-2 md:pr-20 lg:pr-20">
       {/* Top part */}
@@ -27,30 +35,34 @@ export function Footer() {
         </div>
         <nav className="col-span-5 flex justify-around w-screen flex-1 ml-4 md:ml-0 lg:ml-0 pl-2 md:pl-0 lg:pl-0 pr-2 md:pr-0 lg:pr-0">
           <a
-            href="#"
-            className="text-sm font-semibold leading-6 text-gray-900"
-            // onClick={() => scrollToSection("homepage")}
+            className="text-sm font-semibold leading-6 text-gray-900 hover:cursor-pointer"
+            onClick={() => {
+              handleNavigateToHomePage("#homepage");
+            }}
           >
             Home
           </a>
           <a
-            href="#"
-            className="text-sm font-semibold leading-6 text-gray-900"
-            // onClick={() => scrollToSection("aboutus")}
+            className="text-sm font-semibold leading-6 text-gray-900 hover:cursor-pointer"
+            onClick={() => {
+              handleNavigateToHomePage("#aboutus");
+            }}
           >
             Sobre nós
           </a>
           <a
-            href="#"
-            className="text-sm font-semibold leading-6 text-gray-900"
-            // onClick={() => scrollToSection("ourpartnership")}
+            className="text-sm font-semibold leading-6 text-gray-900 hover:cursor-pointer"
+            onClick={() => {
+              handleNavigateToHomePage("#ourpartnership");
+            }}
           >
             Nossos parceiros
           </a>
           <a
-            href="#"
-            className="text-sm font-semibold leading-6 text-gray-900"
-            // onClick={() => scrollToSection("contact")}
+            className="text-sm font-semibold leading-6 text-gray-900 hover:cursor-pointer"
+            onClick={() => {
+              handleNavigateToHomePage("#contact");
+            }}
           >
             Contato
           </a>
