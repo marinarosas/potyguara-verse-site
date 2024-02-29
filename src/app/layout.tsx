@@ -17,6 +17,33 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <title>Potyguara Verse</title>
+
+        <link
+          rel="icon"
+          href="favicon.ico"
+          sizes="any"
+          type="image/svg+xml"
+        />
+        <link rel="preconnect" href="https://fonts.gstatic.com" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap"
+          rel="stylesheet"
+        />
+        <link
+          rel="preload"
+          href="/fonts/gilroy/Gilroy-Regular.ttf"
+          as="font"
+          crossOrigin=""
+        />
+        <link
+          rel="preload"
+          href="/fonts/gilroy/Gilroy-Medium.ttf"
+          as="font"
+          crossOrigin=""
+        />
+      </head>
       <body className={inter.className}>
         <ThemeProvider
           attribute="class"

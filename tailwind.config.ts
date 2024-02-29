@@ -50,8 +50,8 @@ const config = {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
-        background: "hsl(var(--background))",
-        foreground: "hsl(var(--foreground))",
+        background: "#000",
+        foreground: "#fff",
         primary: {
           DEFAULT: "#F24F00",
           foreground: "#F58A57",

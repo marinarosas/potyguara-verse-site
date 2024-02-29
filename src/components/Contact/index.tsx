@@ -1,8 +1,28 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { Button } from "../ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogOverlay,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 
 export function Contact() {
+  const router = useRouter();
+
+  function handleNavigateToSingupPageArtist() {
+    router.push(`/singup-artist`);
+  }
+
+  function handleNavigateToSingupPageViewer() {
+    router.push(`/singup-viewer`);
+  }
   return (
     <div
       className="h-full bg-background flex flex-col md:flex-row lg:flex-row"
@@ -112,12 +132,44 @@ export function Contact() {
           <Button className="text-foreground w-full md:w-6/12 lg:w-6/12 text-lg">
             Baixe a plataforma
           </Button>
-          <Button
-            className="text-background w-full md:w-6/12 lg:w-6/12 text-lg"
-            variant="secondary"
-          >
-            Cadastre-se
-          </Button>
+          <Dialog>
+            <DialogTrigger asChild>
+              <Button
+                className="text-background w-full md:w-6/12 lg:w-6/12 text-lg"
+                variant="secondary"
+              >
+                Cadastre-se
+              </Button>
+            </DialogTrigger>
+            <DialogOverlay className="bg-background opacity-90 w-screen" />
+            <DialogContent className="sm:max-w-[425px] md:h-52">
+              <DialogHeader>
+                <DialogTitle className="text-md text-foreground">
+                  Gostariamos de saber qual é o seu perfil?
+                </DialogTitle>
+                <DialogDescription className="text-justify">
+                  No Potyguara você pode escolher dois caminhos... <br />O
+                  criador de conteúdo (O artista) ou o consumidor de cultura (O
+                  espectador).
+                </DialogDescription>
+              </DialogHeader>
+              <DialogFooter className="flex justify-around sm:justify-around">
+                <Button
+                  className="w-32 text-foreground"
+                  onClick={() => handleNavigateToSingupPageArtist()}
+                >
+                  Artista
+                </Button>
+                <Button
+                  className="w-32 text-foreground"
+                  onClick={() => handleNavigateToSingupPageViewer()}
+                >
+                  Espectador
+                </Button>
+              </DialogFooter>
+            </DialogContent>
+          </Dialog>
+
           <Button className="text-foreground  w-full md:w-6/12 lg:w-6/12 text-lg">
             Comunidade Steam
           </Button>
