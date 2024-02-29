@@ -97,7 +97,11 @@ export function Header() {
           <a href="#" className="-m-1.5 p-1.5">
             <span className="sr-only">Your Company</span>
             <div className="h-auto w-32">
-              <img src="/LogoRetangular.png" alt="Logo Potyguara" onClick={()=>handleNavigateToHome()}/>
+              <img
+                src="/LogoRetangular.png"
+                alt="Logo Potyguara"
+                // onClick={() => handleNavigateToHome()}
+              />
             </div>
           </a>
         </div>
@@ -259,7 +263,6 @@ export function Header() {
             </DropdownMenuContent>
           </DropdownMenu>
           <a
-            href="#"
             className="text-sm font-semibold leading-6 text-gray-900 hover:text-orange-md"
             onClick={() => handleNavigateToLoginPage()}
           >

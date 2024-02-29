@@ -50,7 +50,7 @@ export default function Dashboard() {
   ];
 
   return (
-    <main className="ease-soft-in-out mt-1 rounded-tl-xl transition-all duration-200 border-2 border-orange-logo bg-foreground text-background">
+    <div className="ease-soft-in-out mt-1 rounded-tl-xl transition-all duration-200 border-2 border-orange-logo bg-foreground text-background">
       <div className="w-full px-6 py-6 mx-auto">
         {/* <!-- row 1 --> */}
         <div className="flex flex-wrap -mx-3">
@@ -105,7 +105,7 @@ export default function Dashboard() {
               </p>
               <a
                 className="font-semibold leading-normal text-sm group text-slate-500 pt-12"
-                href="javascript:;"
+                // href="javascript:;"
               >
                 Read More
                 {/* <i className="fas fa-arrow-right ease-bounce text-sm group-hover:translate-x-1.25 ml-1 leading-normal transition-all duration-200"></i> */}
@@ -179,7 +179,7 @@ export default function Dashboard() {
                   <div className="flex-none w-5/12 max-w-full px-3 my-auto text-right lg:w-1/2 lg:flex-none">
                     <div className="relative pr-6 lg:float-right">
                       <a
-                        dropdown-trigger
+                        // dropdown-trigger
                         className="cursor-pointer"
                         aria-expanded="false"
                       >
@@ -188,13 +188,13 @@ export default function Dashboard() {
                       <p className="hidden transform-dropdown-show"></p>
 
                       <ul
-                        dropdown-menu
+                        // dropdown-menu
                         className="z-100 text-sm transform-dropdown shadow-soft-3xl duration-250 before:duration-350 before:font-awesome before:ease-soft min-w-44 -ml-34 before:text-5.5 pointer-events-none absolute top-0 m-0 mt-2 list-none rounded-lg border-0 border-solid border-transparent bg-white bg-clip-padding px-2 py-4 text-left text-slate-500 opacity-0 transition-all before:absolute before:top-0 before:right-7 before:left-auto before:z-40 before:text-white before:transition-all before:content-['\f0d8']"
                       >
                         <li className="relative">
                           <a
                             className="py-1.2 lg:ease-soft clear-both block w-full whitespace-nowrap rounded-lg border-0 bg-transparent px-4 text-left font-normal text-slate-500 lg:transition-colors lg:duration-300"
-                            href="javascript:;"
+                            // href="javascript:;"
                           >
                             Action
                           </a>
@@ -202,7 +202,7 @@ export default function Dashboard() {
                         <li className="relative">
                           <a
                             className="py-1.2 lg:ease-soft clear-both block w-full whitespace-nowrap rounded-lg border-0 bg-transparent px-4 text-left font-normal text-slate-500 lg:transition-colors lg:duration-300"
-                            href="javascript:;"
+                            // href="javascript:;"
                           >
                             Another action
                           </a>
@@ -210,7 +210,7 @@ export default function Dashboard() {
                         <li className="relative">
                           <a
                             className="py-1.2 lg:ease-soft clear-both block w-full whitespace-nowrap rounded-lg border-0 bg-transparent px-4 text-left font-normal text-slate-500 lg:transition-colors lg:duration-300"
-                            href="javascript:;"
+                            // href="javascript:;"
                           >
                             Something else here
                           </a>
@@ -244,11 +244,11 @@ export default function Dashboard() {
                         <td className="p-2 align-middle bg-transparent border-b whitespace-nowrap">
                           <div className="flex px-2 py-1">
                             <div>
-                              <img
+                              {/* <img
                                 src="../assets/img/small-logos/logo-xd.svg"
                                 className="inline-flex items-center justify-center mr-4 text-white transition-all duration-200 ease-soft-in-out text-sm h-9 w-9 rounded-xl"
                                 alt="xd"
-                              />
+                              /> */}
                             </div>
                             <div className="flex flex-col justify-center">
                               <h6 className="mb-0 leading-normal text-sm">
@@ -260,16 +260,16 @@ export default function Dashboard() {
                         <td className="p-2 align-middle bg-transparent border-b whitespace-nowrap">
                           <div className="mt-2 avatar-group">
                             <a
-                              href="javascript:;"
+                              // href="javascript:;"
                               className="relative z-20 inline-flex items-center justify-center w-6 h-6 text-white transition-all duration-200 border-2 border-white border-solid rounded-full ease-soft-in-out text-xs hover:z-30"
                               data-target="tooltip_trigger"
                               data-placement="bottom"
                             >
-                              <img
+                              {/* <img
                                 src="../assets/img/team-1.jpg"
                                 className="w-full rounded-full"
                                 alt="team1"
-                              />
+                              /> */}
                             </a>
                             <div
                               data-target="tooltip"
@@ -283,16 +283,16 @@ export default function Dashboard() {
                               ></div>
                             </div>
                             <a
-                              href="javascript:;"
+                              // href="javascript:;"
                               className="relative z-20 inline-flex items-center justify-center w-6 h-6 -ml-4 text-white transition-all duration-200 border-2 border-white border-solid rounded-full ease-soft-in-out text-xs hover:z-30"
                               data-target="tooltip_trigger"
                               data-placement="bottom"
                             >
-                              <img
+                              {/* <img
                                 src="../assets/img/team-2.jpg"
                                 className="w-full rounded-full"
                                 alt="team2"
-                              />
+                              /> */}
                             </a>
                             <div
                               data-target="tooltip"
@@ -306,16 +306,16 @@ export default function Dashboard() {
                               ></div>
                             </div>
                             <a
-                              href="javascript:;"
+                              // href="javascript:;"
                               className="relative z-20 inline-flex items-center justify-center w-6 h-6 -ml-4 text-white transition-all duration-200 border-2 border-white border-solid rounded-full ease-soft-in-out text-xs hover:z-30"
                               data-target="tooltip_trigger"
                               data-placement="bottom"
                             >
-                              <img
+                              {/* <img
                                 src="../assets/img/team-3.jpg"
                                 className="w-full rounded-full"
                                 alt="team3"
-                              />
+                              /> */}
                             </a>
                             <div
                               data-target="tooltip"
@@ -329,16 +329,16 @@ export default function Dashboard() {
                               ></div>
                             </div>
                             <a
-                              href="javascript:;"
+                              // href="javascript:;"
                               className="relative z-20 inline-flex items-center justify-center w-6 h-6 -ml-4 text-white transition-all duration-200 border-2 border-white border-solid rounded-full ease-soft-in-out text-xs hover:z-30"
                               data-target="tooltip_trigger"
                               data-placement="bottom"
                             >
-                              <img
+                              {/* <img
                                 src="../assets/img/team-4.jpg"
                                 className="w-full rounded-full"
                                 alt="team4"
-                              />
+                              /> */}
                             </a>
                             <div
                               data-target="tooltip"
@@ -371,7 +371,7 @@ export default function Dashboard() {
                             <div className="text-xs h-0.75 w-30 m-0 flex overflow-visible rounded-lg bg-gray-200">
                               <div
                                 className="duration-600 ease-soft bg-gradient-to-tl from-blue-600 to-cyan-400 -mt-0.38 -ml-px flex h-1.5 w-3/5 flex-col justify-center overflow-hidden whitespace-nowrap rounded bg-fuchsia-500 text-center text-white transition-all"
-                                role="progressbar"
+                                // role="progressbar"
                                 // aria-valuenow="60"
                                 // aria-valuemin="0"
                                 // aria-valuemax="100"
@@ -384,11 +384,11 @@ export default function Dashboard() {
                         <td className="p-2 align-middle bg-transparent border-b whitespace-nowrap">
                           <div className="flex px-2 py-1">
                             <div>
-                              <img
+                              {/* <img
                                 src="../assets/img/small-logos/logo-atlassian.svg"
                                 className="inline-flex items-center justify-center mr-4 text-white transition-all duration-200 ease-soft-in-out text-sm h-9 w-9 rounded-xl"
                                 alt="atlassian"
-                              />
+                              /> */}
                             </div>
                             <div className="flex flex-col justify-center">
                               <h6 className="mb-0 leading-normal text-sm">
@@ -400,16 +400,16 @@ export default function Dashboard() {
                         <td className="p-2 align-middle bg-transparent border-b whitespace-nowrap">
                           <div className="mt-2 avatar-group">
                             <a
-                              href="javascript:;"
+                              // href="javascript:;"
                               className="relative z-20 inline-flex items-center justify-center w-6 h-6 text-white transition-all duration-200 border-2 border-white border-solid rounded-full ease-soft-in-out text-xs hover:z-30"
                               data-target="tooltip_trigger"
                               data-placement="bottom"
                             >
-                              <img
+                              {/* <img
                                 src="../assets/img/team-2.jpg"
                                 className="w-full rounded-full"
                                 alt="team5"
-                              />
+                              /> */}
                             </a>
                             <div
                               data-target="tooltip"
@@ -423,16 +423,16 @@ export default function Dashboard() {
                               ></div>
                             </div>
                             <a
-                              href="javascript:;"
+                              // href="javascript:;"
                               className="relative z-20 inline-flex items-center justify-center w-6 h-6 -ml-4 text-white transition-all duration-200 border-2 border-white border-solid rounded-full ease-soft-in-out text-xs hover:z-30"
                               data-target="tooltip_trigger"
                               data-placement="bottom"
                             >
-                              <img
+                              {/* <img
                                 src="../assets/img/team-4.jpg"
                                 className="w-full rounded-full"
                                 alt="team6"
-                              />
+                              /> */}
                             </a>
                             <div
                               data-target="tooltip"
@@ -465,10 +465,10 @@ export default function Dashboard() {
                             <div className="text-xs h-0.75 w-30 m-0 flex overflow-visible rounded-lg bg-gray-200">
                               <div
                                 className="duration-600 ease-soft bg-gradient-to-tl from-blue-600 to-cyan-400 -mt-0.38 w-1/10 -ml-px flex h-1.5 flex-col justify-center overflow-hidden whitespace-nowrap rounded bg-fuchsia-500 text-center text-white transition-all"
-                                role="progressbar"
-                                aria-valuenow="10"
-                                aria-valuemin="0"
-                                aria-valuemax="100"
+                                // // role="progressbar"
+                                // aria-valuenow="10"
+                                // aria-valuemin="0"
+                                // aria-valuemax="100"
                               ></div>
                             </div>
                           </div>
@@ -478,11 +478,11 @@ export default function Dashboard() {
                         <td className="p-2 align-middle bg-transparent border-b whitespace-nowrap">
                           <div className="flex px-2 py-1">
                             <div>
-                              <img
+                              {/* <img
                                 src="../assets/img/small-logos/logo-slack.svg"
                                 className="inline-flex items-center justify-center mr-4 text-white transition-all duration-200 ease-soft-in-out text-sm h-9 w-9 rounded-xl"
                                 alt="team7"
-                              />
+                              /> */}
                             </div>
                             <div className="flex flex-col justify-center">
                               <h6 className="mb-0 leading-normal text-sm">
@@ -494,16 +494,16 @@ export default function Dashboard() {
                         <td className="p-2 align-middle bg-transparent border-b whitespace-nowrap">
                           <div className="mt-2 avatar-group">
                             <a
-                              href="javascript:;"
+                              // href="javascript:;"
                               className="relative z-20 inline-flex items-center justify-center w-6 h-6 text-white transition-all duration-200 border-2 border-white border-solid rounded-full ease-soft-in-out text-xs hover:z-30"
                               data-target="tooltip_trigger"
                               data-placement="bottom"
                             >
-                              <img
+                              {/* <img
                                 src="../assets/img/team-3.jpg"
                                 className="w-full rounded-full"
                                 alt="team8"
-                              />
+                              /> */}
                             </a>
                             <div
                               data-target="tooltip"
@@ -517,16 +517,16 @@ export default function Dashboard() {
                               ></div>
                             </div>
                             <a
-                              href="javascript:;"
+                              // href="javascript:;"
                               className="relative z-20 inline-flex items-center justify-center w-6 h-6 -ml-4 text-white transition-all duration-200 border-2 border-white border-solid rounded-full ease-soft-in-out text-xs hover:z-30"
                               data-target="tooltip_trigger"
                               data-placement="bottom"
                             >
-                              <img
+                              {/* <img
                                 src="../assets/img/team-1.jpg"
                                 className="w-full rounded-full"
                                 alt="team9"
-                              />
+                              /> */}
                             </a>
                             <div
                               data-target="tooltip"
@@ -559,7 +559,7 @@ export default function Dashboard() {
                             <div className="text-xs h-0.75 w-30 m-0 flex overflow-visible rounded-lg bg-gray-200">
                               <div
                                 className="duration-600 ease-soft bg-gradient-to-tl from-green-600 to-lime-400 -mt-0.38 -ml-px flex h-1.5 w-full flex-col justify-center overflow-hidden whitespace-nowrap rounded bg-fuchsia-500 text-center text-white transition-all"
-                                role="progressbar"
+                                // role="progressbar"
                                 // aria-valuenow="100"
                                 // aria-valuemin="0"
                                 // aria-valuemax="100"
@@ -572,11 +572,11 @@ export default function Dashboard() {
                         <td className="p-2 align-middle bg-transparent border-b whitespace-nowrap">
                           <div className="flex px-2 py-1">
                             <div>
-                              <img
+                              {/* <img
                                 src="../assets/img/small-logos/logo-spotify.svg"
                                 className="inline-flex items-center justify-center mr-4 text-white transition-all duration-200 ease-soft-in-out text-sm h-9 w-9 rounded-xl"
                                 alt="spotify"
-                              />
+                              /> */}
                             </div>
                             <div className="flex flex-col justify-center">
                               <h6 className="mb-0 leading-normal text-sm">
@@ -588,16 +588,16 @@ export default function Dashboard() {
                         <td className="p-2 align-middle bg-transparent border-b whitespace-nowrap">
                           <div className="mt-2 avatar-group">
                             <a
-                              href="javascript:;"
+                              // href="javascript:;"
                               className="relative z-20 inline-flex items-center justify-center w-6 h-6 text-white transition-all duration-200 border-2 border-white border-solid rounded-full ease-soft-in-out text-xs hover:z-30"
                               data-target="tooltip_trigger"
                               data-placement="bottom"
                             >
-                              <img
+                              {/* <img
                                 src="../assets/img/team-4.jpg"
                                 className="w-full rounded-full"
                                 alt="user1"
-                              />
+                              /> */}
                             </a>
                             <div
                               data-target="tooltip"
@@ -611,16 +611,16 @@ export default function Dashboard() {
                               ></div>
                             </div>
                             <a
-                              href="javascript:;"
+                              // href="javascript:;"
                               className="relative z-20 inline-flex items-center justify-center w-6 h-6 -ml-4 text-white transition-all duration-200 border-2 border-white border-solid rounded-full ease-soft-in-out text-xs hover:z-30"
                               data-target="tooltip_trigger"
                               data-placement="bottom"
                             >
-                              <img
+                              {/* <img
                                 src="../assets/img/team-3.jpg"
                                 className="w-full rounded-full"
                                 alt="user2"
-                              />
+                              /> */}
                             </a>
                             <div
                               data-target="tooltip"
@@ -634,16 +634,16 @@ export default function Dashboard() {
                               ></div>
                             </div>
                             <a
-                              href="javascript:;"
+                              // href="javascript:;"
                               className="relative z-20 inline-flex items-center justify-center w-6 h-6 -ml-4 text-white transition-all duration-200 border-2 border-white border-solid rounded-full ease-soft-in-out text-xs hover:z-30"
                               data-target="tooltip_trigger"
                               data-placement="bottom"
                             >
-                              <img
+                              {/* <img
                                 src="../assets/img/team-4.jpg"
                                 className="w-full rounded-full"
                                 alt="user3"
-                              />
+                              /> */}
                             </a>
                             <div
                               data-target="tooltip"
@@ -657,16 +657,16 @@ export default function Dashboard() {
                               ></div>
                             </div>
                             <a
-                              href="javascript:;"
+                              // href="javascript:;"
                               className="relative z-20 inline-flex items-center justify-center w-6 h-6 -ml-4 text-white transition-all duration-200 border-2 border-white border-solid rounded-full ease-soft-in-out text-xs hover:z-30"
                               data-target="tooltip_trigger"
                               data-placement="bottom"
                             >
-                              <img
+                              {/* <img
                                 src="../assets/img/team-1.jpg"
                                 className="w-full rounded-full"
                                 alt="user4"
-                              />
+                              /> */}
                             </a>
                             <div
                               data-target="tooltip"
@@ -699,7 +699,7 @@ export default function Dashboard() {
                             <div className="text-xs h-0.75 w-30 m-0 flex overflow-visible rounded-lg bg-gray-200">
                               <div
                                 className="duration-600 ease-soft bg-gradient-to-tl from-green-600 to-lime-400 -mt-0.38 -ml-px flex h-1.5 w-full flex-col justify-center overflow-hidden whitespace-nowrap rounded bg-fuchsia-500 text-center text-white transition-all"
-                                role="progressbar"
+                                // role="progressbar"
                                 // aria-valuenow="100"
                                 // aria-valuemin="0"
                                 // aria-valuemax="100"
@@ -712,11 +712,11 @@ export default function Dashboard() {
                         <td className="p-2 align-middle bg-transparent border-b whitespace-nowrap">
                           <div className="flex px-2 py-1">
                             <div>
-                              <img
+                              {/* <img
                                 src="../assets/img/small-logos/logo-jira.svg"
                                 className="inline-flex items-center justify-center mr-4 text-white transition-all duration-200 ease-soft-in-out text-sm h-9 w-9 rounded-xl"
                                 alt="jira"
-                              />
+                              /> */}
                             </div>
                             <div className="flex flex-col justify-center">
                               <h6 className="mb-0 leading-normal text-sm">
@@ -728,16 +728,16 @@ export default function Dashboard() {
                         <td className="p-2 align-middle bg-transparent border-b whitespace-nowrap">
                           <div className="mt-2 avatar-group">
                             <a
-                              href="javascript:;"
+                              // href="javascript:;"
                               className="relative z-20 inline-flex items-center justify-center w-6 h-6 text-white transition-all duration-200 border-2 border-white border-solid rounded-full ease-soft-in-out text-xs hover:z-30"
                               data-target="tooltip_trigger"
                               data-placement="bottom"
                             >
-                              <img
+                              {/* <img
                                 src="../assets/img/team-4.jpg"
                                 className="w-full rounded-full"
                                 alt="user5"
-                              />
+                              /> */}
                             </a>
                             <div
                               data-target="tooltip"
@@ -770,7 +770,7 @@ export default function Dashboard() {
                             <div className="text-xs h-0.75 w-30 m-0 flex overflow-visible rounded-lg bg-gray-200">
                               <div
                                 className="duration-600 ease-soft bg-gradient-to-tl from-blue-600 to-cyan-400 -mt-0.38 -ml-px flex h-1.5 w-1/4 flex-col justify-center overflow-hidden whitespace-nowrap rounded bg-fuchsia-500 text-center text-white transition-all"
-                                role="progressbar"
+                                // role="progressbar"
                                 // aria-valuenow="25"
                                 // aria-valuemin="0"
                                 // aria-valuemax="25"
@@ -783,11 +783,11 @@ export default function Dashboard() {
                         <td className="p-2 align-middle bg-transparent border-0 whitespace-nowrap">
                           <div className="flex px-2 py-1">
                             <div>
-                              <img
+                              {/* <img
                                 src="../assets/img/small-logos/logo-invision.svg"
                                 className="inline-flex items-center justify-center mr-4 text-white transition-all duration-200 ease-soft-in-out text-sm h-9 w-9 rounded-xl"
                                 alt="invision"
-                              />
+                              /> */}
                             </div>
                             <div className="flex flex-col justify-center">
                               <h6 className="mb-0 leading-normal text-sm">
@@ -799,16 +799,16 @@ export default function Dashboard() {
                         <td className="p-2 align-middle bg-transparent border-0 whitespace-nowrap">
                           <div className="mt-2 avatar-group">
                             <a
-                              href="javascript:;"
+                              // href="javascript:;"
                               className="relative z-20 inline-flex items-center justify-center w-6 h-6 text-white transition-all duration-200 border-2 border-white border-solid rounded-full ease-soft-in-out text-xs hover:z-30"
                               data-target="tooltip_trigger"
                               data-placement="bottom"
                             >
-                              <img
+                              {/* <img
                                 src="../assets/img/team-1.jpg"
                                 className="w-full rounded-full"
                                 alt="user6"
-                              />
+                              /> */}
                             </a>
                             <div
                               data-target="tooltip"
@@ -822,16 +822,16 @@ export default function Dashboard() {
                               ></div>
                             </div>
                             <a
-                              href="javascript:;"
+                              // href="javascript:;"
                               className="relative z-20 inline-flex items-center justify-center w-6 h-6 -ml-4 text-white transition-all duration-200 border-2 border-white border-solid rounded-full ease-soft-in-out text-xs hover:z-30"
                               data-target="tooltip_trigger"
                               data-placement="bottom"
                             >
-                              <img
+                              {/* <img
                                 src="../assets/img/team-4.jpg"
                                 className="w-full rounded-full"
                                 alt="user7"
-                              />
+                              /> */}
                             </a>
                             <div
                               data-target="tooltip"
@@ -864,7 +864,7 @@ export default function Dashboard() {
                             <div className="text-xs h-0.75 w-30 m-0 flex overflow-visible rounded-lg bg-gray-200">
                               <div
                                 className="duration-600 ease-soft bg-gradient-to-tl from-blue-600 to-cyan-400 -mt-0.38 -ml-px flex h-1.5 w-2/5 flex-col justify-center overflow-hidden whitespace-nowrap rounded bg-fuchsia-500 text-center text-white transition-all"
-                                role="progressbar"
+                                // role="progressbar"
                                 // aria-valuenow="40"
                                 // aria-valuemin="0"
                                 // aria-valuemax="40"
@@ -880,6 +880,8 @@ export default function Dashboard() {
             </div>
           </div>
         </div>
+
+        {/* Footer */}
         <footer className="pt-4">
           <div className="w-full px-6 mx-auto">
             <div className="flex flex-wrap items-center -mx-3 lg:justify-between">
@@ -887,9 +889,9 @@ export default function Dashboard() {
                 <div className="leading-normal text-center text-sm text-slate-500 lg:text-left">
                   ©
                   <script>
-                    document.write(new Date().getFullYear() + ",");
+                    {/* document.write(new Date().getFullYear() + ","); */}
                   </script>
-                  made with <i className="fa fa-heart"></i> by
+                  {/* made with <i className="fa fa-heart"></i> by */}
                   <a
                     href="https://www.creative-tim.com"
                     className="font-semibold text-slate-700"
@@ -944,6 +946,6 @@ export default function Dashboard() {
           </div>
         </footer>
       </div>
-    </main>
+    </div>
   );
 }

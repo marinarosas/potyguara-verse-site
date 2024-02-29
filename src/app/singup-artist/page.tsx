@@ -3,6 +3,7 @@
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 import { Button } from "@/components/ui/button";
+import * as yup from 'yup'
 import { PhotoIcon, UserCircleIcon } from "@heroicons/react/24/solid";
 import { useRouter } from "next/navigation";
 import {
@@ -25,6 +26,30 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { IArtist } from "@/types/artist";
+import {
+  SubmitHandler,
+  UseFormHandleSubmit,
+  UseFormRegister,
+} from 'react-hook-form'
+
+const createTipoItemFormSchema = yup.object().shape({
+  username: yup.string().nullable(),
+  address: yup.string().nullable(),
+  number: yup.number().nullable(),
+  complement: yup.string().nullable(),
+  country: yup.string().nullable(),
+  state: yup.string().nullable(),
+  city: yup.string().nullable(),
+  email: yup.string().nullable(),
+  aboutartist: yup.string().nullable(),
+  documentnumber: yup.string().nullable(),
+  allownotifications: yup.boolean().nullable(),
+})
+
+type ICreateArtistFormData = yup.InferType<
+  typeof createTipoItemFormSchema
+>
 
 export default function SingupArtist() {
   const router = useRouter();
@@ -35,7 +60,7 @@ export default function SingupArtist() {
 
   const { register, handleSubmit, setValue } = useForm();
 
-  const onSubmit = async (data) => {
+  const onSubmit: SubmitHandler<ICreateArtistFormData> = async (data) => {
     try {
       const response = await axios.post(
         "https://api.ycodify.com/v2/persistence/c/s/no-ac",
@@ -66,7 +91,7 @@ export default function SingupArtist() {
   return (
     <main className="text-foreground bg-background ">
       <Header />
-      <form className="px-28 py-8" onSubmit={handleSubmit(onSubmit)}>
+      <form className="px-28 py-8">
         <div className="space-y-12">
           <div className="border-b border-gray-900/10 pb-12">
             <h2 className="text-green-neon text-xl font-semibold leading-7 text-gray-900 pb-4">
@@ -460,6 +485,7 @@ export default function SingupArtist() {
                 type="submit"
                 variant="ghost"
                 className="hover:bg-transparent  hover:text-green-neon"
+                onSubmit={handleSubmit(onSubmit)}
               >
                 Save
               </Button>

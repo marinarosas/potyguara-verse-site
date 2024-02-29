@@ -59,15 +59,13 @@ export default function Layout({ children }: { children: ReactNode }) {
           <Loading />
         </>
       ) : ( */}
-     <html lang="en">
-       <body>
+       <div>
         <HeaderSideBar/>
         <SideBar/> 
         <div className="h-screen pt-20 pl-0 lg:pl-64 transition-width duration-75">
         {children}
         </div>
-      </body>
-     </html>
+      </div>
       {/* )} */}
     </>
   );
