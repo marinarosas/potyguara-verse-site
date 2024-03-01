@@ -1,46 +1,12 @@
-// "use client";
-
-// import { SideBar } from "@/components/SideBar";
-// import { ReactNode } from "react";
-// import Loading from "./loading";
-// // import { useAuth } from '@/contexts/AuthContext'
-
-// export default function Layout({ children }: { children: ReactNode }) {
-//   //   const { user } = useAuth()
-
-//   return (
-//     <>
-//       <div className="flex flex-col h-screen">
-//         <div className="w-full relative">
-//           <SideBar />
-//           {children}
-//         </div>
-//       </div>
-//       {user.id ? (
-//       <>
-//         <div className='flex flex-col h-screen'>
-//           <div className='w-full relative'>
-//             <SideBar />
-
-//             {children}
-//           </div>
-//         </div>
-//       </>
-//     ) : (
-//       <Loading />
-//     )}
-//     </>
-//   );
-// }
 "use client";
 
 import { Flex, useColorModeValue } from "@chakra-ui/react";
-import { Header } from "../../components/Header/";
-import { SideBar } from "../../components/SideBar/";
+import { Header } from "../../components/Header";
+import { SideBar } from "../../components/SideBar";
 
 import { ReactNode } from "react";
 // import { useAuth } from '@/contexts/AuthContext'
-import Loading from "./loading";
+// import Loading from "./loading";
 import { HeaderSideBar } from "@/components/SideBar/headerSidebar";
 // import { theme } from '@/styles/theme'
 
