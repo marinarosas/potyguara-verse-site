@@ -26,7 +26,7 @@ export default function RootLayout({
           sizes="any"
           type="image/svg+xml"
         />
-        <link rel="preconnect" href="https://fonts.gstatic.com" />
+        {/* <link rel="preconnect" href="https://fonts.gstatic.com" />
         <link
           href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap"
           rel="stylesheet"
@@ -42,7 +42,7 @@ export default function RootLayout({
           href="/fonts/gilroy/Gilroy-Medium.ttf"
           as="font"
           crossOrigin=""
-        />
+        /> */}
       </head>
       <body className={inter.className}>
         <ThemeProvider
