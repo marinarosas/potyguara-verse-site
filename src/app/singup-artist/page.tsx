@@ -20,7 +20,7 @@ import axios from "axios";
 import { useForm } from "react-hook-form";
 import { Input } from "@/components/ui/input";
 import { SubmitHandler } from "react-hook-form";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { z } from "zod";
 import {
   Form,
@@ -74,6 +74,11 @@ export default function SingupArtist() {
 
   const tenantId = process.env.TENANT_ID;
   const apiMasterKey = process.env.API_MASTER_KEY;
+
+  // useEffect(()=>{
+  //   console.log(tenantId);
+    
+  // }, [tenantId])
 
 
   function handleNavigateToHomePage() {

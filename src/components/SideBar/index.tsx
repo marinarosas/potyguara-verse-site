@@ -37,6 +37,7 @@ import { FiHelpCircle } from "react-icons/fi";
 import { IoIosLogOut } from "react-icons/io";
 import { ReactNode } from "react";
 import { CiStar } from "react-icons/ci";
+import { useListArtistAll } from "@/services/hooks/useListArtistAll";
 
 const products = [
   {
@@ -57,11 +58,10 @@ const callsToAction = [
   { name: "Fale conosco", href: "#", icon: PhoneIcon },
 ];
 
-
-
-
 export function SideBar() {
   const router = useRouter();
+
+  const { artists } = useListArtistAll();
 
   const { setTheme } = useTheme();
 
@@ -84,168 +84,175 @@ export function SideBar() {
 
   return (
     <aside
-        className="fixed hidden z-20 h-full top-0 left-0 pt-12 lg:flex flex-shrink-0 flex-col w-64 transition-width duration-75"
-        aria-label="Sidebar"
-      >
-        <div className="relative flex-1 flex flex-col min-h-0 bg-background pt-0">
-          <div className="flex-1 flex flex-col pt-5 pb-4">
-            {/* Sidebar */}
-            <div className="flex-1 px-3 bg-background divide-y space-y-1">
-              <ul className="space-y-1 py-2">
-                <li>
-                  <form action="#" method="GET" className="lg:hidden">
-                    <label
-                      //  for="mobile-search"
-                      className="sr-only"
-                    >
-                      Procurar
-                    </label>
-                    <div className="relative">
-                      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                        <svg
-                          className="w-5 h-5 text-gray-500"
-                          fill="currentColor"
-                          viewBox="0 0 20 20"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path>
-                        </svg>
-                      </div>
-                      <input
-                        type="text"
-                        name="email"
-                        id="mobile-search"
-                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-cyan-600 focus:ring-cyan-600 block w-full pl-10 p-2.5"
-                        placeholder="Search"
-                      />
+      className="fixed hidden z-20 h-full top-0 left-0 pt-12 lg:flex flex-shrink-0 flex-col w-64 transition-width duration-75"
+      aria-label="Sidebar"
+    >
+      <div className="relative flex-1 flex flex-col min-h-0 bg-background pt-0">
+        <div className="flex-1 flex flex-col pt-5 pb-4">
+          {/* Sidebar */}
+          <div className="flex-1 px-3 bg-background divide-y space-y-1">
+            <ul className="space-y-1 py-2">
+              <li>
+                <form action="#" method="GET" className="lg:hidden">
+                  <label
+                    //  for="mobile-search"
+                    className="sr-only"
+                  >
+                    Procurar
+                  </label>
+                  <div className="relative">
+                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                      <svg
+                        className="w-5 h-5 text-gray-500"
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path>
+                      </svg>
                     </div>
-                  </form>
-                </li>
-
-                {/* Perfil */}
-                <li>
-                  <div id="profile" className="space-y-3 pt-2">
-                    <img
-                      src="https://images.unsplash.com/photo-1628157588553-5eeea00af15c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80"
-                      alt="Avatar user"
-                      className="w-10 md:w-16 rounded-full mx-auto"
+                    <input
+                      type="text"
+                      name="email"
+                      id="mobile-search"
+                      className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-cyan-600 focus:ring-cyan-600 block w-full pl-10 p-2.5"
+                      placeholder="Search"
                     />
-                    <div>
-                      <h2 className="font-medium text-xs md:text-sm text-center text-teal-500">
-                        Eduard Pantazi
-                      </h2>
-                      <p className="text-xs text-gray-500 text-center">
-                        Administrator
-                      </p>
-                    </div>
                   </div>
-                </li>
+                </form>
+              </li>
 
-                {/* Menu Sidebar */}
-                <li>
-                  <a
-                    href="#"
-                    className="text-base text-gray-900 font-normal rounded-lg flex items-center p-2 hover:bg-gray-100 group"
-                  >
-                    <AiOutlineDashboard />
-                    <span className="ml-3">Dashboard</span>
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    target="_blank"
-                    className="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group "
-                  >
-                    <RxCalendar />
-                    <span className="ml-3 flex-1 whitespace-nowrap">
-                      Meus Eventos
-                    </span>
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    target="_blank"
-                    className="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group "
-                  >
-                    <HiOutlineInboxIn size={18} />
-                    <span className="ml-3 flex-1 whitespace-nowrap">
-                      Menssagens
-                    </span>
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    className="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group "
-                  >
-                    <FaUsers size={18} />
+              {/* Perfil */}
+              <li>
+                <div id="profile" className="space-y-3 pt-2">
+                  <img
+                    src="https://images.unsplash.com/photo-1628157588553-5eeea00af15c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80"
+                    alt="Avatar user"
+                    className="w-10 md:w-16 rounded-full mx-auto"
+                  />
+                  <div>
+                    {/* {artists?.map((artists) => {
+                      return artists.map((artist)=>{
+                        return (
+                          <h2 key={artist.id} className="font-medium text-xs md:text-sm text-center text-teal-500">
+                            {artist.name}
+                          </h2>
+                        );
+                      })
+                    })} */}
+                    Alex Wanderley
+                    <p className="text-xs text-gray-500 text-center">
+                      Administrator
+                    </p>
+                  </div>
+                </div>
+              </li>
 
-                    <span className="ml-3 flex-1 whitespace-nowrap">
-                      Meus avatares
-                    </span>
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    className="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group "
-                  >
-                    <PiMicrophoneStage size={18} />
-                    <span className="ml-3 flex-1 whitespace-nowrap">
-                      Meu palco
-                    </span>
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    className="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group "
-                  >
-                    <IoWalletOutline size={18} />
-                    <span className="ml-3 flex-1 whitespace-nowrap">
-                      Carteira
-                    </span>
-                  </a>
-                </li>
-              </ul>
-              <div className="space-y-2 pt-2">
+              {/* Menu Sidebar */}
+              <li>
                 <a
                   href="#"
-                  className="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 group transition duration-75 flex items-center p-2"
+                  className="text-base text-gray-900 font-normal rounded-lg flex items-center p-2 hover:bg-gray-100 group"
                 >
-                  <RxAvatar size={18} />
-                  <span className="ml-3 flex-1 whitespace-nowrap">Perfil</span>
+                  <AiOutlineDashboard />
+                  <span className="ml-3">Dashboard</span>
                 </a>
+              </li>
+              <li>
                 <a
                   href="#"
-                  className="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 group transition duration-75 flex items-center p-2"
+                  target="_blank"
+                  className="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group "
                 >
-                  <GoGear size={18} />
+                  <RxCalendar />
                   <span className="ml-3 flex-1 whitespace-nowrap">
-                    Configuração
+                    Meus Eventos
                   </span>
                 </a>
+              </li>
+              <li>
                 <a
                   href="#"
-                  className="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 group transition duration-75 flex items-center p-2"
+                  target="_blank"
+                  className="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group "
                 >
-                  <FiHelpCircle size={18} />
-                  <span className="ml-3 flex-1 whitespace-nowrap">Ajuda</span>
+                  <HiOutlineInboxIn size={18} />
+                  <span className="ml-3 flex-1 whitespace-nowrap">
+                    Menssagens
+                  </span>
                 </a>
+              </li>
+              <li>
                 <a
                   href="#"
-                  className="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 group transition duration-75 flex items-center p-2"
+                  className="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group "
                 >
-                  <IoIosLogOut size={18} />
-                  <span className="ml-3 flex-1 whitespace-nowrap">Sair</span>
+                  <FaUsers size={18} />
+
+                  <span className="ml-3 flex-1 whitespace-nowrap">
+                    Meus avatares
+                  </span>
                 </a>
-              </div>
+              </li>
+              <li>
+                <a
+                  href="#"
+                  className="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group "
+                >
+                  <PiMicrophoneStage size={18} />
+                  <span className="ml-3 flex-1 whitespace-nowrap">
+                    Meu palco
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#"
+                  className="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 flex items-center p-2 group "
+                >
+                  <IoWalletOutline size={18} />
+                  <span className="ml-3 flex-1 whitespace-nowrap">
+                    Carteira
+                  </span>
+                </a>
+              </li>
+            </ul>
+            <div className="space-y-2 pt-2">
+              <a
+                href="#"
+                className="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 group transition duration-75 flex items-center p-2"
+              >
+                <RxAvatar size={18} />
+                <span className="ml-3 flex-1 whitespace-nowrap">Perfil</span>
+              </a>
+              <a
+                href="#"
+                className="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 group transition duration-75 flex items-center p-2"
+              >
+                <GoGear size={18} />
+                <span className="ml-3 flex-1 whitespace-nowrap">
+                  Configuração
+                </span>
+              </a>
+              <a
+                href="#"
+                className="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 group transition duration-75 flex items-center p-2"
+              >
+                <FiHelpCircle size={18} />
+                <span className="ml-3 flex-1 whitespace-nowrap">Ajuda</span>
+              </a>
+              <a
+                href="#"
+                className="text-base text-gray-900 font-normal rounded-lg hover:bg-gray-100 group transition duration-75 flex items-center p-2"
+              >
+                <IoIosLogOut size={18} />
+                <span className="ml-3 flex-1 whitespace-nowrap">Sair</span>
+              </a>
             </div>
           </div>
         </div>
-      </aside>
+      </div>
+    </aside>
   );
 }
 // <div className="h-screen w-full text-muted-foreground bg-background border-2 border-pink-600">
@@ -404,5 +411,3 @@ export function SideBar() {
 // </div>
 
 //
-
-
