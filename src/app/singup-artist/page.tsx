@@ -6,21 +6,10 @@ import { Button } from "@/components/ui/button";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { UserCircleIcon } from "@heroicons/react/24/solid";
 import { useRouter } from "next/navigation";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogOverlay,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
 import axios from "axios";
 import { useForm } from "react-hook-form";
 import { Input } from "@/components/ui/input";
 import { SubmitHandler } from "react-hook-form";
-import { useEffect, useState } from "react";
 import { z } from "zod";
 import {
   Form,
@@ -72,14 +61,8 @@ const formSchema = z.object({
 export default function SingupArtist() {
   const router = useRouter();
 
-  const tenantId = process.env.TENANT_ID;
-  const apiMasterKey = process.env.API_MASTER_KEY;
-
-  // useEffect(()=>{
-  //   console.log(tenantId);
-    
-  // }, [tenantId])
-
+  const tenantId = process.env.NEXT_PUBLIC_TENANT_ID;
+  const apiMasterKey = process.env.NEXT_PUBLIC_API_MASTER_KEY;
 
   function handleNavigateToHomePage() {
     router.push(`/`);
@@ -107,8 +90,8 @@ export default function SingupArtist() {
   const axiosConfig = {
     headers: {
       "Content-Type": "application/json",
-      "X-Tenant-ID": '19379587-75b0-3aec-9717-46c6e26757e3',
-      "X-API-Master-Key": 'ed950147-a6fc-3d45-a69c-bfc55f414ae6',
+      "X-Tenant-ID": tenantId,
+      "X-API-Master-Key": apiMasterKey,
     },
   };
 

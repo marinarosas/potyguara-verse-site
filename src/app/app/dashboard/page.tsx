@@ -26,15 +26,16 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { object } from "zod";
 
 export default function Dashboard() {
   const router = useRouter();
 
   const { artists } = useListArtistAll();
 
-  useEffect(() => {
-    console.log(artists);
-  }, [artists]);
+  // useEffect(() => {
+  //   console.log("list do useHook", artists);
+  // });
 
   function handleNavigateToHomePage() {
     router.push(`/`);
@@ -125,7 +126,7 @@ export default function Dashboard() {
   ];
 
   return (
-    <div className="ease-soft-in-out mt-1 rounded-tl-xl transition-all duration-200 border-2 border-orange-logo bg-foreground text-background">
+    <div className="ease-soft-in-out rounded-tl-xl transition-all duration-200 bg-foreground text-background">
       <div className="w-full px-6 py-6 mx-auto">
         {/* <!--Cards important infos--> */}
         <div className="flex flex-wrap -mx-3">
@@ -160,7 +161,7 @@ export default function Dashboard() {
         </div>
 
         {/* <!--Cards Tips, Avatar and Stage--> */}
-        <div className="flex items-center my-12 gap-6">
+        <div className="flex items-center mt-12 mb-8 gap-6">
           {/* Card 1 */}
           <Card className="flex w-1/2 h-64 break-words bg-gray-light shadow-md rounded-2xl bg-clip-border border-0 text-background">
             <CardContent className="flex items-center ">
@@ -229,7 +230,7 @@ export default function Dashboard() {
 
         {/* <!-- Tabela Histórico --> */}
 
-        <div className="flex flex-col my-6 mx-1">
+        <div className="flex flex-col my-4 mx-1">
           <div className=" my-4">
             <h6>Último eventos</h6>
             <p className="mb-0 leading-normal text-sm">
@@ -240,7 +241,9 @@ export default function Dashboard() {
           </div>
 
           <Table>
-            <TableCaption>Para mais detalhes dos eventos, entrar em "Meus eventos".</TableCaption>
+            <TableCaption>
+              Para mais detalhes dos eventos, entrar em "Meus eventos".
+            </TableCaption>
             <TableHeader>
               <TableRow>
                 <TableHead className="w-32">Nome</TableHead>
@@ -253,9 +256,7 @@ export default function Dashboard() {
             <TableBody>
               {eventsShows.map((event) => (
                 <TableRow key={event.name}>
-                  <TableCell className="font-medium">
-                    {event.name}
-                  </TableCell>
+                  <TableCell className="font-medium">{event.name}</TableCell>
                   <TableCell>{event.paymentStatus}</TableCell>
                   <TableCell>{event.eventDate}</TableCell>
                   <TableCell>{event.numberViewers}</TableCell>
@@ -273,71 +274,6 @@ export default function Dashboard() {
             </TableFooter>
           </Table>
         </div>
-
-        {/* Footer */}
-        <footer className="pt-4">
-          <div className="w-full px-6 mx-auto">
-            <div className="flex flex-wrap items-center -mx-3 lg:justify-between">
-              <div className="w-full max-w-full px-3 mt-0 mb-6 shrink-0 lg:mb-0 lg:w-1/2 lg:flex-none">
-                <div className="leading-normal text-center text-sm text-slate-500 lg:text-left">
-                  ©
-                  <script>
-                    {/* document.write(new Date().getFullYear() + ","); */}
-                  </script>
-                  {/* made with <i className="fa fa-heart"></i> by */}
-                  <a
-                    href="https://www.creative-tim.com"
-                    className="font-semibold text-slate-700"
-                    target="_blank"
-                  >
-                    Creative Tim
-                  </a>
-                  for a better web.
-                </div>
-              </div>
-              <div className="w-full max-w-full px-3 mt-0 shrink-0 lg:w-1/2 lg:flex-none">
-                <ul className="flex flex-wrap justify-center pl-0 mb-0 list-none lg:justify-end">
-                  <li className="nav-item">
-                    <a
-                      href="https://www.creative-tim.com"
-                      className="block px-4 pt-0 pb-1 font-normal transition-colors ease-soft-in-out text-sm text-slate-500"
-                      target="_blank"
-                    >
-                      Creative Tim
-                    </a>
-                  </li>
-                  <li className="nav-item">
-                    <a
-                      href="https://www.creative-tim.com/presentation"
-                      className="block px-4 pt-0 pb-1 font-normal transition-colors ease-soft-in-out text-sm text-slate-500"
-                      target="_blank"
-                    >
-                      About Us
-                    </a>
-                  </li>
-                  <li className="nav-item">
-                    <a
-                      href="https://creative-tim.com/blog"
-                      className="block px-4 pt-0 pb-1 font-normal transition-colors ease-soft-in-out text-sm text-slate-500"
-                      target="_blank"
-                    >
-                      Blog
-                    </a>
-                  </li>
-                  <li className="nav-item">
-                    <a
-                      href="https://www.creative-tim.com/license"
-                      className="block px-4 pt-0 pb-1 pr-0 font-normal transition-colors ease-soft-in-out text-sm text-slate-500"
-                      target="_blank"
-                    >
-                      License
-                    </a>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </footer>
       </div>
     </div>
   );

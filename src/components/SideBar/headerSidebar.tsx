@@ -1,42 +1,66 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { Fragment, useState } from "react";
-import { Dialog, Disclosure, Popover, Transition } from "@headlessui/react";
+import { z } from "zod";
+import { useState } from "react";
 import {
-  Bars3Icon,
   ChartPieIcon,
   CursorArrowRaysIcon,
-  XMarkIcon,
+  UserCircleIcon,
 } from "@heroicons/react/24/outline";
-import {
-  ChevronDownIcon,
-  PhoneIcon,
-  PlayCircleIcon,
-} from "@heroicons/react/20/solid";
-import * as React from "react";
-import { MoonIcon, SunIcon } from "@radix-ui/react-icons";
+import { PhoneIcon, PlayCircleIcon } from "@heroicons/react/20/solid";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { useTheme } from "next-themes";
-
-import { Button } from "@/components/ui/button";
+import { zodResolver } from "@hookform/resolvers/zod";
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { AiOutlineDashboard } from "react-icons/ai";
-import { RxCalendar } from "react-icons/rx";
-import { HiOutlineInboxIn } from "react-icons/hi";
-import { RxAvatar } from "react-icons/rx";
-import { FaUsers } from "react-icons/fa";
-import { PiMicrophoneStage } from "react-icons/pi";
-import { IoWalletOutline } from "react-icons/io5";
-import { GoGear } from "react-icons/go";
-import { FiHelpCircle } from "react-icons/fi";
-import { IoIosLogOut } from "react-icons/io";
-import { ReactNode } from "react";
-import { CiStar } from "react-icons/ci";
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogOverlay,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Label } from "../ui/label";
+import { Input } from "../ui/input";
+import { useToast } from "@/components/ui/use-toast";
+import axios from "axios";
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { Textarea } from "@/components/ui/textarea";
+import * as React from "react";
+import { CalendarIcon } from "@radix-ui/react-icons";
+import { format } from "date-fns";
+
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import { Calendar } from "@/components/ui/calendar";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { MdOutlineAddPhotoAlternate } from "react-icons/md";
+
+const formSchema = z.object({
+  eventdata: z.string(),
+  local: z.string(),
+  nameevent: z.string(),
+  timeevent: z.string(),
+  durantionevent: z.string(),
+  price: z.string(),
+  description: z.string(),
+  statuspayment: z.boolean(),
+});
 
 const products = [
   {
@@ -60,16 +84,84 @@ const callsToAction = [
 export function HeaderSideBar() {
   const router = useRouter();
 
+  const tenantId = process.env.NEXT_PUBLIC_TENANT_ID;
+  const apiMasterKey = process.env.NEXT_PUBLIC_API_MASTER_KEY;
+
   const { setTheme } = useTheme();
 
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { toast } = useToast();
 
-  // const scrollToSection = (sectionId: string) => {
-  //   const section = document.getElementById(sectionId);
-  //   if (section) {
-  //     section.scrollIntoView({ behavior: "smooth" });
-  //   }
-  // };
+  const [dateEvent, setDateEvent] = React.useState<Date>();
+
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      eventdata: "",
+      local: "",
+      nameevent: "",
+      timeevent: "",
+      durantionevent: "",
+      price: "",
+      description: "",
+      statuspayment: false,
+    },
+  });
+
+  const axiosConfig = {
+    headers: {
+      "Content-Type": "application/json",
+      "X-Tenant-ID": tenantId,
+      "X-API-Master-Key": apiMasterKey,
+    },
+  };
+
+  const handleCreateEvent: SubmitHandler<z.infer<typeof formSchema>> = async ({
+    local,
+    nameevent,
+    timeevent,
+    durantionevent,
+    price,
+    description,
+    statuspayment,
+  }) => {
+
+    console.log('ENTROUUUUU');
+    
+    try {
+      await axios.post(
+        "https://api.ycodify.com/v2/persistence/c/s/no-ac",
+        {
+          action: "CREATE",
+          data: [
+            {
+              evento: {
+                eventdata: dateEvent,
+                local,
+                nameevent,
+                timeevent,
+                durantionevent,
+                price,
+                description,
+                statuspayment,
+              },
+            },
+          ],
+        },
+        axiosConfig
+      );
+
+      toast({
+        title: "Uhuu! Deu certo o cadastro.",
+        description: "Cadastro do evento criado com sucesso.",
+      });
+    } catch (error) {
+      console.log(error);
+      toast({
+        title: "Ops! Algo deu errado.",
+        description: "O cadastro não foi criado, fale com a central.",
+      });
+    }
+  };
 
   function handleNavigateToLoginPage() {
     router.push(`/app/login-page`);
@@ -189,9 +281,203 @@ export function HeaderSideBar() {
           />
           <h3>1650</h3>
         </div>
-        <Button className="hidden sm:inline-flex ml-5 text-white text-sm px-5 py-2.5 text-center items-center mr-3">
-          Criar evento
-        </Button>
+        <Dialog>
+          <DialogTrigger asChild>
+            <Button className="hidden sm:inline-flex ml-5 text-white text-sm px-5 py-2.5 text-center items-center mr-3">
+              Criar evento
+            </Button>
+          </DialogTrigger>
+          <DialogOverlay className="bg-background opacity-90" />
+          <DialogContent className="h-5/6 border-2 border-blue-500">
+            <DialogHeader>
+              <DialogTitle>Criar evento</DialogTitle>
+              <DialogDescription>
+                Crie seu evento aqui, quanto mais detalhes melhor a exoeriência
+                do seu fã.
+              </DialogDescription>
+            </DialogHeader>
+            <Form {...form}>
+              <form
+                onSubmit={form.handleSubmit(handleCreateEvent)}
+                className="overflow-y-scroll "
+              >
+                {/* Image of event */}
+                <div>
+                  <label
+                    htmlFor="photo"
+                    className="block text-sm font-medium leading-6 text-gray-900"
+                  >
+                    Imagem do evento artístico.
+                  </label>
+                  <div className="mt-2 flex items-center">
+                    <Button
+                      type="button"
+                      className="text-white flex gap-2 hover:text-orange-logo hover:bg-transparent"
+                      variant="ghost"
+                    >
+                      <MdOutlineAddPhotoAlternate
+                        className="size-6 text-gray-300 hover:text-orange-logo hover:bg-transparent"
+                        aria-hidden="true"
+                      />
+                      Adicionar imagem
+                    </Button>
+                  </div>
+                </div>
+                {/* Forms */}
+                <div>
+                  <FormField
+                    control={form.control}
+                    name="nameevent"
+                    render={({ field }) => (
+                      <FormItem className="mt-6">
+                        <FormLabel>Nome do evento</FormLabel>
+                        <FormControl>
+                          <Input
+                            id="nameevent"
+                            placeholder="Informe o nome do evento"
+                            className="text-background placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 bg-foreground"
+                            {...field}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  <FormField
+                    control={form.control}
+                    name="description"
+                    render={({ field }) => (
+                      <FormItem className="my-6">
+                        <FormLabel>Descrição do evento</FormLabel>
+                        <FormControl>
+                          <Textarea
+                            id="description"
+                            placeholder="Informe um pouco sobre o evento"
+                            className="text-background placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 bg-foreground h-32"
+                            {...field}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormLabel>Data do evento</FormLabel>
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <Button
+                        variant={"outline"}
+                        className={cn(
+                          "flex w-full justify-start text-left font-normal text-background placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 bg-foreground",
+                          !dateEvent && "text-muted-foreground"
+                        )}
+                      >
+                        <CalendarIcon className="mr-2 h-4 w-4" />
+                        {dateEvent ? (
+                          format(dateEvent, "PPP")
+                        ) : (
+                          <span>Escolha uma data</span>
+                        )}
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-auto p-0" align="start">
+                      <Calendar
+                        mode="single"
+                        selected={dateEvent}
+                        onSelect={setDateEvent}
+                        initialFocus
+                      />
+                    </PopoverContent>
+                  </Popover>
+                  <FormField
+                    control={form.control}
+                    name="timeevent"
+                    render={({ field }) => (
+                      <FormItem className="mt-6">
+                        <FormLabel>Horário do evento</FormLabel>
+                        <FormControl>
+                          <Input
+                            id="timeevent"
+                            placeholder="Informe o horário do evento"
+                            className="text-background placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 bg-foreground"
+                            {...field}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="durantionevent"
+                    render={({ field }) => (
+                      <FormItem className="mt-6">
+                        <FormLabel>Duração do evento</FormLabel>
+                        <FormControl>
+                          <Input
+                            id="durantionevent"
+                            placeholder="Informe a duração do evento"
+                            className="text-background placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 bg-foreground"
+                            {...field}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="local"
+                    render={({ field }) => (
+                      <FormItem className="mt-6">
+                        <FormLabel>Local do evento</FormLabel>
+                        <FormControl>
+                          <Input
+                            id="local"
+                            placeholder="Informe a localização do evento"
+                            className="text-background placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 bg-foreground"
+                            {...field}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="price"
+                    render={({ field }) => (
+                      <FormItem className="mt-6">
+                        <FormLabel>Valor do evento</FormLabel>
+                        <FormControl>
+                          <Input
+                            id="price"
+                            placeholder="Informe valor do evento"
+                            className="text-background placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 bg-foreground"
+                            {...field}
+                          />
+                        </FormControl>
+                        <FormDescription>
+                          Lembre que esse valor é retirado a taxa da plataforma
+                          e impostos. Taxa de transmissão a parte. Ler{" "}
+                          <span className="text-blue-500">
+                            Termo do usuário
+                          </span>
+                          .
+                        </FormDescription>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+              </form>
+            </Form>
+            <DialogFooter>
+              {/* <DialogClose>Fechar</DialogClose> */}
+              <Button type="submit" className="text-foreground">Save changes</Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
       </div>
     </header>
   );

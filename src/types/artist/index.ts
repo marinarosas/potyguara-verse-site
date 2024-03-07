@@ -13,4 +13,7 @@ export interface IArtist {
   zipcode: string;
   documentnumber: string;
   allownotifications: boolean;
+  loguser: string;
+  logrole: string;
+  logversion: number;
 }

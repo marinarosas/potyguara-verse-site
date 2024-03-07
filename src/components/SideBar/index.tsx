@@ -131,16 +131,18 @@ export function SideBar() {
                     className="w-10 md:w-16 rounded-full mx-auto"
                   />
                   <div>
-                    {/* {artists?.map((artists) => {
-                      return artists.map((artist)=>{
-                        return (
-                          <h2 key={artist.id} className="font-medium text-xs md:text-sm text-center text-teal-500">
+                    {artists?.map((artist) => {
+                      return (
+                        artist.name === "Alex Wanderley" && (
+                          <h2
+                            className="font-medium text-xs md:text-sm text-center text-teal-500"
+                            key={artist.id}
+                          >
                             {artist.name}
                           </h2>
-                        );
-                      })
-                    })} */}
-                    Alex Wanderley
+                        )
+                      );
+                    })}
                     <p className="text-xs text-gray-500 text-center">
                       Administrator
                     </p>
