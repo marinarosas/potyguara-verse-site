@@ -50,6 +50,38 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { MdOutlineAddPhotoAlternate } from "react-icons/md";
+import Link from "next/link";
+// import { Icons } from "@/components/icons";
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+  navigationMenuTriggerStyle,
+} from "@/components/ui/navigation-menu";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuPortal,
+  DropdownMenuSeparator,
+  DropdownMenuShortcut,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { RxAvatar } from "react-icons/rx";
+import { IoWalletOutline } from "react-icons/io5";
+import { GoGear } from "react-icons/go";
+import { GiThreeFriends } from "react-icons/gi";
+import { IoIosArrowDown } from "react-icons/io";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { MoonIcon, SunIcon } from "@radix-ui/react-icons";
 
 const formSchema = z.object({
   eventdata: z.string(),
@@ -81,7 +113,34 @@ const callsToAction = [
   { name: "Fale conosco", href: "#", icon: PhoneIcon },
 ];
 
-export function HeaderSideBar() {
+const components: { title: string; href: string; description: string }[] = [
+  {
+    title: "Steam",
+    href: "/docs/primitives/alert-dialog",
+    description:
+      "Entre em nossa comunidade steam e veja o que a galera ta falando do jogo.",
+  },
+  {
+    title: "Meta Quest Store",
+    href: "/docs/primitives/hover-card",
+    description:
+      "Nossa plataforma a clique de você, venha experimentar o outro lado do jogo.",
+  },
+  {
+    title: "Loja parceiras",
+    href: "/docs/primitives/progress",
+    description:
+      "Quem não que um desconto? Venha conhecer nossos parceiros de perto.",
+  },
+  {
+    title: "Configuração",
+    href: "/docs/primitives/tooltip",
+    description:
+      "Caso precise, configure a plataforma para melhor performance.",
+  },
+];
+
+export function HeaderInside() {
   const router = useRouter();
 
   const tenantId = process.env.NEXT_PUBLIC_TENANT_ID;
@@ -124,9 +183,8 @@ export function HeaderSideBar() {
     description,
     statuspayment,
   }) => {
+    console.log("ENTROUUUUU");
 
-    console.log('ENTROUUUUU');
-    
     try {
       await axios.post(
         "https://api.ycodify.com/v2/persistence/c/s/no-ac",
@@ -172,118 +230,116 @@ export function HeaderSideBar() {
   }
 
   return (
-    <header className="bg-background fixed w-full flex items-center justify-between pl-12 z-30">
+    <header className="bg-background fixed w-full flex items-center justify-between px-8 z-30 border-b-2">
       {/* Logo side */}
       <div className="flex items-center justify-start">
-        {/* Button Mobile Menu */}
-        <button
-          id="toggleSidebarMobile"
-          aria-expanded="true"
-          aria-controls="sidebar"
-          className="lg:hidden mr-2 text-gray-600 hover:text-gray-900 cursor-pointer p-2 hover:bg-gray-100 focus:bg-gray-100 focus:ring-2 focus:ring-gray-100 rounded"
-        >
-          <svg
-            id="toggleSidebarMobileHamburger"
-            className="w-6 h-6"
-            fill="currentColor"
-            viewBox="0 0 20 20"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              fillRule="evenodd"
-              d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h6a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
-              clipRule="evenodd"
-            ></path>
-          </svg>
-          <svg
-            id="toggleSidebarMobileClose"
-            className="w-6 h-6 hidden"
-            fill="currentColor"
-            viewBox="0 0 20 20"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              fillRule="evenodd"
-              d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-              clipRule="evenodd"
-            ></path>
-          </svg>
-        </button>
 
         {/* Logo */}
-        <div className="h-auto w-32 hover:cursor-pointer ">
+        <div className="h-auto w-28 hover:cursor-pointer ">
           <img
             src="/LogoRetangular.png"
             alt="Logo Potyguara"
             onClick={() => handleNavigateToHomePage()}
           />
         </div>
-        <form action="#" method="GET" className="hidden lg:block lg:pl-20">
-          <label
-            // for="topbar-search"
-            className="sr-only"
-          >
-            Procurar
-          </label>
-          <div className="mt-1 relative lg:w-64">
-            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-              <svg
-                className="w-5 h-5 text-gray-500"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
-                  clipRule="evenodd"
-                ></path>
-              </svg>
-            </div>
-            <input
-              type="text"
-              name="email"
-              id="topbar-search"
-              className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full pl-10 p-2.5"
-              placeholder="Procurar"
-            />
-          </div>
-        </form>
+        <NavigationMenu className="pl-8">
+          <NavigationMenuList>
+            <NavigationMenuItem>
+              <Link href="/docs" legacyBehavior passHref>
+                <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                  Ínicio
+                </NavigationMenuLink>
+              </Link>
+            </NavigationMenuItem>
+
+            <NavigationMenuItem>
+              <NavigationMenuTrigger>Meus eventos</NavigationMenuTrigger>
+              <NavigationMenuContent>
+                <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
+                  <li className="row-span-3">
+                    <NavigationMenuLink asChild>
+                      <a
+                        className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
+                        href="/"
+                      >
+                        {/* <Icons.logo className="h-6 w-6" /> */}
+                        <div className="mb-2 mt-4 text-lg font-medium">
+                          Eventos
+                        </div>
+                        <p className="text-sm leading-tight text-muted-foreground">
+                          Crie seus eventos em poucos cliques e conquiste uma
+                          plateia de outro mundo!
+                        </p>
+                      </a>
+                    </NavigationMenuLink>
+                  </li>
+                  <ListItem href="/docs" title="Crie seu evento">
+                    Dê vida a seu avatar, construa seu palco e preencha o
+                    formulário e seu evento estará pronto para começar.
+                  </ListItem>
+                  <ListItem
+                    href="/docs/installation"
+                    title="Central de controle"
+                  >
+                    Gerencie seus eventos e acompanhe os status da sua
+                    monetização.
+                  </ListItem>
+                  <ListItem href="/docs/primitives/typography" title="Dicas">
+                    Dicas de como criar seu eventos, tutorial e muito mais...
+                  </ListItem>
+                </ul>
+              </NavigationMenuContent>
+            </NavigationMenuItem>
+
+            <NavigationMenuItem>
+              <Link href="/docs" legacyBehavior passHref>
+                <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                  Meu avatar
+                </NavigationMenuLink>
+              </Link>
+            </NavigationMenuItem>
+
+            <NavigationMenuItem>
+              <Link href="/docs" legacyBehavior passHref>
+                <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                  Meu Palco
+                </NavigationMenuLink>
+              </Link>
+            </NavigationMenuItem>
+
+            <NavigationMenuItem>
+              <Link href="/docs" legacyBehavior passHref>
+                <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                  Carteira
+                </NavigationMenuLink>
+              </Link>
+            </NavigationMenuItem>
+
+            <NavigationMenuItem>
+              <NavigationMenuTrigger>Outras opções</NavigationMenuTrigger>
+              <NavigationMenuContent>
+                <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
+                  {components.map((component) => (
+                    <ListItem
+                      key={component.title}
+                      title={component.title}
+                      href={component.href}
+                    >
+                      {component.description}
+                    </ListItem>
+                  ))}
+                </ul>
+              </NavigationMenuContent>
+            </NavigationMenuItem>
+          </NavigationMenuList>
+        </NavigationMenu>
       </div>
 
       {/* Coins side */}
-      <div className="flex items-center">
-        <button
-          id="toggleSidebarMobileSearch"
-          type="button"
-          className="lg:hidden text-gray-500 hover:text-gray-900 hover:bg-gray-100 p-2 rounded-lg"
-        >
-          <span className="sr-only">Procurar</span>
-          <svg
-            className="w-6 h-6"
-            fill="currentColor"
-            viewBox="0 0 20 20"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              fillRule="evenodd"
-              d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
-              clipRule="evenodd"
-            ></path>
-          </svg>
-        </button>
-
-        <div className="flex justify-between w-20 items-center px-2">
-          <img
-            src="/brasao_preto.png"
-            alt="Iamgem da moeda"
-            className="w-auto h-10"
-          />
-          <h3>1650</h3>
-        </div>
+      <div className="flex items-center justify-end gap-4 w-full">
         <Dialog>
           <DialogTrigger asChild>
-            <Button className="hidden sm:inline-flex ml-5 text-white text-sm px-5 py-2.5 text-center items-center mr-3">
+            <Button className="hidden sm:inline-flex text-white text-xs py-2.5 text-center items-center">
               Criar evento
             </Button>
           </DialogTrigger>
@@ -474,11 +530,148 @@ export function HeaderSideBar() {
             </Form>
             <DialogFooter>
               {/* <DialogClose>Fechar</DialogClose> */}
-              <Button type="submit" className="text-foreground">Save changes</Button>
+              <Button type="submit" className="text-foreground">
+                Save changes
+              </Button>
             </DialogFooter>
           </DialogContent>
         </Dialog>
+
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="outline" size="icon">
+              <SunIcon className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+              <MoonIcon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+              <span className="sr-only">Toggle theme</span>
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+            <DropdownMenuItem onClick={() => setTheme("light")}>
+              Light
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => setTheme("dark")}>
+              Dark
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => setTheme("system")}>
+              System
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <div className="flex items-center gap-1">
+              <Avatar>
+                <AvatarImage
+                  src="https://github.com/shadcn.png"
+                  alt="@shadcn"
+                />
+                <AvatarFallback>CN</AvatarFallback>
+              </Avatar>
+              <IoIosArrowDown size={18} color="#fff" />
+            </div>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className="w-56 mr-2">
+            <DropdownMenuLabel className="flex justify-between items-center">
+              Minha conta
+              <div className="flex justify-between items-center gap-1">
+                <img
+                  src="/brasao_preto.png"
+                  alt="Iamgem da moeda"
+                  className="w-6 h-auto"
+                />
+                <h3 className="text-sm">1650</h3>
+              </div>
+            </DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            <DropdownMenuGroup>
+              <DropdownMenuItem className="gap-2">
+                <RxAvatar size={18} />
+                Perfil
+                {/* <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut> */}
+              </DropdownMenuItem>
+              <DropdownMenuItem className="gap-2">
+                <IoWalletOutline size={18} />
+                Carteira
+                {/* <DropdownMenuShortcut>⌘B</DropdownMenuShortcut> */}
+              </DropdownMenuItem>
+              <DropdownMenuItem className="gap-2">
+                <GoGear size={18} />
+                Configuração
+                {/* <DropdownMenuShortcut>⌘S</DropdownMenuShortcut> */}
+              </DropdownMenuItem>
+            </DropdownMenuGroup>
+            <DropdownMenuSeparator />
+            <DropdownMenuGroup>
+              <DropdownMenuSub>
+                <DropdownMenuSubTrigger>Meus amigos</DropdownMenuSubTrigger>
+                <DropdownMenuPortal>
+                  <DropdownMenuSubContent>
+                    <DropdownMenuItem>Primeiro amigo</DropdownMenuItem>
+                    <DropdownMenuItem>Segundo amigo</DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem>More...</DropdownMenuItem>
+                  </DropdownMenuSubContent>
+                </DropdownMenuPortal>
+              </DropdownMenuSub>
+              <DropdownMenuSub>
+                <DropdownMenuSubTrigger>
+                  Convide um amigo
+                </DropdownMenuSubTrigger>
+                <DropdownMenuPortal>
+                  <DropdownMenuSubContent>
+                    <DropdownMenuItem>Email</DropdownMenuItem>
+                    <DropdownMenuItem>Message</DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem>More...</DropdownMenuItem>
+                  </DropdownMenuSubContent>
+                </DropdownMenuPortal>
+              </DropdownMenuSub>
+              <DropdownMenuItem>
+                Novo evento
+                <DropdownMenuShortcut>⌘+E</DropdownMenuShortcut>
+              </DropdownMenuItem>
+            </DropdownMenuGroup>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem>Ajuda</DropdownMenuItem>
+            <DropdownMenuItem>Termo de uso</DropdownMenuItem>
+            <DropdownMenuItem disabled>
+              Política de privacidade
+            </DropdownMenuItem>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem>
+              Sair
+              {/* <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut> */}
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </div>
     </header>
   );
 }
+
+const ListItem = React.forwardRef<
+  React.ElementRef<"a">,
+  React.ComponentPropsWithoutRef<"a">
+>(({ className, title, children, ...props }, ref) => {
+  return (
+    <li>
+      <NavigationMenuLink asChild>
+        <a
+          ref={ref}
+          className={cn(
+            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
+            className
+          )}
+          {...props}
+        >
+          <div className="text-sm font-medium leading-none">{title}</div>
+          <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+            {children}
+          </p>
+        </a>
+      </NavigationMenuLink>
+    </li>
+  );
+});
+ListItem.displayName = "ListItem";

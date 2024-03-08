@@ -1,11 +1,10 @@
 "use client";
 
-import { SideBar } from "../../components/SideBar";
-
 import { ReactNode } from "react";
 // import { useAuth } from '@/contexts/AuthContext'
 // import Loading from "./loading";
-import { HeaderSideBar } from "@/components/SideBar/headerSidebar";
+import { HeaderInside } from "@/components/Header/headerInside";
+import { FooterInside } from "@/components/Footer/footerInside";
 // import { theme } from '@/styles/theme'
 
 export default function Layout({ children }: { children: ReactNode }) {
@@ -24,11 +23,11 @@ export default function Layout({ children }: { children: ReactNode }) {
         </>
       ) : ( */}
        <div>
-        <HeaderSideBar/>
-        <SideBar/> 
-        <div className="h-screen pt-20 pl-0 lg:pl-64 transition-width duration-75">
+        <HeaderInside/>
+        <div className="h-screen pt-20 transition-width duration-75">
         {children}
         </div>
+        <FooterInside/>
       </div>
       {/* )} */}
     </>
