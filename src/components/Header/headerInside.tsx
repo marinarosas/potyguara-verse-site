@@ -84,8 +84,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { MoonIcon, SunIcon } from "@radix-ui/react-icons";
 
 const formSchema = z.object({
-  eventdata: z.string(),
-  local: z.string(),
+  // eventdata: z.string(),
   nameevent: z.string(),
   timeevent: z.string(),
   durantionevent: z.string(),
@@ -155,8 +154,7 @@ export function HeaderInside() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      eventdata: "",
-      local: "",
+      // eventdata: "",
       nameevent: "",
       timeevent: "",
       durantionevent: "",
@@ -175,7 +173,6 @@ export function HeaderInside() {
   };
 
   const handleCreateEvent: SubmitHandler<z.infer<typeof formSchema>> = async ({
-    local,
     nameevent,
     timeevent,
     durantionevent,
@@ -193,8 +190,6 @@ export function HeaderInside() {
           data: [
             {
               evento: {
-                eventdata: dateEvent,
-                local,
                 nameevent,
                 timeevent,
                 durantionevent,
@@ -230,12 +225,11 @@ export function HeaderInside() {
   }
 
   return (
-    <header className="bg-background fixed w-full flex items-center justify-between px-8 z-30 border-b-2">
+    <header className="bg-background h-16 w-full flex items-center justify-between px-8 z-30 border-b-2">
       {/* Logo side */}
       <div className="flex items-center justify-start">
-
         {/* Logo */}
-        <div className="h-auto w-28 hover:cursor-pointer ">
+        <div className="h-auto w-24 hover:cursor-pointer ">
           <img
             src="/LogoRetangular.png"
             alt="Logo Potyguara"
@@ -339,53 +333,44 @@ export function HeaderInside() {
       <div className="flex items-center justify-end gap-4 w-full">
         <Dialog>
           <DialogTrigger asChild>
-            <Button className="hidden sm:inline-flex text-white text-xs py-2.5 text-center items-center">
+            <Button className="text-white text-xs py-2.5 text-center items-center">
               Criar evento
             </Button>
           </DialogTrigger>
           <DialogOverlay className="bg-background opacity-90" />
-          <DialogContent className="h-5/6 border-2 border-blue-500">
+          <DialogContent className="h-5/6 max-w-4xl">
             <DialogHeader>
               <DialogTitle>Criar evento</DialogTitle>
               <DialogDescription>
-                Crie seu evento aqui, quanto mais detalhes melhor a exoeriência
+                Crie seu evento aqui, quanto mais detalhes melhor a experiência
                 do seu fã.
               </DialogDescription>
             </DialogHeader>
+
+            {/* Formulario evento */}
             <Form {...form}>
               <form
                 onSubmit={form.handleSubmit(handleCreateEvent)}
-                className="overflow-y-scroll "
+                className="overflow-y-scroll pr-4"
               >
-                {/* Image of event */}
-                <div>
-                  <label
-                    htmlFor="photo"
-                    className="block text-sm font-medium leading-6 text-gray-900"
-                  >
-                    Imagem do evento artístico.
-                  </label>
-                  <div className="mt-2 flex items-center">
-                    <Button
-                      type="button"
-                      className="text-white flex gap-2 hover:text-orange-logo hover:bg-transparent"
-                      variant="ghost"
-                    >
-                      <MdOutlineAddPhotoAlternate
-                        className="size-6 text-gray-300 hover:text-orange-logo hover:bg-transparent"
-                        aria-hidden="true"
-                      />
-                      Adicionar imagem
-                    </Button>
-                  </div>
-                </div>
-                {/* Forms */}
-                <div>
+                <Button
+                  type="button"
+                  className="w-fit h-12 text-white flex gap-2 hover:text-orange-logo hover:bg-transparent border-2 border-orange-logo border-dashed"
+                  variant="ghost"
+                >
+                  <MdOutlineAddPhotoAlternate
+                    className="size-6 text-gray-300 hover:text-orange-logo hover:bg-transparent"
+                    aria-hidden="true"
+                  />
+                  Adicionar imagem do evento
+                </Button>
+                {/* Row1 */}
+                <div className="flex items-center py-6 gap-4">
                   <FormField
                     control={form.control}
                     name="nameevent"
                     render={({ field }) => (
-                      <FormItem className="mt-6">
+                      <FormItem className="w-1/2">
                         <FormLabel>Nome do evento</FormLabel>
                         <FormControl>
                           <Input
@@ -399,57 +384,62 @@ export function HeaderInside() {
                       </FormItem>
                     )}
                   />
-
-                  <FormField
-                    control={form.control}
-                    name="description"
-                    render={({ field }) => (
-                      <FormItem className="my-6">
-                        <FormLabel>Descrição do evento</FormLabel>
-                        <FormControl>
-                          <Textarea
-                            id="description"
-                            placeholder="Informe um pouco sobre o evento"
-                            className="text-background placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 bg-foreground h-32"
-                            {...field}
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <FormLabel>Data do evento</FormLabel>
-                  <Popover>
-                    <PopoverTrigger asChild>
-                      <Button
-                        variant={"outline"}
-                        className={cn(
-                          "flex w-full justify-start text-left font-normal text-background placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 bg-foreground",
-                          !dateEvent && "text-muted-foreground"
-                        )}
-                      >
-                        <CalendarIcon className="mr-2 h-4 w-4" />
-                        {dateEvent ? (
-                          format(dateEvent, "PPP")
-                        ) : (
-                          <span>Escolha uma data</span>
-                        )}
-                      </Button>
-                    </PopoverTrigger>
-                    <PopoverContent className="w-auto p-0" align="start">
-                      <Calendar
-                        mode="single"
-                        selected={dateEvent}
-                        onSelect={setDateEvent}
-                        initialFocus
-                      />
-                    </PopoverContent>
-                  </Popover>
+                  <div className="w-1/2 space-y-2">
+                    <FormLabel>Data do evento</FormLabel>
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <Button
+                          variant={"outline"}
+                          className={cn(
+                            "flex w-full justify-start text-left font-normal text-background placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 bg-foreground",
+                            !dateEvent && "text-muted-foreground"
+                          )}
+                        >
+                          <CalendarIcon className="mr-2 h-4 w-4" />
+                          {dateEvent ? (
+                            format(dateEvent, "PPP")
+                          ) : (
+                            <span>Escolha uma data</span>
+                          )}
+                        </Button>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-auto p-0" align="start">
+                        <Calendar
+                          mode="single"
+                          selected={dateEvent}
+                          onSelect={setDateEvent}
+                          initialFocus
+                        />
+                      </PopoverContent>
+                    </Popover>
+                  </div>
+                </div>
+                {/* Row 2 */}
+                <FormField
+                  control={form.control}
+                  name="description"
+                  render={({ field }) => (
+                    <FormItem className="w-full">
+                      <FormLabel>Descrição do evento</FormLabel>
+                      <FormControl>
+                        <Textarea
+                          id="description"
+                          placeholder="Informe um pouco sobre o seu evento"
+                          className="text-background placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 bg-foreground h-32"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                {/* Row 3 */}
+                <div className="flex py-6 gap-4">
                   <FormField
                     control={form.control}
                     name="timeevent"
                     render={({ field }) => (
-                      <FormItem className="mt-6">
+                      <FormItem className="w-1/2">
                         <FormLabel>Horário do evento</FormLabel>
                         <FormControl>
                           <Input
@@ -467,7 +457,7 @@ export function HeaderInside() {
                     control={form.control}
                     name="durantionevent"
                     render={({ field }) => (
-                      <FormItem className="mt-6">
+                      <FormItem className="w-1/2">
                         <FormLabel>Duração do evento</FormLabel>
                         <FormControl>
                           <Input
@@ -481,59 +471,41 @@ export function HeaderInside() {
                       </FormItem>
                     )}
                   />
-                  <FormField
-                    control={form.control}
-                    name="local"
-                    render={({ field }) => (
-                      <FormItem className="mt-6">
-                        <FormLabel>Local do evento</FormLabel>
-                        <FormControl>
-                          <Input
-                            id="local"
-                            placeholder="Informe a localização do evento"
-                            className="text-background placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 bg-foreground"
-                            {...field}
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={form.control}
-                    name="price"
-                    render={({ field }) => (
-                      <FormItem className="mt-6">
-                        <FormLabel>Valor do evento</FormLabel>
-                        <FormControl>
-                          <Input
-                            id="price"
-                            placeholder="Informe valor do evento"
-                            className="text-background placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 bg-foreground"
-                            {...field}
-                          />
-                        </FormControl>
-                        <FormDescription>
-                          Lembre que esse valor é retirado a taxa da plataforma
-                          e impostos. Taxa de transmissão a parte. Ler{" "}
-                          <span className="text-blue-500">
-                            Termo do usuário
-                          </span>
-                          .
-                        </FormDescription>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
                 </div>
+                <FormField
+                  control={form.control}
+                  name="price"
+                  render={({ field }) => (
+                    <FormItem className="">
+                      <FormLabel>Valor do evento</FormLabel>
+                      <FormControl>
+                        <Input
+                          id="price"
+                          placeholder="Informe valor do evento"
+                          className="text-background placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 bg-foreground"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormDescription>
+                        Lembre que esse valor é retirado a taxa da plataforma e
+                        impostos. Taxa de transmissão a parte. Ler{" "}
+                        <span className="text-blue-500">Termo do usuário</span>.
+                      </FormDescription>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
               </form>
+              <DialogFooter className="gap-2">
+                <DialogClose>
+                  {" "}
+                  <Button variant="outline">Fechar</Button>
+                </DialogClose>
+                <Button type="submit" className="text-foreground" onClick={handleCreateEvent}>
+                  Criar evento
+                </Button>
+              </DialogFooter>
             </Form>
-            <DialogFooter>
-              {/* <DialogClose>Fechar</DialogClose> */}
-              <Button type="submit" className="text-foreground">
-                Save changes
-              </Button>
-            </DialogFooter>
           </DialogContent>
         </Dialog>
 

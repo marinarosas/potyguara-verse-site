@@ -24,9 +24,7 @@ export default function Layout({ children }: { children: ReactNode }) {
       ) : ( */}
        <div>
         <HeaderInside/>
-        <div className="h-screen pt-20 transition-width duration-75">
         {children}
-        </div>
         <FooterInside/>
       </div>
       {/* )} */}

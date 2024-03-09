@@ -57,15 +57,17 @@ export default function Dashboard() {
       smallValue: "+3",
       icon: <FaStar size={20} />,
     },
-    
+
     {
       title: "Potycoins",
       value: "1650",
-      icon:  <img
-      src="/brasao_preto.png"
-      alt="Iamgem da moeda"
-      className="w-6 h-auto"
-    />,
+      icon: (
+        <img
+          src="/brasao_preto.png"
+          alt="Iamgem da moeda"
+          className="w-6 h-auto"
+        />
+      ),
     },
     {
       title: "Eventos feitos",
@@ -132,108 +134,101 @@ export default function Dashboard() {
   ];
 
   return (
-    <div className="bg-background text-foreground flex flex-col space-y-8">
-        {/* <!--Cards important infos--> */}
-        <div className="flex mx-8 gap-4 mt-4">
-          {mainInfoDashboard.map((info) => {
-            return (
-              <div
-                className="w-full mb-6"
-                key={info.title}
-              >
-                <Card className="relative h-24 flex flex-col min-w-0 break-words bg-transparent drop-shadow-md rounded-2xl bg-clip-border border-2">
-                  <CardContent className="flex-auto p-4">
-                    <div className="flex flex-row -mx-3">
-                      <div className="flex-none w-2/3 max-w-full px-3">
-                        <p className="mb-0 font-sans leading-normal text-sm">
-                          {info.title}
-                        </p>
-                        <h5 className="mb-0 text-xl font-bold">{info.value}</h5>
-                      </div>
-                      <div className="px-3 text-right basis-1/3">
-                        {/* <div className="inline-block w-12 h-12 text-center rounded-lg bg-gradient-to-tl from-orange-logo to-green-neon"> */}
-                          <div className="h-full flex justify-end items-start text-foreground opacity-85">
-                            {info.icon}
-                          </div>
-                        {/* </div> */}
-                      </div>
+    <div className="h-full px-8 py-6 bg-background text-foreground space-y-6 pb-16">
+      {/* <!--Cards important infos--> */}
+      <div className="flex gap-4">
+        {mainInfoDashboard.map((info) => {
+          return (
+              <Card key={info.title} className="relative w-full h-24 flex flex-col min-w-0 break-words bg-transparent drop-shadow-md rounded-2xl bg-clip-border border-2">
+                <CardContent className="flex-auto p-4">
+                  <div className="flex flex-row -mx-3">
+                    <div className="flex-none w-2/3 max-w-full px-3">
+                      <p className="mb-0 font-sans leading-normal text-sm">
+                        {info.title}
+                      </p>
+                      <h5 className="mb-0 text-xl font-bold">{info.value}</h5>
                     </div>
-                  </CardContent>
-                </Card>
-              </div>
-            );
-          })}
-        </div>
+                    <div className="px-3 text-right basis-1/3">
+                      {/* <div className="inline-block w-12 h-12 text-center rounded-lg bg-gradient-to-tl from-orange-logo to-green-neon"> */}
+                      <div className="h-full flex justify-end items-start text-foreground opacity-85">
+                        {info.icon}
+                      </div>
+                      {/* </div> */}
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+          );
+        })}
+      </div>
 
-        {/* <!--Cards Tips, Avatar and Stage--> */}
-        <div className="flex mx-8 gap-4">
-          {/* Card 1 */}
-          <Card className="flex w-1/2 h-1/2 break-words bg-transparent shadow-md rounded-2xl bg-clip-border border-2 relative">
-            <CardContent className="flex items-center ">
-              {/* Left Side */}
-              <div className="w-1/2 h-full p-6">
-                <CardTitle>Dicas para o seu evento</CardTitle>
-                <h5 className="font-bold text-sm py-2">O que você precisa?</h5>
-                <CardDescription className="text-gray">
-                  Aqui você encontra dicas, novidades e outras perguntas sobre
-                  criar um evento.
-                </CardDescription>
-                <a
-                  className="absolute font-semibold leading-normal text-sm group text-slate-500 flex flex-1 h-fit bottom-8"
-                  // href="javascript:;"
-                >
-                  Veja mais
-                  {/* <i className="fas fa-arrow-right ease-bounce text-sm group-hover:translate-x-1.25 ml-1 leading-normal transition-all duration-200"></i> */}
-                </a>
-              </div>
+      {/* <!--Cards Tips, Avatar and Stage--> */}
+      <div className="flex gap-4">
+        {/* Card 1 */}
+        <Card className="flex w-1/2 h-1/2 break-words bg-transparent shadow-md rounded-2xl bg-clip-border border-2 relative">
+          <CardContent className="flex items-center ">
+            {/* Left Side */}
+            <div className="w-1/2 h-full p-6">
+              <CardTitle>Dicas para o seu evento</CardTitle>
+              <h5 className="font-bold text-sm py-2">O que você precisa?</h5>
+              <CardDescription className="text-gray">
+                Aqui você encontra dicas, novidades e outras perguntas sobre
+                criar um evento.
+              </CardDescription>
+              <a
+                className="absolute font-semibold leading-normal text-sm group text-slate-500 flex flex-1 h-fit bottom-8"
+                // href="javascript:;"
+              >
+                Veja mais
+                {/* <i className="fas fa-arrow-right ease-bounce text-sm group-hover:translate-x-1.25 ml-1 leading-normal transition-all duration-200"></i> */}
+              </a>
+            </div>
 
-              {/* Image Side */}
-              <div className="flex w-1/2 h-full">
-                <img
-                  className="w-full h-full rounded-r-2xl"
-                  src="https://picsum.photos/200"
-                  alt="rocket"
-                />
-              </div>
+            {/* Image Side */}
+            <div className="flex w-1/2 h-full">
+              <img
+                className="w-full h-full rounded-r-2xl"
+                src="https://picsum.photos/200"
+                alt="rocket"
+              />
+            </div>
+          </CardContent>
+        </Card>
+
+        <div className="flex w-1/2 gap-4">
+          {/* Card 2 */}
+          <Card className="flex flex-col w-1/2 h-full break-words bg-transparent shadow-md rounded-2xl bg-clip-border border-2">
+            <CardHeader className="flex py-4 px-4 justify-between h-14">
+              <CardTitle className="font-semibold flex justify-between">
+                Meu Avatar <MdEdit />
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="h-full">
+              <img
+                className="object-cover h-full w-full rounded-b-2xl"
+                src="/avatarTemp.png"
+                alt="rocket"
+              />
             </CardContent>
           </Card>
 
-          <div className="flex w-1/2 gap-4">
-            {/* Card 2 */}
-            <Card className="flex flex-col w-1/2 h-full break-words bg-transparent shadow-md rounded-2xl bg-clip-border border-2">
-              <CardHeader className="flex py-4 px-4 justify-between h-14">
-                <CardTitle className="font-semibold flex justify-between">
-                  Meu Avatar <MdEdit />
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="h-full">
-                <img
-                  className="object-cover h-full w-full rounded-b-2xl"
-                  src="/avatarTemp.png"
-                  alt="rocket"
-                />
-              </CardContent>
-            </Card>
-
-            {/* Card 3 */}
-            <Card className="flex flex-col w-1/2 h-full break-words bg-transparent shadow-md rounded-2xl bg-clip-border border-2">
-              <CardHeader className="flex py-4 px-4 justify-between h-14">
-                <CardTitle className="font-semibold flex justify-between">
-                  Meu Palco <MdEdit />
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="h-full">
-                <img
-                  className="object-cover h-full w-full rounded-b-2xl"
-                  src="/stageTemp.png"
-                  alt="rocket"
-                />
-              </CardContent>
-            </Card>
-          </div>
+          {/* Card 3 */}
+          <Card className="flex flex-col w-1/2 h-full break-words bg-transparent shadow-md rounded-2xl bg-clip-border border-2">
+            <CardHeader className="flex py-4 px-4 justify-between h-14">
+              <CardTitle className="font-semibold flex justify-between">
+                Meu Palco <MdEdit />
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="h-full">
+              <img
+                className="object-cover h-full w-full rounded-b-2xl"
+                src="/stageTemp.png"
+                alt="rocket"
+              />
+            </CardContent>
+          </Card>
         </div>
-
-        
       </div>
+    </div>
   );
 }
