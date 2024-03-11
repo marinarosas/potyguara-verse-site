@@ -81,58 +81,6 @@ export default function Dashboard() {
     },
   ];
 
-  const eventsShows = [
-    {
-      name: "Luau MPB",
-      paymentStatus: "Pago",
-      totalAmount: "R$250.00",
-      eventDate: "28/02",
-      numberViewers: 29,
-    },
-    {
-      name: "Samba Rock",
-      paymentStatus: "Pendente",
-      totalAmount: "R$150.00",
-      eventDate: "24/02",
-      numberViewers: 32,
-    },
-    {
-      name: "MPB na praia",
-      paymentStatus: "Não pago",
-      totalAmount: "R$350.00",
-      eventDate: "18/02",
-      numberViewers: 24,
-    },
-    {
-      name: "Sabadásso",
-      paymentStatus: "Pago",
-      totalAmount: "R$450.00",
-      eventDate: "15/02",
-      numberViewers: 18,
-    },
-    {
-      name: "Rock Geral",
-      paymentStatus: "Pago",
-      totalAmount: "R$550.00",
-      eventDate: "10/02",
-      numberViewers: 21,
-    },
-    {
-      name: "Domingo Legal",
-      paymentStatus: "Pendente",
-      totalAmount: "R$200.00",
-      eventDate: "03/02",
-      numberViewers: 14,
-    },
-    {
-      name: "Trip Rock",
-      paymentStatus: "Não pago",
-      totalAmount: "R$300.00",
-      eventDate: "01/02",
-      numberViewers: 10,
-    },
-  ];
-
   return (
     <div className="h-full px-8 py-6 bg-background text-foreground space-y-6 pb-16">
       {/* <!--Cards important infos--> */}

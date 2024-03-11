@@ -82,16 +82,7 @@ import { GiThreeFriends } from "react-icons/gi";
 import { IoIosArrowDown } from "react-icons/io";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { MoonIcon, SunIcon } from "@radix-ui/react-icons";
-
-const eventFormSchema = z.object({
-  // eventdata: z.string(),
-  nameevent: z.string(),
-  timeevent: z.string(),
-  durantionevent: z.string(),
-  price: z.string(),
-  description: z.string(),
-  statuspayment: z.boolean(),
-});
+import CreateEventDialog, { eventFormSchema } from "../FormCreateEvent";
 
 const products = [
   {
@@ -142,21 +133,16 @@ const components: { title: string; href: string; description: string }[] = [
 export function HeaderInside() {
   const router = useRouter();
 
-  const tenantId = process.env.NEXT_PUBLIC_TENANT_ID;
-  const apiMasterKey = process.env.NEXT_PUBLIC_API_MASTER_KEY;
-
   const { setTheme } = useTheme();
 
   const { toast } = useToast();
 
-  const [dateEvent, setDateEvent] = React.useState<Date>();
-
-  const [openDialogCreateEvent, setOpenDialogCreateEvent] = useState(false)
+  const [openDialogCreateEvent, setOpenDialogCreateEvent] = useState(false);
 
   const formEvent = useForm<z.infer<typeof eventFormSchema>>({
     resolver: zodResolver(eventFormSchema),
     defaultValues: {
-      // eventdata: "",
+      eventdata: "",
       nameevent: "",
       timeevent: "",
       durantionevent: "",
@@ -166,66 +152,20 @@ export function HeaderInside() {
     },
   });
 
-  const axiosConfig = {
-    headers: {
-      "Content-Type": "application/json",
-      "X-Tenant-ID": tenantId,
-      "X-API-Master-Key": apiMasterKey,
-    },
-  };
-
-  const handleCreateEvent: SubmitHandler<z.infer<typeof eventFormSchema>> = async ({
-    nameevent,
-    timeevent,
-    durantionevent,
-    price,
-    description,
-    statuspayment,
-  }) => {
-
-    try {
-      await axios.post(
-        "https://api.ycodify.com/v2/persistence/c/s/no-ac",
-        {
-          action: "CREATE",
-          data: [
-            {
-              evento: {
-                nameevent,
-                timeevent,
-                durantionevent,
-                price,
-                description,
-                statuspayment,
-              },
-            },
-          ],
-        },
-        axiosConfig
-      );
-
-      toast({
-        title: "Uhuu! Deu certo o cadastro.",
-        description: "Cadastro do evento criado com sucesso.",
-      });
-      setOpenDialogCreateEvent(false)
-
-    } catch (error) {
-      console.log(error);
-      toast({
-        title: "Ops! Algo deu errado.",
-        description: "O cadastro não foi criado, fale com a central.",
-      });
-      setOpenDialogCreateEvent(false)
-    }
-  };
-
   function handleNavigateToLoginPage() {
     router.push(`/app/login-page`);
   }
 
   function handleNavigateToHomePage() {
     router.push(`/`);
+  }
+
+  function handleNavigateToMyEventsPage() {
+    router.push(`/app/my-events`);
+  }
+
+  function handleNavigateToDashboardPage() {
+    router.push(`/app/dashboard`);
   }
 
   return (
@@ -243,7 +183,7 @@ export function HeaderInside() {
         <NavigationMenu className="pl-8">
           <NavigationMenuList>
             <NavigationMenuItem>
-              <Link href="/docs" legacyBehavior passHref>
+              <Link href="/app/dashboard" onClick={()=>{handleNavigateToDashboardPage()}} legacyBehavior passHref>
                 <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                   Ínicio
                 </NavigationMenuLink>
@@ -271,13 +211,32 @@ export function HeaderInside() {
                       </a>
                     </NavigationMenuLink>
                   </li>
-                  <ListItem href="/docs" title="Crie seu evento">
-                    Dê vida a seu avatar, construa seu palco e preencha o
-                    formulário e seu evento estará pronto para começar.
-                  </ListItem>
+                  <Dialog
+                    open={openDialogCreateEvent}
+                    onOpenChange={setOpenDialogCreateEvent}
+                  >
+                    <DialogTrigger asChild>
+                      <ListItem
+                        title="Crie seu evento"
+                        onClick={() => {
+                          formEvent.reset();
+                          setOpenDialogCreateEvent(true);
+                        }}
+                      >
+                        Dê vida a seu avatar, construa seu palco e preencha o
+                        formulário e seu evento estará pronto para começar.
+                      </ListItem>
+                    </DialogTrigger>
+                    <DialogOverlay className="bg-background opacity-90" />
+                    <CreateEventDialog
+                      formEvent={formEvent}
+                      setOpenDialogCreateEvent={setOpenDialogCreateEvent}
+                    />
+                  </Dialog>
+
                   <ListItem
-                    href="/docs/installation"
-                    title="Central de controle"
+                    onClick={() => handleNavigateToMyEventsPage()}
+                    title="Central de eventos"
                   >
                     Gerencie seus eventos e acompanhe os status da sua
                     monetização.
@@ -335,183 +294,30 @@ export function HeaderInside() {
 
       {/* Coins side */}
       <div className="flex items-center justify-end gap-4 w-full">
-        <Dialog open={openDialogCreateEvent} onOpenChange={setOpenDialogCreateEvent}>
+        {/* Create Event */}
+        <Dialog
+          open={openDialogCreateEvent}
+          onOpenChange={setOpenDialogCreateEvent}
+        >
           <DialogTrigger asChild>
-            <Button className="text-white text-xs py-2.5 text-center items-center">
+            <Button
+              className="text-white text-xs py-2.5 text-center items-center"
+              onClick={() => {
+                formEvent.reset();
+                setOpenDialogCreateEvent(true);
+              }}
+            >
               Criar evento
             </Button>
           </DialogTrigger>
           <DialogOverlay className="bg-background opacity-90" />
-          <DialogContent className="h-5/6 max-w-4xl">
-            <DialogHeader>
-              <DialogTitle onClick={()=>{setOpenDialogCreateEvent(true)}}>Criar evento</DialogTitle>
-              <DialogDescription>
-                Crie seu evento aqui, quanto mais detalhes melhor a experiência
-                do seu fã.
-              </DialogDescription>
-            </DialogHeader>
-
-            {/* Formulario evento */}
-            <Form {...formEvent}>
-              <form
-                // onSubmit={formEvent.handleSubmit(handleCreateEvent)}
-                className="overflow-y-scroll pr-4"
-              >
-                <Button
-                  type="button"
-                  className="w-fit h-12 text-white flex gap-2 hover:text-orange-logo hover:bg-transparent border-2 border-orange-logo border-dashed"
-                  variant="ghost"
-                >
-                  <MdOutlineAddPhotoAlternate
-                    className="size-6 text-gray-300 hover:text-orange-logo hover:bg-transparent"
-                    aria-hidden="true"
-                  />
-                  Adicionar imagem do evento
-                </Button>
-                {/* Row1 */}
-                <div className="flex items-center py-6 gap-4">
-                  <FormField
-                    control={formEvent.control}
-                    name="nameevent"
-                    render={({ field }) => (
-                      <FormItem className="w-1/2">
-                        <FormLabel>Nome do evento</FormLabel>
-                        <FormControl>
-                          <Input
-                            id="nameevent"
-                            placeholder="Informe o nome do evento"
-                            className="text-background placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 bg-foreground"
-                            {...field}
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <div className="w-1/2 space-y-2">
-                    <FormLabel>Data do evento</FormLabel>
-                    <Popover>
-                      <PopoverTrigger asChild>
-                        <Button
-                          variant={"outline"}
-                          className={cn(
-                            "flex w-full justify-start text-left font-normal text-background placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 bg-foreground",
-                            !dateEvent && "text-muted-foreground"
-                          )}
-                        >
-                          <CalendarIcon className="mr-2 h-4 w-4" />
-                          {dateEvent ? (
-                            format(dateEvent, "PPP")
-                          ) : (
-                            <span>Escolha uma data</span>
-                          )}
-                        </Button>
-                      </PopoverTrigger>
-                      <PopoverContent className="w-auto p-0" align="start">
-                        <Calendar
-                          mode="single"
-                          selected={dateEvent}
-                          onSelect={setDateEvent}
-                          initialFocus
-                        />
-                      </PopoverContent>
-                    </Popover>
-                  </div>
-                </div>
-                {/* Row 2 */}
-                <FormField
-                  control={formEvent.control}
-                  name="description"
-                  render={({ field }) => (
-                    <FormItem className="w-full">
-                      <FormLabel>Descrição do evento</FormLabel>
-                      <FormControl>
-                        <Textarea
-                          id="description"
-                          placeholder="Informe um pouco sobre o seu evento"
-                          className="text-background placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 bg-foreground h-32"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                {/* Row 3 */}
-                <div className="flex py-6 gap-4">
-                  <FormField
-                    control={formEvent.control}
-                    name="timeevent"
-                    render={({ field }) => (
-                      <FormItem className="w-1/2">
-                        <FormLabel>Horário do evento</FormLabel>
-                        <FormControl>
-                          <Input
-                            id="timeevent"
-                            placeholder="Informe o horário do evento"
-                            className="text-background placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 bg-foreground"
-                            {...field}
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={formEvent.control}
-                    name="durantionevent"
-                    render={({ field }) => (
-                      <FormItem className="w-1/2">
-                        <FormLabel>Duração do evento</FormLabel>
-                        <FormControl>
-                          <Input
-                            id="durantionevent"
-                            placeholder="Informe a duração do evento"
-                            className="text-background placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 bg-foreground"
-                            {...field}
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </div>
-                <FormField
-                  control={formEvent.control}
-                  name="price"
-                  render={({ field }) => (
-                    <FormItem className="">
-                      <FormLabel>Valor do evento</FormLabel>
-                      <FormControl>
-                        <Input
-                          id="price"
-                          placeholder="Informe valor do evento"
-                          className="text-background placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 bg-foreground"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormDescription>
-                        Lembre que esse valor é retirado a taxa da plataforma e
-                        impostos. Taxa de transmissão a parte. Ler{" "}
-                        <span className="text-blue-500">Termo do usuário</span>.
-                      </FormDescription>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </form>
-              <DialogFooter className="gap-2">
-                <DialogClose>
-                  <Button variant="outline" className="text-foreground">Fechar</Button>
-                </DialogClose>
-                <Button type="submit" className="text-foreground" onClick={formEvent.handleSubmit(handleCreateEvent)}>
-                  Criar evento
-                </Button>
-              </DialogFooter>
-            </Form>
-          </DialogContent>
+          <CreateEventDialog
+            formEvent={formEvent}
+            setOpenDialogCreateEvent={setOpenDialogCreateEvent}
+          />
         </Dialog>
 
+        {/* Dark/Light Mode */}
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" size="icon">
@@ -533,6 +339,7 @@ export function HeaderInside() {
           </DropdownMenuContent>
         </DropdownMenu>
 
+        {/* Menu profile */}
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <div className="flex items-center gap-1">
