@@ -3,96 +3,156 @@
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 import { Button } from "@/components/ui/button";
-import * as yup from 'yup'
-import { PhotoIcon, UserCircleIcon } from "@heroicons/react/24/solid";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { UserCircleIcon } from "@heroicons/react/24/solid";
 import { useRouter } from "next/navigation";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogOverlay,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
 import axios from "axios";
 import { useForm } from "react-hook-form";
 import { Input } from "@/components/ui/input";
+import { SubmitHandler } from "react-hook-form";
+import { z } from "zod";
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { IArtist } from "@/types/artist";
-import {
-  SubmitHandler,
-  UseFormHandleSubmit,
-  UseFormRegister,
-} from 'react-hook-form'
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { Textarea } from "@/components/ui/textarea";
 
-const createTipoItemFormSchema = yup.object().shape({
-  username: yup.string().nullable(),
-  address: yup.string().nullable(),
-  number: yup.number().nullable(),
-  complement: yup.string().nullable(),
-  country: yup.string().nullable(),
-  state: yup.string().nullable(),
-  city: yup.string().nullable(),
-  email: yup.string().nullable(),
-  aboutartist: yup.string().nullable(),
-  documentnumber: yup.string().nullable(),
-  allownotifications: yup.boolean().nullable(),
-})
-
-type ICreateArtistFormData = yup.InferType<
-  typeof createTipoItemFormSchema
->
+const formSchema = z.object({
+  username: z.string().min(10, {
+    message: "Informe o nome artístico",
+  }),
+  name: z.string().min(10, {
+    message: "Informe o nome completo",
+  }),
+  numberstreet: z.string().min(1, {
+    message: "Informe o número da rua",
+  }),
+  address: z.string().min(10, {
+    message: "Informe o endereço completo",
+  }),
+  complement: z.string(),
+  country: z.string().min(2, {
+    message: "Informe o país",
+  }),
+  state: z.string().min(2, {
+    message: "Informe o estado",
+  }),
+  city: z.string().min(2, {
+    message: "Informe a cidade",
+  }),
+  email: z.string().min(10, {
+    message: "Informe o e-mail",
+  }),
+  aboutartist: z.string(),
+  zipcode: z.string().min(2, {
+    message: "Informe o cep",
+  }),
+  documentnumber: z.string().min(8, {
+    message: "Informe o CPF",
+  }),
+  allownotifications: z.boolean(),
+});
 
 export default function SingupArtist() {
   const router = useRouter();
+
+  const tenantId = process.env.NEXT_PUBLIC_TENANT_ID;
+  const apiMasterKey = process.env.NEXT_PUBLIC_API_MASTER_KEY;
 
   function handleNavigateToHomePage() {
     router.push(`/`);
   }
 
-  const { register, handleSubmit, setValue } = useForm();
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      username: "",
+      name: "",
+      numberstreet: "",
+      address: "",
+      complement: "",
+      country: "",
+      state: "",
+      city: "",
+      email: "",
+      aboutartist: "",
+      zipcode: "",
+      documentnumber: "",
+      allownotifications: false,
+    },
+  });
 
-  const onSubmit: SubmitHandler<ICreateArtistFormData> = async (data) => {
+  const axiosConfig = {
+    headers: {
+      "Content-Type": "application/json",
+      "X-Tenant-ID": tenantId,
+      "X-API-Master-Key": apiMasterKey,
+    },
+  };
+
+  const handleCreateArtist: SubmitHandler<z.infer<typeof formSchema>> = async ({
+    username,
+    name,
+    numberstreet,
+    address,
+    complement,
+    country,
+    state,
+    city,
+    email,
+    aboutartist,
+    zipcode,
+    documentnumber,
+    allownotifications,
+  }) => {
+    console.log("entrou");
+
     try {
-      const response = await axios.post(
+      await axios.post(
         "https://api.ycodify.com/v2/persistence/c/s/no-ac",
         {
           action: "CREATE",
-          data: [data],
+          data: [
+            {
+              artist: {
+                username,
+                name,
+                numberstreet,
+                address,
+                complement,
+                country,
+                state,
+                city,
+                email,
+                aboutartist,
+                zipcode,
+                documentnumber,
+                allownotifications,
+              },
+            },
+          ],
         },
-        {
-          headers: {
-            "Content-Type": "application/json",
-            "X-Tenant-Id": "19379587-75b0-3aec-9717-46c6e26757e3",
-            "X-API-Master-Key": "ed950147-a6fc-3d45-a69c-bfc55f414ae6",
-          },
-        }
+        axiosConfig
       );
-
-      if (response.status === 201) {
-        alert("Artista cadastrado com sucesso!");
-        console.log(response.data);
-      } else {
-        throw new Error("Error: " + JSON.stringify(response.data));
-      }
     } catch (error) {
-      console.error(error);
+      console.log(error);
     }
   };
 
   return (
     <main className="text-foreground bg-background ">
       <Header />
-      <form className="px-28 py-8">
-        <div className="space-y-12">
+      <Form {...form}>
+        <form
+          onSubmit={form.handleSubmit(handleCreateArtist)}
+          className="px-28 py-8"
+        >
+          {/* Formulário */}
           <div className="border-b border-gray-900/10 pb-12">
             <h2 className="text-green-neon text-xl font-semibold leading-7 text-gray-900 pb-4">
               Perfil do Artista
@@ -121,398 +181,371 @@ export default function SingupArtist() {
                 </Button>
               </div>
             </div>
-
-            <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-              <div className="sm:col-span-4">
-                <label
-                  htmlFor="username"
-                  className="block text-sm font-medium leading-6 text-gray-900"
-                >
-                  Nome artístico (username)
-                </label>
-                <div className="mt-2">
-                  <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+            <FormField
+              control={form.control}
+              name="username"
+              render={({ field }) => (
+                <FormItem className="w-1/2 mt-8">
+                  <FormLabel>Nome artítico (Username)</FormLabel>
+                  <FormControl>
                     <Input
+                      id="username"
+                      placeholder="Informe o nome artístico"
                       className="text-background placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 bg-foreground"
-                      {...register("username")}
-                      placeholder="Nome artístico"
+                      {...field}
                     />
-                  </div>
-                </div>
-              </div>
+                  </FormControl>
+                  <FormDescription>
+                    Esse será seu nome de usuário e login.
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-              <div className="col-span-full">
-                <label
-                  htmlFor="about"
-                  className="block text-sm font-medium leading-6 text-gray-900"
-                >
-                  Sobre
-                </label>
-                <div className="mt-2">
-                  <Input
-                    {...register("aboutartist")}
-                    className="text-background placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 h-32 bg-foreground"
-                    defaultValue={""}
-                  />
-                </div>
-                <p className="mt-3 text-sm leading-6 text-gray-600">
-                  Escreva um pouco sobre seu trabalho.
-                </p>
-              </div>
-            </div>
+            <FormField
+              control={form.control}
+              name="aboutartist"
+              render={({ field }) => (
+                <FormItem className="mt-8">
+                  <FormLabel>Sobre</FormLabel>
+                  <FormControl>
+                    <Textarea
+                      id="aboutartist"
+                      placeholder="Informe o nome artístico"
+                      className="text-background placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 bg-foreground h-32"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormDescription>
+                    Escreva um pouco sobre seu trabalho.
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
           </div>
 
-          <div className="border-b border-gray-900/10 pb-12">
+          <div className="mt-8">
             <h2 className="text-base font-semibold leading-7 text-gray-900">
-              Informação pessoal (Criador da conta)
+              Informação pessoal
             </h2>
             <p className="mt-1 text-sm leading-6 text-gray-600">
-              Use um endereço permanente a onde você consiga receber o correio.
+              Aqui, precismos que você preencha os dados pessoais de quem será o
+              admnistrador do artista ou grupo artístico dentro do Potyguara
+              Verse.
             </p>
-
-            <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-              <div className="sm:col-span-3">
-                <label
-                  htmlFor="first-name"
-                  className="block text-sm font-medium leading-6 text-gray-900"
-                >
-                  Nome
-                </label>
-                <div className="mt-2">
-                  <Input
-                    type="text"
-                    {...register("name")}
-                    autoComplete="given-name"
-                    className="text-background placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 bg-foreground"
-                  />
-                </div>
-              </div>
-
-              <div className="sm:col-span-3">
-                <label
-                  htmlFor="email"
-                  className="block text-sm font-medium leading-6 text-gray-900"
-                >
-                  CPF
-                </label>
-                <div className="mt-2">
-                  <Input
-                    {...register("documentnumber")}
-                    name="cpf"
-                    className="text-background placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 bg-foreground"
-                  />
-                </div>
-              </div>
-              <div className="sm:col-span-3">
-                <label
-                  htmlFor="email"
-                  className="block text-sm font-medium leading-6 text-gray-900"
-                >
-                  E-mail
-                </label>
-                <div className="mt-2">
-                  <Input
-                    {...register("email")}
-                    type="email"
-                    autoComplete="email"
-                    className="text-background placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 bg-foreground"
-                  />
-                </div>
-              </div>
-
-              <div className="sm:col-span-3">
-                <label
-                  htmlFor="email"
-                  className="block text-sm font-medium leading-6 text-gray-900"
-                >
-                  Confirmar E-mail
-                </label>
-                <div className="mt-2">
-                  <Input
-                    {...register("email")}
-                    type="email"
-                    autoComplete="email"
-                    className="text-background placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 bg-foreground"
-                  />
-                </div>
-              </div>
-
-              <div className="sm:col-span-3">
-                <label
-                  htmlFor="street-address"
-                  className="block text-sm font-medium leading-6 text-gray-900"
-                >
-                  Endereço
-                </label>
-                <div className="mt-2">
-                  <Input
-                    {...register("address")}
-                    type="text"
-                    autoComplete="street-address"
-                    className="text-background placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 bg-foreground"
-                  />
-                </div>
-              </div>
-              <div className="sm:col-span-3">
-                <label
-                  htmlFor="street-address"
-                  className="block text-sm font-medium leading-6 text-gray-900"
-                >
-                  Número
-                </label>
-                <div className="mt-2">
-                  <Input
-                    {...register("number")}
-                    type="text"
-                    autoComplete="street-address"
-                    className="text-background placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 bg-foreground"
-                  />
-                </div>
-              </div>
-
-              <div className="sm:col-span-2">
-                <label
-                  htmlFor="region"
-                  className="block text-sm font-medium leading-6 text-gray-900"
-                >
-                  Complemento
-                </label>
-                <div className="mt-2">
-                  <Input
-                    {...register("complement")}
-                    autoComplete="address-level1"
-                    className="text-background placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 bg-foreground"
-                  />
-                </div>
-              </div>
-
-              <div className="sm:col-span-2">
-                <label
-                  htmlFor="country"
-                  className="block text-sm font-medium leading-6 text-gray-900"
-                >
-                  País
-                </label>
-                <div className="mt-2">
-                  <Select>
-                    <SelectTrigger className="text-background placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 bg-foreground">
-                      <SelectValue
-                        placeholder="País"
-                        {...register("country")}
+            <div className="flex gap-4">
+              <FormField
+                control={form.control}
+                name="name"
+                render={({ field }) => (
+                  <FormItem className="w-1/2 mt-8">
+                    <FormLabel>Nome completo</FormLabel>
+                    <FormControl>
+                      <Input
+                        id="name"
+                        placeholder="Informe o nome completo"
+                        className="text-background placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 bg-foreground"
+                        {...field}
                       />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="Brasil">Brasil</SelectItem>
-                      <SelectItem value="dark">Dark</SelectItem>
-                      <SelectItem value="system">System</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-              </div>
+                    </FormControl>
+                    {/* <FormDescription>
+                    Esse será seu nome de usuário e login.
+                  </FormDescription> */}
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-              <div className="sm:col-span-2">
-                <label
-                  htmlFor="city"
-                  className="block text-sm font-medium leading-6 text-gray-900"
-                >
-                  Estado
-                </label>
-                <div className="mt-2">
-                  <Select>
-                    <SelectTrigger className="text-background placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 bg-foreground">
-                      <SelectValue
-                        placeholder="Cidade"
-                        {...register("state")}
+              <FormField
+                control={form.control}
+                name="documentnumber"
+                render={({ field }) => (
+                  <FormItem className="w-1/2 mt-8">
+                    <FormLabel>CPF</FormLabel>
+                    <FormControl>
+                      <Input
+                        id="documentnumber"
+                        placeholder="Informe o cpf"
+                        className="text-background placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 bg-foreground"
+                        {...field}
                       />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="Brasil">Natal</SelectItem>
-                      <SelectItem value="dark">Dark</SelectItem>
-                      <SelectItem value="system">System</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-              </div>
-
-              <div className="sm:col-span-2">
-                <label
-                  htmlFor="city"
-                  className="block text-sm font-medium leading-6 text-gray-900"
-                >
-                  Cidade
-                </label>
-                <div className="mt-2">
-                  <Select>
-                    <SelectTrigger className="text-background placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 bg-foreground">
-                      <SelectValue placeholder="Cidade" {...register("city")} />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="Brasil">Natal</SelectItem>
-                      <SelectItem value="dark">Dark</SelectItem>
-                      <SelectItem value="system">System</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-              </div>
-
-              <div className="sm:col-span-2">
-                <label
-                  htmlFor="region"
-                  className="block text-sm font-medium leading-6 text-gray-900"
-                >
-                  CEP
-                </label>
-                <div className="mt-2">
-                  <Input
-                    {...register("zipcode")}
-                    autoComplete="address-level1"
-                    className="text-background placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 bg-foreground"
-                  />
-                </div>
-              </div>
+                    </FormControl>
+                    {/* <FormDescription>
+                    Esse será seu nome de usuário e login.
+                  </FormDescription> */}
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
             </div>
-          </div>
 
-          <div className="border-b border-gray-900/10 pb-12">
-            <h2 className="text-base font-semibold leading-7 text-gray-900">
-              Notifications
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem className="w-1/2 mt-8">
+                  <FormLabel>E-mail</FormLabel>
+                  <FormControl>
+                    <Input
+                      id="email"
+                      placeholder="Informe o e-mail"
+                      className="text-background placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 bg-foreground"
+                      {...field}
+                    />
+                  </FormControl>
+                  {/* <FormDescription>
+                    Esse será seu nome de usuário e login.
+                  </FormDescription> */}
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem className="w-1/2 mt-8">
+                  <FormLabel>Confirme o e-mail</FormLabel>
+                  <FormControl>
+                    <Input
+                      id="email"
+                      placeholder="Informe o e-mail novamente"
+                      className="text-background placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 bg-foreground"
+                      {...field}
+                    />
+                  </FormControl>
+                  {/* <FormDescription>
+                    Esse será seu nome de usuário e login.
+                  </FormDescription> */}
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <h2 className="text-base font-semibold leading-7 text-gray-900 mt-8">
+              Endereço
             </h2>
-            <p className="mt-1 text-sm leading-6 text-gray-600">
-              Receba informações e novidades sobre o Potyguara Verse.
-            </p>
 
-            <div className="mt-4 space-y-10">
-              <fieldset>
-                <div className="mt-6 space-y-6">
-                  <div className="relative flex gap-x-3">
-                    <div className="flex h-6 items-center">
-                      <input
-                        id="comments"
-                        name="comments"
-                        type="checkbox"
-                        className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
+            <div className="flex gap-4">
+              <FormField
+                control={form.control}
+                name="address"
+                render={({ field }) => (
+                  <FormItem className="w-1/2 mt-4">
+                    <FormLabel>Rua</FormLabel>
+                    <FormControl>
+                      <Input
+                        id="address"
+                        placeholder="Informe a rua"
+                        className="text-background placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 bg-foreground"
+                        {...field}
                       />
-                    </div>
-                    <div className="text-sm leading-6">
-                      <label
-                        htmlFor="comments"
-                        className="font-medium text-gray-900"
-                      >
-                        Eventos
-                      </label>
-                      <p className="text-gray-500">
-                        Seja notificado quando chegar um evento novo na
-                        plataforma.
-                      </p>
-                    </div>
-                  </div>
-                  <div className="relative flex gap-x-3">
-                    <div className="flex h-6 items-center">
-                      <input
-                        id="candidates"
-                        name="candidates"
-                        type="checkbox"
-                        className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
+                    </FormControl>
+                    {/* <FormDescription>
+                    Esse será seu nome de usuário e login.
+                  </FormDescription> */}
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="numberstreet"
+                render={({ field }) => (
+                  <FormItem className="w-1/2 mt-4">
+                    <FormLabel>Número</FormLabel>
+                    <FormControl>
+                      <Input
+                        id="numberstreet"
+                        placeholder="Informe o número"
+                        className="text-background placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 bg-foreground"
+                        {...field}
                       />
-                    </div>
-                    <div className="text-sm leading-6">
-                      <label
-                        htmlFor="candidates"
-                        className="font-medium text-gray-900"
-                      >
-                        Promoções
-                      </label>
-                      <p className="text-gray-500">
-                        Seja norificado quando tivermos alguma promoção
-                        especial.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </fieldset>
+                    </FormControl>
+                    {/* <FormDescription>
+                    Esse será seu nome de usuário e login.
+                  </FormDescription> */}
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
             </div>
+
+            <div className="flex gap-4">
+              <FormField
+                control={form.control}
+                name="complement"
+                render={({ field }) => (
+                  <FormItem className="w-1/2 mt-4">
+                    <FormLabel>Complemento</FormLabel>
+                    <FormControl>
+                      <Input
+                        id="complement"
+                        placeholder="Informe o complemento, se houver."
+                        className="text-background placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 bg-foreground"
+                        {...field}
+                      />
+                    </FormControl>
+                    {/* <FormDescription>
+                    Esse será seu nome de usuário e login.
+                  </FormDescription> */}
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="country"
+                render={({ field }) => (
+                  <FormItem className="w-1/2 mt-4">
+                    <FormLabel>País</FormLabel>
+                    <FormControl>
+                      <Input
+                        id="country"
+                        placeholder="Informe o país"
+                        className="text-background placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 bg-foreground"
+                        {...field}
+                      />
+                    </FormControl>
+                    {/* <FormDescription>
+                    Esse será seu nome de usuário e login.
+                  </FormDescription> */}
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+
+            <div className="flex gap-4">
+              <FormField
+                control={form.control}
+                name="state"
+                render={({ field }) => (
+                  <FormItem className="w-1/2 mt-4">
+                    <FormLabel>Estado</FormLabel>
+                    <FormControl>
+                      <Input
+                        id="state"
+                        placeholder="Informe o estado"
+                        className="text-background placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 bg-foreground"
+                        {...field}
+                      />
+                    </FormControl>
+                    {/* <FormDescription>
+                    Esse será seu nome de usuário e login.
+                  </FormDescription> */}
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="city"
+                render={({ field }) => (
+                  <FormItem className="w-1/2 mt-4">
+                    <FormLabel>Cidade</FormLabel>
+                    <FormControl>
+                      <Input
+                        id="city"
+                        placeholder="Informe a cidade"
+                        className="text-background placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 bg-foreground"
+                        {...field}
+                      />
+                    </FormControl>
+                    {/* <FormDescription>
+                    Esse será seu nome de usuário e login.
+                  </FormDescription> */}
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+
+            <FormField
+              control={form.control}
+              name="zipcode"
+              render={({ field }) => (
+                <FormItem className="w-1/2 mt-4">
+                  <FormLabel>CEP</FormLabel>
+                  <FormControl>
+                    <Input
+                      id="zipcode"
+                      placeholder="Informe o CEP"
+                      className="text-background placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 bg-foreground"
+                      {...field}
+                    />
+                  </FormControl>
+                  {/* <FormDescription>
+                    Esse será seu nome de usuário e login.
+                  </FormDescription> */}
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
           </div>
 
-          <div className="border-b border-gray-900/10 pb-12">
-            {/* <h2 className="text-base font-semibold leading-7 text-gray-900">
-              Termos e condições
-            </h2> */}
-            <div className="mt-4 space-y-10">
-              <fieldset>
-                <div className="mt-6 space-y-6">
-                  <div className="relative flex gap-x-3">
-                    <div className="flex h-6 items-center">
-                      <input
-                        id="comments"
-                        name="comments"
-                        type="checkbox"
-                        className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                      />
-                    </div>
-                    <div className="text-sm leading-6">
-                      <label
-                        htmlFor="comments"
-                        className="font-medium text-gray-900"
-                      >
-                        Li e aceito a{" "}
-                        <a
-                          href="https://www.mozilla.org/pt-BR/"
-                          className="text-blue-500 underline"
-                        >
-                          Política de privacidade
-                        </a>{" "}
-                        do Potyguara Verse
-                      </label>
-                    </div>
-                  </div>
-                </div>
-              </fieldset>
-            </div>
+          <div className="mt-6 flex items-center justify-end gap-x-6">
+            <button
+              type="button"
+              className="text-sm font-semibold leading-6 text-gray-900 hover:text-red-600"
+              onClick={() => handleNavigateToHomePage()}
+            >
+              Cancel
+            </button>
+            <Button
+              type="submit"
+              variant="ghost"
+              className="hover:bg-transparent hover:text-green-neon"
+            >
+              Save
+            </Button>
           </div>
-        </div>
 
-        <div className="mt-6 flex items-center justify-end gap-x-6">
-          <button
-            type="button"
-            className="text-sm font-semibold leading-6 text-gray-900 hover:text-red-600"
-            onClick={() => handleNavigateToHomePage()}
-          >
-            Cancel
-          </button>
-          <Dialog>
-            <DialogTrigger asChild>
-              <Button
-                type="submit"
-                variant="ghost"
-                className="hover:bg-transparent  hover:text-green-neon"
-                onSubmit={handleSubmit(onSubmit)}
-              >
-                Save
-              </Button>
-            </DialogTrigger>
-            <DialogOverlay className="bg-background opacity-90" />
-            <DialogContent className="sm:max-w-[425px] md:h-52">
-              <DialogHeader>
-                <DialogTitle className="text-md text-foreground">
-                  Cadastro realizado com sucesso!
-                </DialogTitle>
-                <DialogDescription className="text-justify">
-                  Cheque seu e-mail para confirmar o cadastro na plataforma e
-                  começar a criar seus eventos.
-                </DialogDescription>
-              </DialogHeader>
-              <DialogFooter className="flex justify-start">
+          {/* <div className="mt-6 flex items-center justify-end gap-x-6">
+            <button
+              type="button"
+              className="text-sm font-semibold leading-6 text-gray-900 hover:text-red-600"
+              onClick={() => handleNavigateToHomePage()}
+            >
+              Cancel
+            </button>
+            <Dialog>
+              <DialogTrigger asChild>
                 <Button
-                  className="w-32 text-white"
-                  onClick={() => handleNavigateToHomePage()}
+                  type="submit"
+                  variant="ghost"
+                  className="hover:bg-transparent hover:text-green-neon"
                 >
-                  Voltar
+                  Save
                 </Button>
-              </DialogFooter>
-            </DialogContent>
-          </Dialog>
-        </div>
-      </form>
+              </DialogTrigger>
+              <DialogOverlay className="bg-background opacity-90" />
+              <DialogContent className="sm:max-w-[425px] md:h-52">
+                <DialogHeader>
+                  <DialogTitle className="text-md text-foreground">
+                    Cadastro realizado com sucesso!
+                  </DialogTitle>
+                  <DialogDescription className="text-justify">
+                    Cheque seu e-mail para confirmar o cadastro na plataforma e
+                    começar a criar seus eventos.
+                  </DialogDescription>
+                </DialogHeader>
+                <DialogFooter className="flex justify-start">
+                  <Button
+                    className="w-32 text-white"
+                    onClick={() => handleNavigateToHomePage()}
+                  >
+                    Voltar
+                  </Button>
+                </DialogFooter>
+              </DialogContent>
+            </Dialog>
+          </div> */}
+        </form>
+      </Form>
       <Footer />
     </main>
   );

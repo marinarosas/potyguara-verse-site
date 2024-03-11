@@ -263,7 +263,7 @@ export function Header() {
             </DropdownMenuContent>
           </DropdownMenu>
           <a
-            className="text-sm font-semibold leading-6 text-gray-900 hover:text-orange-md"
+            className="text-sm font-semibold leading-6 text-gray-900 hover:text-orange-md hover:cursor-pointer"
             onClick={() => handleNavigateToLoginPage()}
           >
             Log in <span aria-hidden="true">&rarr;</span>
