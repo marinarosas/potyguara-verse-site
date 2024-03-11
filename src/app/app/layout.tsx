@@ -5,6 +5,7 @@ import { ReactNode } from "react";
 // import Loading from "./loading";
 import { HeaderInside } from "@/components/Header/headerInside";
 import { FooterInside } from "@/components/Footer/footerInside";
+import { Toaster } from "@/components/ui/toaster";
 // import { theme } from '@/styles/theme'
 
 export default function Layout({ children }: { children: ReactNode }) {
@@ -25,6 +26,7 @@ export default function Layout({ children }: { children: ReactNode }) {
        <div>
         <HeaderInside/>
         {children}
+        <Toaster/>
         <FooterInside/>
       </div>
       {/* )} */}

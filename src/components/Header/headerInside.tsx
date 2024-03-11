@@ -83,7 +83,7 @@ import { IoIosArrowDown } from "react-icons/io";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { MoonIcon, SunIcon } from "@radix-ui/react-icons";
 
-const formSchema = z.object({
+const eventFormSchema = z.object({
   // eventdata: z.string(),
   nameevent: z.string(),
   timeevent: z.string(),
@@ -151,8 +151,10 @@ export function HeaderInside() {
 
   const [dateEvent, setDateEvent] = React.useState<Date>();
 
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const [openDialogCreateEvent, setOpenDialogCreateEvent] = useState(false)
+
+  const formEvent = useForm<z.infer<typeof eventFormSchema>>({
+    resolver: zodResolver(eventFormSchema),
     defaultValues: {
       // eventdata: "",
       nameevent: "",
@@ -172,7 +174,7 @@ export function HeaderInside() {
     },
   };
 
-  const handleCreateEvent: SubmitHandler<z.infer<typeof formSchema>> = async ({
+  const handleCreateEvent: SubmitHandler<z.infer<typeof eventFormSchema>> = async ({
     nameevent,
     timeevent,
     durantionevent,
@@ -180,7 +182,6 @@ export function HeaderInside() {
     description,
     statuspayment,
   }) => {
-    console.log("ENTROUUUUU");
 
     try {
       await axios.post(
@@ -207,12 +208,15 @@ export function HeaderInside() {
         title: "Uhuu! Deu certo o cadastro.",
         description: "Cadastro do evento criado com sucesso.",
       });
+      setOpenDialogCreateEvent(false)
+
     } catch (error) {
       console.log(error);
       toast({
         title: "Ops! Algo deu errado.",
         description: "O cadastro não foi criado, fale com a central.",
       });
+      setOpenDialogCreateEvent(false)
     }
   };
 
@@ -331,7 +335,7 @@ export function HeaderInside() {
 
       {/* Coins side */}
       <div className="flex items-center justify-end gap-4 w-full">
-        <Dialog>
+        <Dialog open={openDialogCreateEvent} onOpenChange={setOpenDialogCreateEvent}>
           <DialogTrigger asChild>
             <Button className="text-white text-xs py-2.5 text-center items-center">
               Criar evento
@@ -340,7 +344,7 @@ export function HeaderInside() {
           <DialogOverlay className="bg-background opacity-90" />
           <DialogContent className="h-5/6 max-w-4xl">
             <DialogHeader>
-              <DialogTitle>Criar evento</DialogTitle>
+              <DialogTitle onClick={()=>{setOpenDialogCreateEvent(true)}}>Criar evento</DialogTitle>
               <DialogDescription>
                 Crie seu evento aqui, quanto mais detalhes melhor a experiência
                 do seu fã.
@@ -348,9 +352,9 @@ export function HeaderInside() {
             </DialogHeader>
 
             {/* Formulario evento */}
-            <Form {...form}>
+            <Form {...formEvent}>
               <form
-                onSubmit={form.handleSubmit(handleCreateEvent)}
+                // onSubmit={formEvent.handleSubmit(handleCreateEvent)}
                 className="overflow-y-scroll pr-4"
               >
                 <Button
@@ -367,7 +371,7 @@ export function HeaderInside() {
                 {/* Row1 */}
                 <div className="flex items-center py-6 gap-4">
                   <FormField
-                    control={form.control}
+                    control={formEvent.control}
                     name="nameevent"
                     render={({ field }) => (
                       <FormItem className="w-1/2">
@@ -416,7 +420,7 @@ export function HeaderInside() {
                 </div>
                 {/* Row 2 */}
                 <FormField
-                  control={form.control}
+                  control={formEvent.control}
                   name="description"
                   render={({ field }) => (
                     <FormItem className="w-full">
@@ -436,7 +440,7 @@ export function HeaderInside() {
                 {/* Row 3 */}
                 <div className="flex py-6 gap-4">
                   <FormField
-                    control={form.control}
+                    control={formEvent.control}
                     name="timeevent"
                     render={({ field }) => (
                       <FormItem className="w-1/2">
@@ -454,7 +458,7 @@ export function HeaderInside() {
                     )}
                   />
                   <FormField
-                    control={form.control}
+                    control={formEvent.control}
                     name="durantionevent"
                     render={({ field }) => (
                       <FormItem className="w-1/2">
@@ -473,7 +477,7 @@ export function HeaderInside() {
                   />
                 </div>
                 <FormField
-                  control={form.control}
+                  control={formEvent.control}
                   name="price"
                   render={({ field }) => (
                     <FormItem className="">
@@ -498,10 +502,9 @@ export function HeaderInside() {
               </form>
               <DialogFooter className="gap-2">
                 <DialogClose>
-                  {" "}
-                  <Button variant="outline">Fechar</Button>
+                  <Button variant="outline" className="text-foreground">Fechar</Button>
                 </DialogClose>
-                <Button type="submit" className="text-foreground" onClick={handleCreateEvent}>
+                <Button type="submit" className="text-foreground" onClick={formEvent.handleSubmit(handleCreateEvent)}>
                   Criar evento
                 </Button>
               </DialogFooter>
