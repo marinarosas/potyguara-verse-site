@@ -1,7 +1,6 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { z } from "zod";
 import { useState } from "react";
 import {
   ChartPieIcon,
@@ -9,9 +8,7 @@ import {
   UserCircleIcon,
 } from "@heroicons/react/24/outline";
 import { PhoneIcon, PlayCircleIcon } from "@heroicons/react/20/solid";
-import { SubmitHandler, useForm } from "react-hook-form";
 import { useTheme } from "next-themes";
-import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Dialog,
   DialogClose,
@@ -23,33 +20,13 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Label } from "../ui/label";
-import { Input } from "../ui/input";
 import { useToast } from "@/components/ui/use-toast";
-import axios from "axios";
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { Textarea } from "@/components/ui/textarea";
+
 import * as React from "react";
-import { CalendarIcon } from "@radix-ui/react-icons";
-import { format } from "date-fns";
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { Calendar } from "@/components/ui/calendar";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import { MdOutlineAddPhotoAlternate } from "react-icons/md";
+
 import Link from "next/link";
 // import { Icons } from "@/components/icons";
 import {
@@ -78,20 +55,14 @@ import {
 import { RxAvatar } from "react-icons/rx";
 import { IoWalletOutline } from "react-icons/io5";
 import { GoGear } from "react-icons/go";
-import { GiThreeFriends } from "react-icons/gi";
 import { IoIosArrowDown } from "react-icons/io";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { MoonIcon, SunIcon } from "@radix-ui/react-icons";
-
-const eventFormSchema = z.object({
-  // eventdata: z.string(),
-  nameevent: z.string(),
-  timeevent: z.string(),
-  durantionevent: z.string(),
-  price: z.string(),
-  description: z.string(),
-  statuspayment: z.boolean(),
-});
+import Image from "next/image";
+import LogoPotyguara from "../../../public/LogoRetangular.png";
+import BrasaoPreto from "../../../public/brasao_preto.png";
+import { NavigationMenuHeader } from "./NavigationMenu";
+import { FormCreateEvent } from "../MyEvents/formCreateEvent";
 
 const products = [
   {
@@ -112,113 +83,12 @@ const callsToAction = [
   { name: "Fale conosco", href: "#", icon: PhoneIcon },
 ];
 
-const components: { title: string; href: string; description: string }[] = [
-  {
-    title: "Steam",
-    href: "/docs/primitives/alert-dialog",
-    description:
-      "Entre em nossa comunidade steam e veja o que a galera ta falando do jogo.",
-  },
-  {
-    title: "Meta Quest Store",
-    href: "/docs/primitives/hover-card",
-    description:
-      "Nossa plataforma a clique de você, venha experimentar o outro lado do jogo.",
-  },
-  {
-    title: "Loja parceiras",
-    href: "/docs/primitives/progress",
-    description:
-      "Quem não que um desconto? Venha conhecer nossos parceiros de perto.",
-  },
-  {
-    title: "Configuração",
-    href: "/docs/primitives/tooltip",
-    description:
-      "Caso precise, configure a plataforma para melhor performance.",
-  },
-];
-
 export function HeaderInside() {
   const router = useRouter();
 
-  const tenantId = process.env.NEXT_PUBLIC_TENANT_ID;
-  const apiMasterKey = process.env.NEXT_PUBLIC_API_MASTER_KEY;
-
   const { setTheme } = useTheme();
 
-  const { toast } = useToast();
-
-  const [dateEvent, setDateEvent] = React.useState<Date>();
-
-  const [openDialogCreateEvent, setOpenDialogCreateEvent] = useState(false)
-
-  const formEvent = useForm<z.infer<typeof eventFormSchema>>({
-    resolver: zodResolver(eventFormSchema),
-    defaultValues: {
-      // eventdata: "",
-      nameevent: "",
-      timeevent: "",
-      durantionevent: "",
-      price: "",
-      description: "",
-      statuspayment: false,
-    },
-  });
-
-  const axiosConfig = {
-    headers: {
-      "Content-Type": "application/json",
-      "X-Tenant-ID": tenantId,
-      "X-API-Master-Key": apiMasterKey,
-    },
-  };
-
-  const handleCreateEvent: SubmitHandler<z.infer<typeof eventFormSchema>> = async ({
-    nameevent,
-    timeevent,
-    durantionevent,
-    price,
-    description,
-    statuspayment,
-  }) => {
-
-    try {
-      await axios.post(
-        "https://api.ycodify.com/v2/persistence/c/s/no-ac",
-        {
-          action: "CREATE",
-          data: [
-            {
-              evento: {
-                nameevent,
-                timeevent,
-                durantionevent,
-                price,
-                description,
-                statuspayment,
-              },
-            },
-          ],
-        },
-        axiosConfig
-      );
-
-      toast({
-        title: "Uhuu! Deu certo o cadastro.",
-        description: "Cadastro do evento criado com sucesso.",
-      });
-      setOpenDialogCreateEvent(false)
-
-    } catch (error) {
-      console.log(error);
-      toast({
-        title: "Ops! Algo deu errado.",
-        description: "O cadastro não foi criado, fale com a central.",
-      });
-      setOpenDialogCreateEvent(false)
-    }
-  };
+  const [openDialogCreateEvent, setOpenDialogCreateEvent] = useState(false);
 
   function handleNavigateToLoginPage() {
     router.push(`/app/login-page`);
@@ -229,122 +99,43 @@ export function HeaderInside() {
   }
 
   return (
-    <header className="bg-background h-16 w-full flex items-center justify-between px-8 z-30 border-b-2">
+    <header className=" h-16 w-full flex items-center justify-between px-8 border-b-2">
       {/* Logo side */}
       <div className="flex items-center justify-start">
         {/* Logo */}
         <div className="h-auto w-24 hover:cursor-pointer ">
-          <img
-            src="/LogoRetangular.png"
+          <Image
+            src={LogoPotyguara}
+            height={100}
+            width={100}
             alt="Logo Potyguara"
             onClick={() => handleNavigateToHomePage()}
           />
         </div>
-        <NavigationMenu className="pl-8">
-          <NavigationMenuList>
-            <NavigationMenuItem>
-              <Link href="/docs" legacyBehavior passHref>
-                <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                  Ínicio
-                </NavigationMenuLink>
-              </Link>
-            </NavigationMenuItem>
-
-            <NavigationMenuItem>
-              <NavigationMenuTrigger>Meus eventos</NavigationMenuTrigger>
-              <NavigationMenuContent>
-                <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
-                  <li className="row-span-3">
-                    <NavigationMenuLink asChild>
-                      <a
-                        className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
-                        href="/"
-                      >
-                        {/* <Icons.logo className="h-6 w-6" /> */}
-                        <div className="mb-2 mt-4 text-lg font-medium">
-                          Eventos
-                        </div>
-                        <p className="text-sm leading-tight text-muted-foreground">
-                          Crie seus eventos em poucos cliques e conquiste uma
-                          plateia de outro mundo!
-                        </p>
-                      </a>
-                    </NavigationMenuLink>
-                  </li>
-                  <ListItem href="/docs" title="Crie seu evento">
-                    Dê vida a seu avatar, construa seu palco e preencha o
-                    formulário e seu evento estará pronto para começar.
-                  </ListItem>
-                  <ListItem
-                    href="/docs/installation"
-                    title="Central de controle"
-                  >
-                    Gerencie seus eventos e acompanhe os status da sua
-                    monetização.
-                  </ListItem>
-                  <ListItem href="/docs/primitives/typography" title="Dicas">
-                    Dicas de como criar seu eventos, tutorial e muito mais...
-                  </ListItem>
-                </ul>
-              </NavigationMenuContent>
-            </NavigationMenuItem>
-
-            <NavigationMenuItem>
-              <Link href="/docs" legacyBehavior passHref>
-                <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                  Meu avatar
-                </NavigationMenuLink>
-              </Link>
-            </NavigationMenuItem>
-
-            <NavigationMenuItem>
-              <Link href="/docs" legacyBehavior passHref>
-                <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                  Meu Palco
-                </NavigationMenuLink>
-              </Link>
-            </NavigationMenuItem>
-
-            <NavigationMenuItem>
-              <Link href="/docs" legacyBehavior passHref>
-                <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-                  Carteira
-                </NavigationMenuLink>
-              </Link>
-            </NavigationMenuItem>
-
-            <NavigationMenuItem>
-              <NavigationMenuTrigger>Outras opções</NavigationMenuTrigger>
-              <NavigationMenuContent>
-                <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
-                  {components.map((component) => (
-                    <ListItem
-                      key={component.title}
-                      title={component.title}
-                      href={component.href}
-                    >
-                      {component.description}
-                    </ListItem>
-                  ))}
-                </ul>
-              </NavigationMenuContent>
-            </NavigationMenuItem>
-          </NavigationMenuList>
-        </NavigationMenu>
+        <NavigationMenuHeader />
       </div>
 
       {/* Coins side */}
       <div className="flex items-center justify-end gap-4 w-full">
-        <Dialog open={openDialogCreateEvent} onOpenChange={setOpenDialogCreateEvent}>
+        <Dialog
+          open={openDialogCreateEvent}
+          onOpenChange={setOpenDialogCreateEvent}
+        >
           <DialogTrigger asChild>
             <Button className="text-white text-xs py-2.5 text-center items-center">
               Criar evento
             </Button>
           </DialogTrigger>
-          <DialogOverlay className="bg-background opacity-90" />
+          <DialogOverlay className="bg-muted-foregorund opacity-90" />
           <DialogContent className="h-5/6 max-w-4xl">
             <DialogHeader>
-              <DialogTitle onClick={()=>{setOpenDialogCreateEvent(true)}}>Criar evento</DialogTitle>
+              <DialogTitle
+                onClick={() => {
+                  setOpenDialogCreateEvent(true);
+                }}
+              >
+                Criar evento
+              </DialogTitle>
               <DialogDescription>
                 Crie seu evento aqui, quanto mais detalhes melhor a experiência
                 do seu fã.
@@ -352,163 +143,7 @@ export function HeaderInside() {
             </DialogHeader>
 
             {/* Formulario evento */}
-            <Form {...formEvent}>
-              <form
-                // onSubmit={formEvent.handleSubmit(handleCreateEvent)}
-                className="overflow-y-scroll pr-4"
-              >
-                <Button
-                  type="button"
-                  className="w-fit h-12 text-white flex gap-2 hover:text-orange-logo hover:bg-transparent border-2 border-orange-logo border-dashed"
-                  variant="ghost"
-                >
-                  <MdOutlineAddPhotoAlternate
-                    className="size-6 text-gray-300 hover:text-orange-logo hover:bg-transparent"
-                    aria-hidden="true"
-                  />
-                  Adicionar imagem do evento
-                </Button>
-                {/* Row1 */}
-                <div className="flex items-center py-6 gap-4">
-                  <FormField
-                    control={formEvent.control}
-                    name="nameevent"
-                    render={({ field }) => (
-                      <FormItem className="w-1/2">
-                        <FormLabel>Nome do evento</FormLabel>
-                        <FormControl>
-                          <Input
-                            id="nameevent"
-                            placeholder="Informe o nome do evento"
-                            className="text-background placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 bg-foreground"
-                            {...field}
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <div className="w-1/2 space-y-2">
-                    <FormLabel>Data do evento</FormLabel>
-                    <Popover>
-                      <PopoverTrigger asChild>
-                        <Button
-                          variant={"outline"}
-                          className={cn(
-                            "flex w-full justify-start text-left font-normal text-background placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 bg-foreground",
-                            !dateEvent && "text-muted-foreground"
-                          )}
-                        >
-                          <CalendarIcon className="mr-2 h-4 w-4" />
-                          {dateEvent ? (
-                            format(dateEvent, "PPP")
-                          ) : (
-                            <span>Escolha uma data</span>
-                          )}
-                        </Button>
-                      </PopoverTrigger>
-                      <PopoverContent className="w-auto p-0" align="start">
-                        <Calendar
-                          mode="single"
-                          selected={dateEvent}
-                          onSelect={setDateEvent}
-                          initialFocus
-                        />
-                      </PopoverContent>
-                    </Popover>
-                  </div>
-                </div>
-                {/* Row 2 */}
-                <FormField
-                  control={formEvent.control}
-                  name="description"
-                  render={({ field }) => (
-                    <FormItem className="w-full">
-                      <FormLabel>Descrição do evento</FormLabel>
-                      <FormControl>
-                        <Textarea
-                          id="description"
-                          placeholder="Informe um pouco sobre o seu evento"
-                          className="text-background placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 bg-foreground h-32"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                {/* Row 3 */}
-                <div className="flex py-6 gap-4">
-                  <FormField
-                    control={formEvent.control}
-                    name="timeevent"
-                    render={({ field }) => (
-                      <FormItem className="w-1/2">
-                        <FormLabel>Horário do evento</FormLabel>
-                        <FormControl>
-                          <Input
-                            id="timeevent"
-                            placeholder="Informe o horário do evento"
-                            className="text-background placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 bg-foreground"
-                            {...field}
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={formEvent.control}
-                    name="durantionevent"
-                    render={({ field }) => (
-                      <FormItem className="w-1/2">
-                        <FormLabel>Duração do evento</FormLabel>
-                        <FormControl>
-                          <Input
-                            id="durantionevent"
-                            placeholder="Informe a duração do evento"
-                            className="text-background placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 bg-foreground"
-                            {...field}
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </div>
-                <FormField
-                  control={formEvent.control}
-                  name="price"
-                  render={({ field }) => (
-                    <FormItem className="">
-                      <FormLabel>Valor do evento</FormLabel>
-                      <FormControl>
-                        <Input
-                          id="price"
-                          placeholder="Informe valor do evento"
-                          className="text-background placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 bg-foreground"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormDescription>
-                        Lembre que esse valor é retirado a taxa da plataforma e
-                        impostos. Taxa de transmissão a parte. Ler{" "}
-                        <span className="text-blue-500">Termo do usuário</span>.
-                      </FormDescription>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </form>
-              <DialogFooter className="gap-2">
-                <DialogClose>
-                  <Button variant="outline" className="text-foreground">Fechar</Button>
-                </DialogClose>
-                <Button type="submit" className="text-foreground" onClick={formEvent.handleSubmit(handleCreateEvent)}>
-                  Criar evento
-                </Button>
-              </DialogFooter>
-            </Form>
+            <FormCreateEvent setOpenDialogCreateEvent={setOpenDialogCreateEvent}/>
           </DialogContent>
         </Dialog>
 
@@ -520,15 +155,15 @@ export function HeaderInside() {
               <span className="sr-only">Toggle theme</span>
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
+          <DropdownMenuContent
+            align="end"
+            className="bg-muted-foreground text-foreground"
+          >
             <DropdownMenuItem onClick={() => setTheme("light")}>
               Light
             </DropdownMenuItem>
             <DropdownMenuItem onClick={() => setTheme("dark")}>
               Dark
-            </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => setTheme("system")}>
-              System
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
@@ -546,13 +181,15 @@ export function HeaderInside() {
               <IoIosArrowDown size={18} color="#fff" />
             </div>
           </DropdownMenuTrigger>
-          <DropdownMenuContent className="w-56 mr-2">
+          <DropdownMenuContent className="w-56 mr-2 bg-muted-foreground text-foreground">
             <DropdownMenuLabel className="flex justify-between items-center">
               Minha conta
               <div className="flex justify-between items-center gap-1">
-                <img
-                  src="/brasao_preto.png"
+                <Image
+                  src={BrasaoPreto}
                   alt="Iamgem da moeda"
+                  height={100}
+                  width={100}
                   className="w-6 h-auto"
                 />
                 <h3 className="text-sm">1650</h3>

@@ -25,6 +25,8 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import Image from "next/image";
+import LogoPotyguara from '../../../public/LogoRetangular.png'
 
 const products = [
   {
@@ -73,50 +75,30 @@ export function Header() {
     router.push(`/${path}`);
   }
 
-  function handleNavigateToHome(path: string) {
+  function handleNavigateToHome() {
     router.push(`/`);
   }
 
   return (
-    <header className="h-20 bg-background text-foreground">
+    <header className="h-20 bg-muted-foreground text-foreground">
       {/* WEB */}
       <nav
-        className="
-        mx-auto 
-        flex 
-        max-w-7xl 
-        items-center 
-        justify-between 
-        p-6 
-        lg:px-8
-        h-20
-        "
+        className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8 h-20"
         aria-label="Global"
       >
         <div className="flex lg:flex-1 h-20 items-center">
-          <a href="#" className="-m-1.5 p-1.5">
-            <span className="sr-only">Your Company</span>
-            <div className="h-auto w-32">
-              <img
-                src="/LogoRetangular.png"
+              <Image
+                src={LogoPotyguara}
                 alt="Logo Potyguara"
-                // onClick={() => handleNavigateToHome()}
+                height={100}
+                width={100}
+                onClick={() => handleNavigateToHome()}
               />
-            </div>
-          </a>
         </div>
-        <div className="flex lg:hidden border-2">
-          <button
-            type="button"
-            className="
-            -m-2.5 
-            inline-flex 
-            items-center 
-            justify-center 
-            rounded-md 
-            p-2.5 
-            text-gray-700
-            "
+        <div className="flex lg:hidden">
+          <Button
+            variant="outline"
+            className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 border-0"
             onClick={() => setMobileMenuOpen(true)}
           >
             <span className="sr-only">Open main menu</span>
@@ -126,12 +108,12 @@ export function Header() {
                 aria-hidden="true"
               />
             )}
-          </button>
+          </Button>
         </div>
-        <Popover.Group className="hidden lg:flex lg:gap-x-12 h-20 items-center">
+        <Popover.Group className="hidden lg:flex lg:gap-x-12 h-20 items-center ">
           <a
             href="#homepage"
-            className="text-sm font-semibold leading-6 text-gray-900"
+            className="text-sm font-semibold leading-6"
             onClick={() => {
               handleNavigateToHomePage("#homepage");
             }}
@@ -140,7 +122,7 @@ export function Header() {
           </a>
           <a
             href="#aboutus"
-            className="text-sm font-semibold leading-6 text-gray-900"
+            className="text-sm font-semibold leading-6"
             onClick={() => {
               handleNavigateToHomePage("#aboutus");
             }}
@@ -149,7 +131,7 @@ export function Header() {
           </a>
           <a
             href="#ourpartnership"
-            className="text-sm font-semibold leading-6 text-gray-900"
+            className="text-sm font-semibold leading-6"
             onClick={() => {
               handleNavigateToHomePage("#ourpartnership");
             }}
@@ -158,7 +140,7 @@ export function Header() {
           </a>
           <a
             href="#contact"
-            className="text-sm font-semibold leading-6 text-gray-900"
+            className="text-sm font-semibold leading-6"
             onClick={() => {
               handleNavigateToHomePage("#contact");
             }}
@@ -166,10 +148,10 @@ export function Header() {
             Contato
           </a>
           <Popover className="relative">
-            <Popover.Button className="flex items-center gap-x-1 text-sm font-semibold leading-6 text-gray-900">
+            <Popover.Button className="flex items-center gap-x-1 text-sm font-semibold leading-6">
               Baixar plataforma
               <ChevronDownIcon
-                className="h-5 w-5 flex-none text-gray-400"
+                className="h-5 w-5 flex-none"
                 aria-hidden="true"
               />
             </Popover.Button>
@@ -183,41 +165,41 @@ export function Header() {
               leaveFrom="opacity-100 translate-y-0"
               leaveTo="opacity-0 translate-y-1"
             >
-              <Popover.Panel className="absolute -left-8 top-full z-10 mt-3 w-screen max-w-md overflow-hidden rounded-3xl bg-background shadow-lg ring-1 ring-gray-900/5">
+              <Popover.Panel className="absolute -left-8 top-full z-10 mt-3 w-screen max-w-md overflow-hidden bg-muted-foreground rounded-3xl shadow-lg ring-1 ring-gray-900/5">
                 <div className="p-4">
                   {products.map((item) => (
                     <div
                       key={item.name}
-                      className="group relative flex items-center gap-x-6 rounded-lg p-4 text-sm leading-6 hover:bg-gray-50"
+                      className="group relative flex items-center gap-x-6 rounded-lg p-4 text-sm leading-6 hover:bg-gray-50 hover:text-background"
                     >
-                      <div className="flex h-11 w-11 flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-black">
+                      <div className="flex h-11 w-11 flex-none items-center justify-center rounded-lg bg-foreground group-hover:bg-black">
                         <item.icon
-                          className="h-6 w-6 text-gray-600 group-hover:text-indigo-600"
+                          className="h-6 w-6 text-background  group-hover:text-primary"
                           aria-hidden="true"
                         />
                       </div>
                       <div className="flex-auto">
                         <a
                           href={item.href}
-                          className="block font-semibold text-gray-900"
+                          className="block font-semibold"
                         >
                           {item.name}
                           <span className="absolute inset-0" />
                         </a>
-                        <p className="mt-1 text-gray-600">{item.description}</p>
+                        <p className="mt-1">{item.description}</p>
                       </div>
                     </div>
                   ))}
                 </div>
-                <div className="grid grid-cols-2 divide-x divide-gray-900/5 bg-gray-50 ">
+                <div className="grid grid-cols-2 divide-x divide-gray-900/5 ">
                   {callsToAction.map((item) => (
                     <a
                       key={item.name}
                       href={item.href}
-                      className="flex items-center justify-center gap-x-2.5 p-3 text-sm font-semibold leading-6 text-gray-900 hover:bg-gray-100"
+                      className="flex items-center justify-center gap-x-2.5 p-3 text-sm font-semibold leading-6 hover:bg-gray-100 hover:text-primary"
                     >
                       <item.icon
-                        className="h-5 w-5 flex-none text-gray-400"
+                        className="h-5 w-5 flex-none"
                         aria-hidden="true"
                       />
                       {item.name}
@@ -229,15 +211,7 @@ export function Header() {
           </Popover>
         </Popover.Group>
         <div
-          className="hidden 
-        lg:flex 
-        lg:flex-1 
-        lg:justify-end 
-        lg:space-x-4 
-        h-20 
-        items-center
-        "
-        >
+          className="hidden lg:flex lg:flex-1 lg:justify-end lg:space-x-4 h-20 items-center">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button
@@ -250,20 +224,17 @@ export function Header() {
                 <span className="sr-only">Toggle theme</span>
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
+            <DropdownMenuContent align="end" className="bg-muted-foreground text-foreground">
               <DropdownMenuItem onClick={() => setTheme("light")}>
                 Light
               </DropdownMenuItem>
               <DropdownMenuItem onClick={() => setTheme("dark")}>
                 Dark
               </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => setTheme("system")}>
-                System
-              </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
           <a
-            className="text-sm font-semibold leading-6 text-gray-900 hover:text-orange-md hover:cursor-pointer"
+            className="text-sm font-semibold leading-6 hover:text-primary hover:cursor-pointer"
             onClick={() => handleNavigateToLoginPage()}
           >
             Log in <span aria-hidden="true">&rarr;</span>
@@ -274,12 +245,12 @@ export function Header() {
       {/* MOBILE */}
       <Dialog
         as="div"
-        className="lg:hidden bg-background"
+        className="lg:hidden bg-muted-foreground"
         open={mobileMenuOpen}
         onClose={setMobileMenuOpen}
       >
         <div className="fixed inset-0 z-10" />
-        <Dialog.Panel className="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-black px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10 bg-background text-foreground">
+        <Dialog.Panel className="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-black px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10 bg-muted-foreground text-foreground">
           <div className="flex items-center justify-end">
             <button
               type="button"
@@ -295,28 +266,28 @@ export function Header() {
               <div className="space-y-2 py-6">
                 <a
                   href="#homepage"
-                  className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                  className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 hover:bg-gray-50 hover:text-background"
                   onClick={() => handleNavigateToHomePage("#homepage")}
                 >
                   Home
                 </a>
                 <a
                   href="#aboutus"
-                  className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                  className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 hover:bg-gray-50 hover:text-background"
                   onClick={() => handleNavigateToHomePage("#aboutus")}
                 >
                   Sobre nós
                 </a>
                 <a
                   href="#ourpartnership"
-                  className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                  className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 hover:bg-gray-50 hover:text-background"
                   onClick={() => handleNavigateToHomePage("#ourpartnership")}
                 >
                   Nosso parceiros
                 </a>
                 <a
                   href="#contact"
-                  className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                  className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 hover:bg-gray-50 hover:text-background"
                   onClick={() => handleNavigateToHomePage("#contact")}
                 >
                   Contato
@@ -324,7 +295,7 @@ export function Header() {
                 <Disclosure as="div" className="-mx-3">
                   {({ open }) => (
                     <>
-                      <Disclosure.Button className="flex w-full items-center justify-between rounded-lg py-2 pl-3 pr-3.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">
+                      <Disclosure.Button className="flex w-full items-center justify-between rounded-lg py-2 pl-3 pr-3.5 text-base font-semibold leading-7 hover:bg-gray-50 hover:text-background">
                         Baixar plataforma
                         <ChevronDownIcon
                           className={classNames(
@@ -340,7 +311,7 @@ export function Header() {
                             key={item.name}
                             as="a"
                             href={item.href}
-                            className="block rounded-lg py-2 pl-6 pr-3 text-sm font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                            className="block rounded-lg py-2 pl-6 pr-3 text-sm font-semibold leading-7 hover:bg-gray-50"
                           >
                             {item.name}
                           </Disclosure.Button>
@@ -353,7 +324,7 @@ export function Header() {
               <div className="flex pt-4 justify-between">
                 <a
                   href="#"
-                  className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:text-orange-md"
+                  className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 hover:text-orange-md"
                   onClick={() => handleNavigateToLoginPage()}
                 >
                   Log in
@@ -363,18 +334,14 @@ export function Header() {
                     <Button variant="outline" size="icon">
                       <SunIcon className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
                       <MoonIcon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-                      <span className="sr-only">Toggle theme</span>
                     </Button>
                   </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end">
+                  <DropdownMenuContent align="end" className="bg-muted-foreground text-foreground">
                     <DropdownMenuItem onClick={() => setTheme("light")}>
                       Light
                     </DropdownMenuItem>
                     <DropdownMenuItem onClick={() => setTheme("dark")}>
                       Dark
-                    </DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => setTheme("system")}>
-                      System
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>

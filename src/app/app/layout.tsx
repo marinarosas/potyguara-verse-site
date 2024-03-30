@@ -23,9 +23,11 @@ export default function Layout({ children }: { children: ReactNode }) {
           <Loading />
         </>
       ) : ( */}
-       <div>
+       <div className="flex h-screen flex-col antialiased bg-muted-foreground text-foreground">
         <HeaderInside/>
+        <div className="flex-1">
         {children}
+        </div>
         <Toaster/>
         <FooterInside/>
       </div>

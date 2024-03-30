@@ -1,36 +1,22 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import { Button } from "../ui/button";
 import {
   Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
   DialogOverlay,
-  DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { ChooseUserRole } from "../Singup/dialogChooseRole";
 
 export function Contact() {
-  const router = useRouter();
-
-  function handleNavigateToSingupPageArtist() {
-    router.push(`/singup-artist`);
-  }
-
-  function handleNavigateToSingupPageViewer() {
-    router.push(`/singup-viewer`);
-  }
   return (
     <div
-      className="h-full bg-background flex flex-col md:flex-row lg:flex-row"
+      className="h-full bg-muted-foreground flex flex-col md:flex-row lg:flex-row"
       id="contact"
     >
       {/* Contatos */}
       <div className="h-screen md:w-1/2 lg:w-1/2 flex justify-center items-center -mt-10 md:mt-0 lg:mt-0">
-        <div className="w-9/12 md:w-7/12 lg:w-7/12 md:h-5/6 lg:5/6 rounded-l-3xl bg-gradient-to-b from-green-neon to-foreground text-background">
+        <div className="w-9/12 md:w-7/12 lg:w-7/12 md:h-5/6 lg:5/6 rounded-l-3xl bg-gradient-to-b from-secondary to-foreground text-background">
           <form className="p-2 md:p-4 lg:p-4">
             <div className="space-y-4">
               <div>
@@ -142,32 +128,7 @@ export function Contact() {
               </Button>
             </DialogTrigger>
             <DialogOverlay className="bg-background opacity-90 w-screen" />
-            <DialogContent className="sm:max-w-[425px] md:h-52">
-              <DialogHeader>
-                <DialogTitle className="text-md text-foreground">
-                  Gostariamos de saber qual é o seu perfil?
-                </DialogTitle>
-                <DialogDescription className="text-justify">
-                  No Potyguara você pode escolher dois caminhos... <br />O
-                  criador de conteúdo (O artista) ou o consumidor de cultura (O
-                  espectador).
-                </DialogDescription>
-              </DialogHeader>
-              <DialogFooter className="flex justify-around sm:justify-around">
-                <Button
-                  className="w-32 text-foreground"
-                  onClick={() => handleNavigateToSingupPageArtist()}
-                >
-                  Artista
-                </Button>
-                <Button
-                  className="w-32 text-foreground"
-                  onClick={() => handleNavigateToSingupPageViewer()}
-                >
-                  Espectador
-                </Button>
-              </DialogFooter>
-            </DialogContent>
+            <ChooseUserRole />
           </Dialog>
 
           <Button className="text-foreground  w-full md:w-6/12 lg:w-6/12 text-lg">

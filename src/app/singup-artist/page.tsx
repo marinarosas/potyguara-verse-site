@@ -5,7 +5,7 @@ import { Header } from "@/components/Header";
 import { Button } from "@/components/ui/button";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { UserCircleIcon } from "@heroicons/react/24/solid";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import axios from "axios";
 import { useForm } from "react-hook-form";
 import { Input } from "@/components/ui/input";
@@ -21,6 +21,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Textarea } from "@/components/ui/textarea";
+import { useToast } from "@/components/ui/use-toast";
 
 const formSchema = z.object({
   username: z.string().min(10, {
@@ -29,13 +30,13 @@ const formSchema = z.object({
   name: z.string().min(10, {
     message: "Informe o nome completo",
   }),
-  numberstreet: z.string().min(1, {
+  streetnumber: z.string().min(1, {
     message: "Informe o número da rua",
   }),
-  address: z.string().min(10, {
+  streetname: z.string().min(10, {
     message: "Informe o endereço completo",
   }),
-  complement: z.string(),
+  streetcomplement: z.string(),
   country: z.string().min(2, {
     message: "Informe o país",
   }),
@@ -61,6 +62,12 @@ const formSchema = z.object({
 export default function SingupArtist() {
   const router = useRouter();
 
+  const { toast } = useToast();
+
+  const searchParams = useSearchParams()
+
+  const userRole = searchParams.get('role')
+
   const tenantId = process.env.NEXT_PUBLIC_TENANT_ID;
   const apiMasterKey = process.env.NEXT_PUBLIC_API_MASTER_KEY;
 
@@ -73,9 +80,9 @@ export default function SingupArtist() {
     defaultValues: {
       username: "",
       name: "",
-      numberstreet: "",
-      address: "",
-      complement: "",
+      streetnumber: "",
+      streetname: "",
+      streetcomplement: "",
       country: "",
       state: "",
       city: "",
@@ -98,9 +105,9 @@ export default function SingupArtist() {
   const handleCreateArtist: SubmitHandler<z.infer<typeof formSchema>> = async ({
     username,
     name,
-    numberstreet,
-    address,
-    complement,
+    streetnumber,
+    streetname,
+    streetcomplement,
     country,
     state,
     city,
@@ -119,12 +126,12 @@ export default function SingupArtist() {
           action: "CREATE",
           data: [
             {
-              artist: {
+              user: {
                 username,
                 name,
-                numberstreet,
-                address,
-                complement,
+                streetnumber,
+                streetname,
+                streetcomplement,
                 country,
                 state,
                 city,
@@ -133,19 +140,29 @@ export default function SingupArtist() {
                 zipcode,
                 documentnumber,
                 allownotifications,
+                role: userRole
               },
             },
           ],
         },
         axiosConfig
       );
+
+      toast({
+        title: "Uhuu! Cadastro realizado com sucesso.",
+        description: "Cadastro do usuário criado com sucesso.",
+      });
     } catch (error) {
       console.log(error);
+      toast({
+        title: "Ops! Algo deu errado.",
+        description: "O cadastro não foi criado, fale com a central.",
+      });
     }
   };
 
   return (
-    <main className="text-foreground bg-background ">
+    <main className="bg-muted-foreground text-foreground">
       <Header />
       <Form {...form}>
         <form
@@ -154,10 +171,10 @@ export default function SingupArtist() {
         >
           {/* Formulário */}
           <div className="border-b border-gray-900/10 pb-12">
-            <h2 className="text-green-neon text-xl font-semibold leading-7 text-gray-900 pb-4">
+            <h2 className="text-secondary text-xl font-semibold leading-7 pb-4">
               Perfil do Artista
             </h2>
-            <p className="mt-1 text-sm leading-6 text-gray-600">
+            <p className="mt-1 text-sm leading-6">
               Olá. <br /> É aqui que sua jornada artística começa! <br />{" "}
               Primeiro, precisamos saber um pouco mais sobre você e o seu
               trabalho. Preencha os dados a seguir, para poder avançar para a
@@ -167,7 +184,7 @@ export default function SingupArtist() {
             <div className="col-span-full pt-8">
               <label
                 htmlFor="photo"
-                className="block text-sm font-medium leading-6 text-gray-900"
+                className="block text-sm font-medium leading-6"
               >
                 Foto da pessoa ou grupo artístico
               </label>
@@ -227,10 +244,10 @@ export default function SingupArtist() {
           </div>
 
           <div className="mt-8">
-            <h2 className="text-base font-semibold leading-7 text-gray-900">
+            <h2 className="text-base font-semibold leading-7">
               Informação pessoal
             </h2>
-            <p className="mt-1 text-sm leading-6 text-gray-600">
+            <p className="mt-1 text-sm leading-6">
               Aqui, precismos que você preencha os dados pessoais de quem será o
               admnistrador do artista ou grupo artístico dentro do Potyguara
               Verse.
@@ -325,20 +342,20 @@ export default function SingupArtist() {
               )}
             />
 
-            <h2 className="text-base font-semibold leading-7 text-gray-900 mt-8">
+            <h2 className="text-base font-semibold leading-7 mt-8">
               Endereço
             </h2>
 
             <div className="flex gap-4">
               <FormField
                 control={form.control}
-                name="address"
+                name="streetname"
                 render={({ field }) => (
                   <FormItem className="w-1/2 mt-4">
                     <FormLabel>Rua</FormLabel>
                     <FormControl>
                       <Input
-                        id="address"
+                        id="streetname"
                         placeholder="Informe a rua"
                         className="text-background placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 bg-foreground"
                         {...field}
@@ -353,13 +370,13 @@ export default function SingupArtist() {
               />
               <FormField
                 control={form.control}
-                name="numberstreet"
+                name="streetnumber"
                 render={({ field }) => (
                   <FormItem className="w-1/2 mt-4">
                     <FormLabel>Número</FormLabel>
                     <FormControl>
                       <Input
-                        id="numberstreet"
+                        id="streetnumber"
                         placeholder="Informe o número"
                         className="text-background placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 bg-foreground"
                         {...field}
@@ -377,10 +394,10 @@ export default function SingupArtist() {
             <div className="flex gap-4">
               <FormField
                 control={form.control}
-                name="complement"
+                name="streetcomplement"
                 render={({ field }) => (
                   <FormItem className="w-1/2 mt-4">
-                    <FormLabel>Complemento</FormLabel>
+                    <FormLabel>streetcomplemento</FormLabel>
                     <FormControl>
                       <Input
                         id="complement"
@@ -490,7 +507,7 @@ export default function SingupArtist() {
           <div className="mt-6 flex items-center justify-end gap-x-6">
             <button
               type="button"
-              className="text-sm font-semibold leading-6 text-gray-900 hover:text-red-600"
+              className="text-sm font-semibold leading-6 hover:text-red-600"
               onClick={() => handleNavigateToHomePage()}
             >
               Cancel
@@ -498,7 +515,7 @@ export default function SingupArtist() {
             <Button
               type="submit"
               variant="ghost"
-              className="hover:bg-transparent hover:text-green-neon"
+              className="hover:bg-transparent hover:text-secondary"
             >
               Save
             </Button>
@@ -507,7 +524,7 @@ export default function SingupArtist() {
           {/* <div className="mt-6 flex items-center justify-end gap-x-6">
             <button
               type="button"
-              className="text-sm font-semibold leading-6 text-gray-900 hover:text-red-600"
+              className="text-sm font-semibold leading-6 hover:text-red-600"
               onClick={() => handleNavigateToHomePage()}
             >
               Cancel
@@ -517,7 +534,7 @@ export default function SingupArtist() {
                 <Button
                   type="submit"
                   variant="ghost"
-                  className="hover:bg-transparent hover:text-green-neon"
+                  className="hover:bg-transparent hover:text-secondary"
                 >
                   Save
                 </Button>

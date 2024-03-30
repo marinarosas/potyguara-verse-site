@@ -1,7 +1,12 @@
 "use client";
 
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { RiInstagramFill, RiLinkedinBoxFill } from "react-icons/ri";
+import LogoSebrae from '../../../public/logo 50 anos  roxo.png'
+import LogoSudene from '../../../public/sudene.png'
+import LogoImd from '../../../public/metropoleIMDlogo.svg'
+import LogoGameLab from '../../../public/LOGO VERT BRANCO@3x.png'
 
 export function FooterInside() {
   const router = useRouter();
@@ -26,23 +31,23 @@ export function FooterInside() {
   }
 
   return (
-    <div className="h-10 flex bg-background  text-foreground items-center justify-between px-8">
+    <footer className="h-16 flex bg-muted-foreground  text-foreground items-center justify-between px-8 border-t-2">
       <p className="text-xs w-1/3">
         Copyright 2023 ©Potyguara Verse - Todos os direitos reservados.
       </p>
 
-      <div className="flex h-16 w-96 justify-between items-center">
+      <div className="flex w-96 justify-between items-center">
         <div className="w-20">
-          <img src="/logo 50 anos  roxo.png" alt="Logo Sebrae" />
+          <Image src={LogoSebrae} alt="Logo Sebrae" height={100} width={100}/>
         </div>
         <div className="w-20">
-          <img src="/sudene.png" alt="Logo Sudene" />
+          <Image src={LogoSudene} alt="Logo Sudene" height={100} width={100}/>
         </div>
         <div className="w-20">
-          <img src="/metropoleIMDlogo.svg" alt="Logo Metorpole Digital" />
+          <Image src={LogoImd} alt="Logo Metorpole Digital" height={100} width={100}/>
         </div>
         <div className="w-20">
-          <img src="/LOGO VERT BRANCO@3x.png" alt="Logo GameLab" />
+          <Image src={LogoGameLab} alt="Logo GameLab" height={100} width={100}/>
         </div>
       </div>
       <div className="flex w-1/3 justify-end">
@@ -57,6 +62,6 @@ export function FooterInside() {
           className="hover:cursor-pointer"
         />
       </div>
-    </div>
+    </footer>
   );
 }

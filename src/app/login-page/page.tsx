@@ -12,6 +12,8 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import Image from "next/image";
+import LogoPotyguara from '../../../public/LogoRetangular.png'
 
 export default function Login() {
   const router = useRouter();
@@ -33,16 +35,18 @@ export default function Login() {
   }
 
   return (
-    <main className="h-screen text-foreground bg-background">
+    <main className="h-screen text-foreground bg-muted-foreground">
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
-        <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-          <img
+        <div className="flex flex-col sm:mx-auto sm:w-full sm:max-w-sm gap-4">
+          <Image
             className="h-auto w-36 m-auto hover:cursor-pointer"
-            src="/LogoRetangular.png"
+            src={LogoPotyguara}
+            height={100}
+            width={100}
             alt="Potyguara Logo"
             onClick={() => handleNavigateToHomePage()}
           />
-          <h2 className="text-center text-xl font-bold leading-4 tracking-tight text-gray-900">
+          <h2 className="text-center text-lg font-bold leading-4 tracking-tight ">
             Entre na sua conta
           </h2>
         </div>
@@ -56,7 +60,7 @@ export default function Login() {
             <div>
               <label
                 htmlFor="email"
-                className="block text-sm font-medium leading-6 text-gray-900"
+                className="block text-sm font-medium leading-6 "
               >
                 E-mail
               </label>
@@ -67,7 +71,7 @@ export default function Login() {
                   type="email"
                   autoComplete="email"
                   required
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 pl-2"
+                  className="block w-full rounded-md border-0 py-1.5  shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 pl-2"
                 />
               </div>
             </div>
@@ -76,14 +80,14 @@ export default function Login() {
               <div className="flex items-center justify-between">
                 <label
                   htmlFor="password"
-                  className="block text-sm font-medium leading-6 text-gray-900"
+                  className="block text-sm font-medium leading-6 "
                 >
                   Senha
                 </label>
                 <div className="text-sm">
                   <a
                     href="#"
-                    className="font-semibold text-indigo-600 hover:text-indigo-500"
+                    className="font-semibold text-secondary-foreground hover:text-secondary"
                   >
                     Esqueceu sua senha?
                   </a>
@@ -96,7 +100,7 @@ export default function Login() {
                   type="password"
                   autoComplete="current-password"
                   required
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 pl-2"
+                  className="block w-full rounded-md border-0 py-1.5  shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 pl-2"
                 />
               </div>
             </div>

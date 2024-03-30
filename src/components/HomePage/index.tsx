@@ -1,31 +1,10 @@
-'use client'
+"use client";
 
-import { useRouter } from "next/navigation";
 import { Button } from "../ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogOverlay,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
+import { Dialog, DialogOverlay, DialogTrigger } from "@/components/ui/dialog";
+import { ChooseUserRole } from "../Singup/dialogChooseRole";
 
 export function Homepage() {
-
-  const router = useRouter();
-
-
-  function handleNavigateToSingupPageArtist() {
-    router.push(`/singup-artist`);
-  }
-
-  function handleNavigateToSingupPageViewer() {
-    router.push(`/singup-viewer`);
-  }
-
   return (
     <div
       id="homepage"
@@ -42,40 +21,13 @@ export function Homepage() {
         maneira de assitir eventos!
       </h1>
       <div className="flex flex-col md:flex-row gap-12">
-        <Button className="text-white">Baixe a plataforma</Button>
+        <Button variant="default">Baixe a plataforma</Button>
         <Dialog>
           <DialogTrigger asChild>
-            <Button className="text-black-000" variant="secondary">
-              Cadastre-se
-            </Button>
+            <Button variant="secondary">Cadastre-se</Button>
           </DialogTrigger>
-          <DialogOverlay className="bg-background opacity-90 w-screen" />
-          <DialogContent className="sm:max-w-[425px] md:h-52">
-            <DialogHeader>
-              <DialogTitle className="text-md text-foreground">
-                Gostariamos de saber qual é o seu perfil?
-              </DialogTitle>
-              <DialogDescription className="text-justify">
-                No Potyguara você pode escolher dois caminhos... <br />O criador
-                de conteúdo (O artista) ou o consumidor de cultura (O
-                espectador).
-              </DialogDescription>
-            </DialogHeader>
-            <DialogFooter className="flex justify-around sm:justify-around">
-              <Button
-                className="w-32 text-foreground"
-                onClick={() => handleNavigateToSingupPageArtist()}
-              >
-                Artista
-              </Button>
-              <Button
-                className="w-32 text-foreground"
-                onClick={() => handleNavigateToSingupPageViewer()}
-              >
-                Espectador
-              </Button>
-            </DialogFooter>
-          </DialogContent>
+          <DialogOverlay className="bg-muted-foreground opacity-30 w-screen" />
+          <ChooseUserRole />
         </Dialog>
       </div>
       <div className="lg:hidden w-full h-28 mt-12 bg-gradient-to-b from-black-000 to-background"></div>

@@ -83,29 +83,14 @@ export function Aboutus() {
 
   return (
     <div
-      className="h-full flex bg-background flex-col md:flex-row lg:flex-row -mt-12 md:mt-0 lg:mt-0"
+      className="h-full flex bg-muted-foreground flex-col md:flex-row lg:flex-row -mt-12 md:mt-0 lg:mt-0"
       id="aboutus"
     >
       {/* Description */}
       <div
-        className="
-      flex 
-      flex-col
-      justify-center 
-      gap-8 
-      md:w-1/2 
-      lg:w-1/2
-      h-screen 
-      "
-      >
+        className="flex flex-col justify-center gap-8 md:w-1/2 lg:w-1/2 h-screen">
         <h2
-          className="
-        pl-10 
-        text-green-neon 
-        text-2xl 
-        font-bold 
-        "
-        >
+          className="pl-10 text-secondary text-2xl font-bold">
           Sobre nós
         </h2>
         <p className="p-4 pl-10 text-start tracking-wider leading-loose">
@@ -126,14 +111,7 @@ export function Aboutus() {
 
       {/* Carrousel */}
       <div
-        className="
-        h-screen
-        flex-col 
-        md:w-1/2
-        lg:w-1/2
-        bg-background
-       "
-      >
+        className="h-screen flex-col md:w-1/2 lg:w-1/2 bg-muted-foreground">
         {isClient && (
           <Chrono
             activeItemIndex={0}

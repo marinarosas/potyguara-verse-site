@@ -7,6 +7,12 @@ import { Pagination, EffectCoverflow } from "swiper/modules";
 import "./styles.css";
 import { useEffect, useState } from "react";
 import ReactPlayer from "react-player";
+import LogoImd from '../../../public/1A-Primaria-Gradiente.svg'
+import LogoAndrea from '../../../public/logoandrea.png'
+import LogoGameLab from '../../../public/LOGO VERT BRANCO@3x.png'
+import LogoSebrae from '../../../public/1A-Primaria-Gradiente.svg'
+import LogoSudene from '../../../public/sudene.png'
+import Image from "next/image";
 
 const slides = [
   // {
@@ -15,27 +21,27 @@ const slides = [
   //   // subtitle: 'É inegociável o cumprimento da regulação e de todos os nossos contratos e compromissos firmados.',
   // },
   {
-    image: "/1A-Primaria-Gradiente.svg",
+    image: LogoImd,
     // title: "Metrópole Digital - IMD",
     // subtitle: 'O sucesso é uma via de mão dupla, nossos parceiros e colaboradores são chave para o nosso crescimento.',
   },
   {
-    image: "/logoandrea.png",
+    image: LogoAndrea,
     // title: "Andrea Arteterapeuta",
     // subtitle: 'A diversidade enriquece ambientes e as pessoas são o nosso maior capital',
   },
   {
-    image: "/LOGO VERT BRANCO@3x.png",
+    image: LogoGameLab,
     // title: "Game Lab",
     // subtitle: 'Proatividade, disposição e desenvoltura para resolver problemas.',
   },
   {
-    image: "/logo 50 anos  roxo.png",
+    image: LogoSebrae,
     // title: "Sebrae RN",
     // subtitle: 'Estar aberto para enxergar novas perspectivas, buscar diferentes soluções e protagonizar mudanças.',
   },
   {
-    image: "/sudene.png",
+    image: LogoSudene,
     // title: "Sudene",
     // subtitle: 'Humildade para entender que se pode aprender sempre mais e ousadia para buscar a evolução.',
   },
@@ -52,7 +58,7 @@ export default function OurPartnership() {
   return (
     <>
       <div
-        className="h-96 md:h-screen lg:h-screen bg-background flex-col gap-4 items-center justify-center pt-10 -mb-20"
+        className="h-96 md:h-screen lg:h-screen bg-muted-foreground flex-col gap-4 items-center justify-center pt-10 -mb-20"
         id="ourpartnership"
         style={{
           backgroundImage: `url(/Waveosund.png)`,
@@ -62,7 +68,7 @@ export default function OurPartnership() {
         }}
       >
         <div className="h-96 md:h-screen lg:h-screen pl-6 md:pl-0 lg:pl-0">
-          <h2 className="text-green-neon text-2xl font-bold text-center pr-6">
+          <h2 className="text-secondary text-2xl font-bold text-center pr-6">
             Nossos parceiros
           </h2>
           <Swiper
@@ -98,8 +104,8 @@ export default function OurPartnership() {
           >
             {slides.map((slide, index) => (
               <SwiperSlide key={index}>
-                <div className="text-foreground items-center justify-center h-auto w-fit">
-                  <img src={slide.image} alt="Logos" />
+                <div className="text-foreground items-center justify-center h-fit">
+                  <Image src={slide.image} alt="Logos"/>
                 </div>
               </SwiperSlide>
             ))}
