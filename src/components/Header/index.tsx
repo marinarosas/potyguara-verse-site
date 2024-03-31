@@ -1,64 +1,64 @@
-"use client";
+'use client'
 
-import { useRouter } from "next/navigation";
-import { Fragment, useState } from "react";
-import { Dialog, Disclosure, Popover, Transition } from "@headlessui/react";
+import { useRouter } from 'next/navigation'
+import { Fragment, useState } from 'react'
+import { Dialog, Disclosure, Popover, Transition } from '@headlessui/react'
 import {
   Bars3Icon,
   ChartPieIcon,
   CursorArrowRaysIcon,
   XMarkIcon,
-} from "@heroicons/react/24/outline";
+} from '@heroicons/react/24/outline'
 import {
   ChevronDownIcon,
   PhoneIcon,
   PlayCircleIcon,
-} from "@heroicons/react/20/solid";
-import * as React from "react";
-import { MoonIcon, SunIcon } from "@radix-ui/react-icons";
-import { useTheme } from "next-themes";
+} from '@heroicons/react/20/solid'
+import * as React from 'react'
+import { MoonIcon, SunIcon } from '@radix-ui/react-icons'
+import { useTheme } from 'next-themes'
 
-import { Button } from "@/components/ui/button";
+import { Button } from '@/components/ui/button'
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import Image from "next/image";
+} from '@/components/ui/dropdown-menu'
+import Image from 'next/image'
 import LogoPotyguara from '../../../public/LogoRetangular.png'
 
 const products = [
   {
-    name: "Steam",
-    description: "Loja de plataforma para download",
-    href: "#",
+    name: 'Steam',
+    description: 'Loja de plataforma para download',
+    href: '#',
     icon: ChartPieIcon,
   },
   {
-    name: "Meta Quest Store",
-    description: "Loja para o óculos quest",
-    href: "#",
+    name: 'Meta Quest Store',
+    description: 'Loja para o óculos quest',
+    href: '#',
     icon: CursorArrowRaysIcon,
   },
-];
+]
 const callsToAction = [
-  { name: "Assita o trailer", href: "#", icon: PlayCircleIcon },
-  { name: "Fale conosco", href: "#", icon: PhoneIcon },
-];
+  { name: 'Assita o trailer', href: '#', icon: PlayCircleIcon },
+  { name: 'Fale conosco', href: '#', icon: PhoneIcon },
+]
 
 function classNames(
   ...classes: (string | boolean | undefined | null)[]
 ): string {
-  return classes.filter(Boolean).join(" ");
+  return classes.filter(Boolean).join(' ')
 }
 
 export function Header() {
-  const router = useRouter();
+  const router = useRouter()
 
-  const { setTheme } = useTheme();
+  const { setTheme } = useTheme()
 
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   // const scrollToSection = (sectionId: string) => {
   //   const section = document.getElementById(sectionId);
@@ -68,15 +68,15 @@ export function Header() {
   // };
 
   function handleNavigateToLoginPage() {
-    router.push(`/login-page`);
+    router.push(`/login-page`)
   }
 
   function handleNavigateToHomePage(path: string) {
-    router.push(`/${path}`);
+    router.push(`/${path}`)
   }
 
   function handleNavigateToHome() {
-    router.push(`/`);
+    router.push(`/`)
   }
 
   return (
@@ -87,13 +87,13 @@ export function Header() {
         aria-label="Global"
       >
         <div className="flex lg:flex-1 h-20 items-center">
-              <Image
-                src={LogoPotyguara}
-                alt="Logo Potyguara"
-                height={100}
-                width={100}
-                onClick={() => handleNavigateToHome()}
-              />
+          <Image
+            src={LogoPotyguara}
+            alt="Logo Potyguara"
+            height={100}
+            width={100}
+            onClick={() => handleNavigateToHome()}
+          />
         </div>
         <div className="flex lg:hidden">
           <Button
@@ -115,7 +115,7 @@ export function Header() {
             href="#homepage"
             className="text-sm font-semibold leading-6"
             onClick={() => {
-              handleNavigateToHomePage("#homepage");
+              handleNavigateToHomePage('#homepage')
             }}
           >
             Home
@@ -124,7 +124,7 @@ export function Header() {
             href="#aboutus"
             className="text-sm font-semibold leading-6"
             onClick={() => {
-              handleNavigateToHomePage("#aboutus");
+              handleNavigateToHomePage('#aboutus')
             }}
           >
             Sobre nós
@@ -133,7 +133,7 @@ export function Header() {
             href="#ourpartnership"
             className="text-sm font-semibold leading-6"
             onClick={() => {
-              handleNavigateToHomePage("#ourpartnership");
+              handleNavigateToHomePage('#ourpartnership')
             }}
           >
             Nossos parceiros
@@ -142,7 +142,7 @@ export function Header() {
             href="#contact"
             className="text-sm font-semibold leading-6"
             onClick={() => {
-              handleNavigateToHomePage("#contact");
+              handleNavigateToHomePage('#contact')
             }}
           >
             Contato
@@ -179,10 +179,7 @@ export function Header() {
                         />
                       </div>
                       <div className="flex-auto">
-                        <a
-                          href={item.href}
-                          className="block font-semibold"
-                        >
+                        <a href={item.href} className="block font-semibold">
                           {item.name}
                           <span className="absolute inset-0" />
                         </a>
@@ -210,8 +207,7 @@ export function Header() {
             </Transition>
           </Popover>
         </Popover.Group>
-        <div
-          className="hidden lg:flex lg:flex-1 lg:justify-end lg:space-x-4 h-20 items-center">
+        <div className="hidden lg:flex lg:flex-1 lg:justify-end lg:space-x-4 h-20 items-center">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button
@@ -224,11 +220,14 @@ export function Header() {
                 <span className="sr-only">Toggle theme</span>
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="bg-muted-foreground text-foreground">
-              <DropdownMenuItem onClick={() => setTheme("light")}>
+            <DropdownMenuContent
+              align="end"
+              className="bg-muted-foreground text-foreground"
+            >
+              <DropdownMenuItem onClick={() => setTheme('light')}>
                 Light
               </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => setTheme("dark")}>
+              <DropdownMenuItem onClick={() => setTheme('dark')}>
                 Dark
               </DropdownMenuItem>
             </DropdownMenuContent>
@@ -267,28 +266,28 @@ export function Header() {
                 <a
                   href="#homepage"
                   className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 hover:bg-gray-50 hover:text-background"
-                  onClick={() => handleNavigateToHomePage("#homepage")}
+                  onClick={() => handleNavigateToHomePage('#homepage')}
                 >
                   Home
                 </a>
                 <a
                   href="#aboutus"
                   className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 hover:bg-gray-50 hover:text-background"
-                  onClick={() => handleNavigateToHomePage("#aboutus")}
+                  onClick={() => handleNavigateToHomePage('#aboutus')}
                 >
                   Sobre nós
                 </a>
                 <a
                   href="#ourpartnership"
                   className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 hover:bg-gray-50 hover:text-background"
-                  onClick={() => handleNavigateToHomePage("#ourpartnership")}
+                  onClick={() => handleNavigateToHomePage('#ourpartnership')}
                 >
                   Nosso parceiros
                 </a>
                 <a
                   href="#contact"
                   className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 hover:bg-gray-50 hover:text-background"
-                  onClick={() => handleNavigateToHomePage("#contact")}
+                  onClick={() => handleNavigateToHomePage('#contact')}
                 >
                   Contato
                 </a>
@@ -299,8 +298,8 @@ export function Header() {
                         Baixar plataforma
                         <ChevronDownIcon
                           className={classNames(
-                            open ? "rotate-180" : "",
-                            "h-5 w-5 flex-none"
+                            open ? 'rotate-180' : '',
+                            'h-5 w-5 flex-none',
                           )}
                           aria-hidden="true"
                         />
@@ -336,11 +335,14 @@ export function Header() {
                       <MoonIcon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
                     </Button>
                   </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end" className="bg-muted-foreground text-foreground">
-                    <DropdownMenuItem onClick={() => setTheme("light")}>
+                  <DropdownMenuContent
+                    align="end"
+                    className="bg-muted-foreground text-foreground"
+                  >
+                    <DropdownMenuItem onClick={() => setTheme('light')}>
                       Light
                     </DropdownMenuItem>
-                    <DropdownMenuItem onClick={() => setTheme("dark")}>
+                    <DropdownMenuItem onClick={() => setTheme('dark')}>
                       Dark
                     </DropdownMenuItem>
                   </DropdownMenuContent>
@@ -351,5 +353,5 @@ export function Header() {
         </Dialog.Panel>
       </Dialog>
     </header>
-  );
+  )
 }

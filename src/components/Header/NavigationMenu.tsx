@@ -1,6 +1,6 @@
-"use client";
+'use client'
 
-import Link from "next/link";
+import Link from 'next/link'
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -9,44 +9,43 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
-} from "@/components/ui/navigation-menu";
-import { cn } from "@/lib/utils";
-import React from "react";
-import { useRouter } from "next/navigation";
+} from '@/components/ui/navigation-menu'
+import { cn } from '@/lib/utils'
+import React from 'react'
+import { useRouter } from 'next/navigation'
 
 export function NavigationMenuHeader() {
-  const router = useRouter();
+  const router = useRouter()
 
   const components: { title: string; href: string; description: string }[] = [
     {
-      title: "Steam",
-      href: "/docs/primitives/alert-dialog",
+      title: 'Steam',
+      href: '/docs/primitives/alert-dialog',
       description:
-        "Entre em nossa comunidade steam e veja o que a galera ta falando do jogo.",
+        'Entre em nossa comunidade steam e veja o que a galera ta falando do jogo.',
     },
     {
-      title: "Meta Quest Store",
-      href: "/docs/primitives/hover-card",
+      title: 'Meta Quest Store',
+      href: '/docs/primitives/hover-card',
       description:
-        "Nossa plataforma a clique de você, venha experimentar o outro lado do jogo.",
+        'Nossa plataforma a clique de você, venha experimentar o outro lado do jogo.',
     },
     {
-      title: "Loja parceiras",
-      href: "/docs/primitives/progress",
+      title: 'Loja parceiras',
+      href: '/docs/primitives/progress',
       description:
-        "Quem não que um desconto? Venha conhecer nossos parceiros de perto.",
+        'Quem não que um desconto? Venha conhecer nossos parceiros de perto.',
     },
     {
-      title: "Configuração",
-      href: "/docs/primitives/tooltip",
+      title: 'Configuração',
+      href: '/docs/primitives/tooltip',
       description:
-        "Caso precise, configure a plataforma para melhor performance.",
+        'Caso precise, configure a plataforma para melhor performance.',
     },
-  ];
-  
+  ]
 
   function handleNavigateToMyEventsPage() {
-    router.push(`/app/my-events`);
+    router.push(`/app/my-events`)
   }
 
   return (
@@ -65,7 +64,7 @@ export function NavigationMenuHeader() {
             <NavigationMenuLink
               className={navigationMenuTriggerStyle()}
               onClick={() => {
-                handleNavigateToMyEventsPage();
+                handleNavigateToMyEventsPage()
               }}
             >
               Meus Eventos
@@ -116,12 +115,12 @@ export function NavigationMenuHeader() {
         </NavigationMenuItem>
       </NavigationMenuList>
     </NavigationMenu>
-  );
+  )
 }
 
 const ListItem = React.forwardRef<
-  React.ElementRef<"a">,
-  React.ComponentPropsWithoutRef<"a">
+  React.ElementRef<'a'>,
+  React.ComponentPropsWithoutRef<'a'>
 >(({ className, title, children, ...props }, ref) => {
   return (
     <li>
@@ -129,8 +128,8 @@ const ListItem = React.forwardRef<
         <a
           ref={ref}
           className={cn(
-            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
-            className
+            'block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground',
+            className,
           )}
           {...props}
         >
@@ -141,6 +140,6 @@ const ListItem = React.forwardRef<
         </a>
       </NavigationMenuLink>
     </li>
-  );
-});
-ListItem.displayName = "ListItem";
+  )
+})
+ListItem.displayName = 'ListItem'

@@ -22,6 +22,7 @@ import {
 } from "@/components/ui/form";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/components/ui/use-toast";
+import { Suspense } from "react";
 
 const formSchema = z.object({
   username: z.string().min(10, {
@@ -64,9 +65,9 @@ export default function SingupArtist() {
 
   const { toast } = useToast();
 
-  const searchParams = useSearchParams()
+  const searchParams = useSearchParams();
 
-  const userRole = searchParams.get('role')
+  const userRole = searchParams.get("role");
 
   const tenantId = process.env.NEXT_PUBLIC_TENANT_ID;
   const apiMasterKey = process.env.NEXT_PUBLIC_API_MASTER_KEY;
@@ -140,7 +141,7 @@ export default function SingupArtist() {
                 zipcode,
                 documentnumber,
                 allownotifications,
-                role: userRole
+                role: userRole,
               },
             },
           ],
@@ -162,9 +163,10 @@ export default function SingupArtist() {
   };
 
   return (
-    <main className="bg-muted-foreground text-foreground">
+   <Suspense>
+       <main className="bg-muted-foreground text-foreground">
       <Header />
-      <Form {...form}>
+     <Form {...form}>
         <form
           onSubmit={form.handleSubmit(handleCreateArtist)}
           className="px-28 py-8"
@@ -342,9 +344,7 @@ export default function SingupArtist() {
               )}
             />
 
-            <h2 className="text-base font-semibold leading-7 mt-8">
-              Endereço
-            </h2>
+            <h2 className="text-base font-semibold leading-7 mt-8">Endereço</h2>
 
             <div className="flex gap-4">
               <FormField
@@ -565,5 +565,6 @@ export default function SingupArtist() {
       </Form>
       <Footer />
     </main>
+   </Suspense>
   );
 }

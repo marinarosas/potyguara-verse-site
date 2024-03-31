@@ -1,10 +1,10 @@
-"use client";
+'use client'
 
-import { Footer } from "@/components/Footer";
-import { Header } from "@/components/Header";
-import { Button } from "@/components/ui/button";
-import { PhotoIcon, UserCircleIcon } from "@heroicons/react/24/solid";
-import { useRouter } from "next/navigation";
+import { Footer } from '@/components/Footer'
+import { Header } from '@/components/Header'
+import { Button } from '@/components/ui/button'
+import { PhotoIcon, UserCircleIcon } from '@heroicons/react/24/solid'
+import { useRouter } from 'next/navigation'
 import {
   Dialog,
   DialogContent,
@@ -14,13 +14,15 @@ import {
   DialogOverlay,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog";
+} from '@/components/ui/dialog'
+import BrasaoColor from '../../../public/brasao_color.png'
+import Image from 'next/image'
 
 export default function SingupViewer() {
-  const router = useRouter();
+  const router = useRouter()
 
   function handleNavigateToHomePage() {
-    router.push(`/`);
+    router.push(`/`)
   }
 
   return (
@@ -52,8 +54,8 @@ export default function SingupViewer() {
                   className="h-12 w-12 text-gray-300"
                   aria-hidden="true"
                 ></UserCircleIcon> */}
-              <img
-                src="/brasao_color.png"
+              <Image
+                src={BrasaoColor}
                 alt="Imagem Perfil"
                 className="h-20 w-20 text-gray-300"
               />
@@ -68,18 +70,18 @@ export default function SingupViewer() {
                       Gostaria de mudar para qual?
                     </DialogTitle>
                     <DialogDescription className="text-justify flex justify-around">
-                      <img
-                        src="/brasao_color.png"
+                      <Image
+                        src={BrasaoColor}
                         alt="Imagem Perfil"
                         className="h-28 w-28 text-gray-300"
                       />
-                      <img
-                        src="/brasao_color.png"
+                      <Image
+                        src={BrasaoColor}
                         alt="Imagem Perfil"
                         className="h-28 w-28 text-gray-300"
                       />
-                      <img
-                        src="/brasao_color.png"
+                      <Image
+                        src={BrasaoColor}
                         alt="Imagem Perfil"
                         className="h-28 w-28 text-gray-300"
                       />
@@ -103,7 +105,7 @@ export default function SingupViewer() {
               </Dialog>
             </div>
           </div>
-          
+
           {/* Username */}
           <div className="border-b border-gray-900/10 pb-12">
             <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
@@ -307,20 +309,20 @@ export default function SingupViewer() {
                         htmlFor="comments"
                         className="font-medium text-gray-900"
                       >
-                        Tenho 13 anos ou mais e li e aceito os termos{" "}
+                        Tenho 13 anos ou mais e li e aceito os termos{' '}
                         <a
                           href="https://www.mozilla.org/pt-BR/"
                           className="text-blue-500 underline"
                         >
-                         Acordo de membro
-                        </a>{" "}
-                        e da{" "} 
+                          Acordo de membro
+                        </a>{' '}
+                        e da{' '}
                         <a
                           href="https://www.mozilla.org/pt-BR/"
                           className="text-blue-500 underline"
                         >
                           Política de privacidade
-                        </a>{" "}
+                        </a>{' '}
                         do Potyguara Verse.
                       </label>
                     </div>
@@ -333,7 +335,7 @@ export default function SingupViewer() {
 
         {/* Footer */}
         <div className="mt-6 flex items-center justify-end gap-x-6">
-        <Dialog>
+          <Dialog>
             <DialogTrigger asChild>
               <Button
                 variant="ghost"
@@ -370,10 +372,9 @@ export default function SingupViewer() {
           >
             Cancelar
           </button>
-         
         </div>
       </form>
       <Footer />
     </main>
-  );
+  )
 }

@@ -3,9 +3,9 @@ import {
   CardContent,
   CardDescription,
   CardTitle,
-} from "@/components/ui/card";
-import Image from "next/image";
-import QualquerCoisa from "../../../public/BgSite.png";
+} from '@/components/ui/card'
+import Image from 'next/image'
+import QualquerCoisa from '../../../public/BgSite.png'
 
 export function CardTips() {
   return (
@@ -40,5 +40,5 @@ export function CardTips() {
         </div>
       </CardContent>
     </Card>
-  );
+  )
 }

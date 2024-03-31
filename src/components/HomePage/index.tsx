@@ -3,6 +3,7 @@
 import { Button } from "../ui/button";
 import { Dialog, DialogOverlay, DialogTrigger } from "@/components/ui/dialog";
 import { ChooseUserRole } from "../Singup/dialogChooseRole";
+import { Suspense } from "react";
 
 export function Homepage() {
   return (
@@ -27,7 +28,9 @@ export function Homepage() {
             <Button variant="secondary">Cadastre-se</Button>
           </DialogTrigger>
           <DialogOverlay className="bg-muted-foreground opacity-30 w-screen" />
-          <ChooseUserRole />
+          <Suspense>
+            <ChooseUserRole />
+          </Suspense>
         </Dialog>
       </div>
       <div className="lg:hidden w-full h-28 mt-12 bg-gradient-to-b from-black-000 to-background"></div>

@@ -7,6 +7,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { ChooseUserRole } from "../Singup/dialogChooseRole";
+import { Suspense } from "react";
 
 export function Contact() {
   return (
@@ -128,7 +129,9 @@ export function Contact() {
               </Button>
             </DialogTrigger>
             <DialogOverlay className="bg-background opacity-90 w-screen" />
+            <Suspense>
             <ChooseUserRole />
+            </Suspense>
           </Dialog>
 
           <Button className="text-foreground  w-full md:w-6/12 lg:w-6/12 text-lg">

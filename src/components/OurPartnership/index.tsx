@@ -1,18 +1,16 @@
-"use client";
+'use client'
 
-import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/css";
-import "swiper/css/pagination";
-import { Pagination, EffectCoverflow } from "swiper/modules";
-import "./styles.css";
-import { useEffect, useState } from "react";
-import ReactPlayer from "react-player";
+import { Swiper, SwiperSlide } from 'swiper/react'
+import 'swiper/css'
+import 'swiper/css/pagination'
+import { Pagination, EffectCoverflow } from 'swiper/modules'
+import './styles.css'
 import LogoImd from '../../../public/1A-Primaria-Gradiente.svg'
 import LogoAndrea from '../../../public/logoandrea.png'
 import LogoGameLab from '../../../public/LOGO VERT BRANCO@3x.png'
-import LogoSebrae from '../../../public/1A-Primaria-Gradiente.svg'
+import LogoSebrae from '../../../public/logo 50 anos  roxo.png'
 import LogoSudene from '../../../public/sudene.png'
-import Image from "next/image";
+import Image from 'next/image'
 
 const slides = [
   // {
@@ -45,16 +43,9 @@ const slides = [
     // title: "Sudene",
     // subtitle: 'Humildade para entender que se pode aprender sempre mais e ousadia para buscar a evolução.',
   },
-];
+]
 
 export default function OurPartnership() {
-  const [isClient, setIsClient] = useState(false);
-  const [isHovered, setIsHovered] = useState(false);
-
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
-
   return (
     <>
       <div
@@ -62,9 +53,9 @@ export default function OurPartnership() {
         id="ourpartnership"
         style={{
           backgroundImage: `url(/Waveosund.png)`,
-          backgroundSize: "contain",
-          backgroundRepeat: "no-repeat",
-          backgroundPositionY: "center",
+          backgroundSize: 'contain',
+          backgroundRepeat: 'no-repeat',
+          backgroundPositionY: 'center',
         }}
       >
         <div className="h-96 md:h-screen lg:h-screen pl-6 md:pl-0 lg:pl-0">
@@ -75,20 +66,20 @@ export default function OurPartnership() {
             breakpoints={{
               320: {
                 slidesPerView: 1,
-                spaceBetween: 20
+                spaceBetween: 20,
               },
               480: {
                 slidesPerView: 3,
-                spaceBetween: 30
+                spaceBetween: 30,
               },
               640: {
                 slidesPerView: 3,
-                spaceBetween: 40
-              }
+                spaceBetween: 40,
+              },
             }}
             navigation={true}
             loop={true}
-            effect={"coverflow"}
+            effect={'coverflow'}
             grabCursor={true}
             centeredSlides={true}
             coverflowEffect={{
@@ -105,13 +96,13 @@ export default function OurPartnership() {
             {slides.map((slide, index) => (
               <SwiperSlide key={index}>
                 <div className="text-foreground items-center justify-center h-fit">
-                  <Image src={slide.image} alt="Logos"/>
+                  <Image src={slide.image} alt="Logos" />
                 </div>
               </SwiperSlide>
             ))}
           </Swiper>
-        </div> 
+        </div>
       </div>
     </>
-  );
+  )
 }

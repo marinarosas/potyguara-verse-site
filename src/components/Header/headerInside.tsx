@@ -1,14 +1,14 @@
-"use client";
+'use client'
 
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useRouter } from 'next/navigation'
+import { useState } from 'react'
 import {
   ChartPieIcon,
   CursorArrowRaysIcon,
   UserCircleIcon,
-} from "@heroicons/react/24/outline";
-import { PhoneIcon, PlayCircleIcon } from "@heroicons/react/20/solid";
-import { useTheme } from "next-themes";
+} from '@heroicons/react/24/outline'
+import { PhoneIcon, PlayCircleIcon } from '@heroicons/react/20/solid'
+import { useTheme } from 'next-themes'
 import {
   Dialog,
   DialogClose,
@@ -19,15 +19,15 @@ import {
   DialogOverlay,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog";
-import { useToast } from "@/components/ui/use-toast";
+} from '@/components/ui/dialog'
+import { useToast } from '@/components/ui/use-toast'
 
-import * as React from "react";
+import * as React from 'react'
 
-import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
+import { cn } from '@/lib/utils'
+import { Button } from '@/components/ui/button'
 
-import Link from "next/link";
+import Link from 'next/link'
 // import { Icons } from "@/components/icons";
 import {
   NavigationMenu,
@@ -37,7 +37,7 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
-} from "@/components/ui/navigation-menu";
+} from '@/components/ui/navigation-menu'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -51,51 +51,51 @@ import {
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { RxAvatar } from "react-icons/rx";
-import { IoWalletOutline } from "react-icons/io5";
-import { GoGear } from "react-icons/go";
-import { IoIosArrowDown } from "react-icons/io";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { MoonIcon, SunIcon } from "@radix-ui/react-icons";
-import Image from "next/image";
-import LogoPotyguara from "../../../public/LogoRetangular.png";
-import BrasaoPreto from "../../../public/brasao_preto.png";
-import { NavigationMenuHeader } from "./NavigationMenu";
-import { FormCreateEvent } from "../MyEvents/formCreateEvent";
+} from '@/components/ui/dropdown-menu'
+import { RxAvatar } from 'react-icons/rx'
+import { IoWalletOutline } from 'react-icons/io5'
+import { GoGear } from 'react-icons/go'
+import { IoIosArrowDown } from 'react-icons/io'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import { MoonIcon, SunIcon } from '@radix-ui/react-icons'
+import Image from 'next/image'
+import LogoPotyguara from '../../../public/LogoRetangular.png'
+import BrasaoPreto from '../../../public/brasao_preto.png'
+import { NavigationMenuHeader } from './NavigationMenu'
+import { FormCreateEvent } from '../MyEvents/formCreateEvent'
 
 const products = [
   {
-    name: "Steam",
-    description: "Loja de plataforma para download",
-    href: "#",
+    name: 'Steam',
+    description: 'Loja de plataforma para download',
+    href: '#',
     icon: ChartPieIcon,
   },
   {
-    name: "Meta Quest Store",
-    description: "Loja para o óculos quest",
-    href: "#",
+    name: 'Meta Quest Store',
+    description: 'Loja para o óculos quest',
+    href: '#',
     icon: CursorArrowRaysIcon,
   },
-];
+]
 const callsToAction = [
-  { name: "Assita o trailer", href: "#", icon: PlayCircleIcon },
-  { name: "Fale conosco", href: "#", icon: PhoneIcon },
-];
+  { name: 'Assita o trailer', href: '#', icon: PlayCircleIcon },
+  { name: 'Fale conosco', href: '#', icon: PhoneIcon },
+]
 
 export function HeaderInside() {
-  const router = useRouter();
+  const router = useRouter()
 
-  const { setTheme } = useTheme();
+  const { setTheme } = useTheme()
 
-  const [openDialogCreateEvent, setOpenDialogCreateEvent] = useState(false);
+  const [openDialogCreateEvent, setOpenDialogCreateEvent] = useState(false)
 
   function handleNavigateToLoginPage() {
-    router.push(`/app/login-page`);
+    router.push(`/app/login-page`)
   }
 
   function handleNavigateToHomePage() {
-    router.push(`/`);
+    router.push(`/`)
   }
 
   return (
@@ -131,7 +131,7 @@ export function HeaderInside() {
             <DialogHeader>
               <DialogTitle
                 onClick={() => {
-                  setOpenDialogCreateEvent(true);
+                  setOpenDialogCreateEvent(true)
                 }}
               >
                 Criar evento
@@ -143,7 +143,9 @@ export function HeaderInside() {
             </DialogHeader>
 
             {/* Formulario evento */}
-            <FormCreateEvent setOpenDialogCreateEvent={setOpenDialogCreateEvent}/>
+            <FormCreateEvent
+              setOpenDialogCreateEvent={setOpenDialogCreateEvent}
+            />
           </DialogContent>
         </Dialog>
 
@@ -159,10 +161,10 @@ export function HeaderInside() {
             align="end"
             className="bg-muted-foreground text-foreground"
           >
-            <DropdownMenuItem onClick={() => setTheme("light")}>
+            <DropdownMenuItem onClick={() => setTheme('light')}>
               Light
             </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => setTheme("dark")}>
+            <DropdownMenuItem onClick={() => setTheme('dark')}>
               Dark
             </DropdownMenuItem>
           </DropdownMenuContent>
@@ -259,12 +261,12 @@ export function HeaderInside() {
         </DropdownMenu>
       </div>
     </header>
-  );
+  )
 }
 
 const ListItem = React.forwardRef<
-  React.ElementRef<"a">,
-  React.ComponentPropsWithoutRef<"a">
+  React.ElementRef<'a'>,
+  React.ComponentPropsWithoutRef<'a'>
 >(({ className, title, children, ...props }, ref) => {
   return (
     <li>
@@ -272,8 +274,8 @@ const ListItem = React.forwardRef<
         <a
           ref={ref}
           className={cn(
-            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
-            className
+            'block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground',
+            className,
           )}
           {...props}
         >
@@ -284,6 +286,6 @@ const ListItem = React.forwardRef<
         </a>
       </NavigationMenuLink>
     </li>
-  );
-});
-ListItem.displayName = "ListItem";
+  )
+})
+ListItem.displayName = 'ListItem'

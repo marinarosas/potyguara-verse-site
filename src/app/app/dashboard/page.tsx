@@ -1,13 +1,11 @@
-"use client";
+'use client'
 
-import { useRouter } from "next/navigation";
-import { FaMoneyBillWave } from "react-icons/fa";
-import { FaStar } from "react-icons/fa";
-import { RiSlideshow3Fill } from "react-icons/ri";
-import { FaWallet } from "react-icons/fa";
-import { MdEdit } from "react-icons/md";
-import { useListArtistAll } from "@/services/hooks/useListArtistAll";
-import { useEffect } from "react";
+import { useRouter } from 'next/navigation'
+import { FaMoneyBillWave, FaStar, FaWallet } from 'react-icons/fa'
+import { RiSlideshow3Fill } from 'react-icons/ri'
+import { MdEdit } from 'react-icons/md'
+import { useListArtistAll } from '@/services/hooks/useListArtistAll'
+import { useEffect } from 'react'
 
 import {
   Table,
@@ -18,32 +16,30 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
-import { object } from "zod";
-import Image from "next/image";
-import QualquerCoisa from "../../../../public/BgSite.png";
-import { CardSmallInfo } from "@/components/Cards/smallCardInfo";
-import { CardTips } from "@/components/Cards/cardTips";
-import { CardMyAvatar } from "@/components/Cards/cardMyAvatar";
-import { CardMyStage } from "@/components/Cards/cardMyStage";
+} from '@/components/ui/table'
+import { object } from 'zod'
+import Image from 'next/image'
+import QualquerCoisa from '../../../../public/BgSite.png'
+import { CardSmallInfo } from '@/components/Cards/smallCardInfo'
+import { CardTips } from '@/components/Cards/cardTips'
+import { CardMyAvatar } from '@/components/Cards/cardMyAvatar'
+import { CardMyStage } from '@/components/Cards/cardMyStage'
 export default function Dashboard() {
-  const router = useRouter();
+  const router = useRouter()
 
-  const { artists } = useListArtistAll();
+  const { artists } = useListArtistAll()
 
   function handleNavigateToHomePage() {
-    router.push(`/`);
+    router.push(`/`)
   }
 
   function handleNavigateToSingupPageArtist() {
-    router.push(`/singup-artist`);
+    router.push(`/singup-artist`)
   }
 
   function handleNavigateToSingupPageViewer() {
-    router.push(`/singup-viewer`);
+    router.push(`/singup-viewer`)
   }
-
-
 
   return (
     <div className="h-full px-8 py-6 space-y-6 pb-16">
@@ -56,5 +52,5 @@ export default function Dashboard() {
         </div>
       </div>
     </div>
-  );
+  )
 }

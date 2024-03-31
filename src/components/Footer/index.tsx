@@ -1,29 +1,30 @@
-"use client";
+'use client'
 
-import { useRouter } from "next/navigation";
-import { RiInstagramFill, RiLinkedinBoxFill } from "react-icons/ri";
+import { useRouter } from 'next/navigation'
+import { RiInstagramFill, RiLinkedinBoxFill } from 'react-icons/ri'
+import LogoPotyguara from '../../../public/LogoRetangular.png'
+import Image from 'next/image'
 
 export function Footer() {
-
-  const router = useRouter();
+  const router = useRouter()
 
   const scrollToSection = (sectionId: string) => {
-    const section = document.getElementById(sectionId);
+    const section = document.getElementById(sectionId)
     if (section) {
-      section.scrollIntoView({ behavior: "smooth" });
+      section.scrollIntoView({ behavior: 'smooth' })
     }
-  };
+  }
 
   function handleNavigateToInstaLink() {
-    window.open("https://www.instagram.com/_liveplus/", "_blank");
+    window.open('https://www.instagram.com/_liveplus/', '_blank')
   }
 
   function handleNavigateToLinkedinLink() {
-    window.open("https://www.linkedin.com/company/liveplusbr/", "_blank");
+    window.open('https://www.linkedin.com/company/liveplusbr/', '_blank')
   }
 
   function handleNavigateToHomePage(path: string) {
-    router.push(`/${path}`);
+    router.push(`/${path}`)
   }
 
   return (
@@ -31,13 +32,13 @@ export function Footer() {
       {/* Top part */}
       <div className="w-screen md:w-full lg:w-full flex flex-col md:flex-row lg:flex-row items-center pr-4">
         <div className="h-auto w-52 md:w-36 lg:w-36 col-span-1">
-          <img src="/LogoRetangular.png" alt="Logo Potyguara" />
+          <Image src={LogoPotyguara} alt="Logo Potyguara"/>
         </div>
         <nav className="col-span-5 flex justify-around w-screen flex-1 ml-4 md:ml-0 lg:ml-0 pl-2 md:pl-0 lg:pl-0 pr-2 md:pr-0 lg:pr-0">
           <a
             className="text-sm font-semibold leading-6 text-gray-900 hover:cursor-pointer"
             onClick={() => {
-              handleNavigateToHomePage("#homepage");
+              handleNavigateToHomePage('#homepage')
             }}
           >
             Home
@@ -45,7 +46,7 @@ export function Footer() {
           <a
             className="text-sm font-semibold leading-6 text-gray-900 hover:cursor-pointer"
             onClick={() => {
-              handleNavigateToHomePage("#aboutus");
+              handleNavigateToHomePage('#aboutus')
             }}
           >
             Sobre nós
@@ -53,7 +54,7 @@ export function Footer() {
           <a
             className="text-sm font-semibold leading-6 text-gray-900 hover:cursor-pointer"
             onClick={() => {
-              handleNavigateToHomePage("#ourpartnership");
+              handleNavigateToHomePage('#ourpartnership')
             }}
           >
             Nossos parceiros
@@ -61,7 +62,7 @@ export function Footer() {
           <a
             className="text-sm font-semibold leading-6 text-gray-900 hover:cursor-pointer"
             onClick={() => {
-              handleNavigateToHomePage("#contact");
+              handleNavigateToHomePage('#contact')
             }}
           >
             Contato
@@ -90,7 +91,7 @@ export function Footer() {
         <div className="w-full text-foreground">
           <h2 className="font-bold text-base">Matriz</h2>
           <h3>
-            Av. Engenheiro Roberto Freire, 1962, Loja 13, Capim Macio - NatalRN.{" "}
+            Av. Engenheiro Roberto Freire, 1962, Loja 13, Capim Macio - NatalRN.{' '}
             <br /> Cond. Seaway Shopping.
           </h3>
           <p className="hidden md:block lg:block text-xs w-full py-6">
@@ -129,5 +130,5 @@ export function Footer() {
         </div>
       </div>
     </div>
-  );
+  )
 }

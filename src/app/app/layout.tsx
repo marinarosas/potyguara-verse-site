@@ -1,11 +1,11 @@
-"use client";
+'use client'
 
-import { ReactNode } from "react";
+import { ReactNode } from 'react'
 // import { useAuth } from '@/contexts/AuthContext'
 // import Loading from "./loading";
-import { HeaderInside } from "@/components/Header/headerInside";
-import { FooterInside } from "@/components/Footer/footerInside";
-import { Toaster } from "@/components/ui/toaster";
+import { HeaderInside } from '@/components/Header/headerInside'
+import { FooterInside } from '@/components/Footer/footerInside'
+import { Toaster } from '@/components/ui/toaster'
 // import { theme } from '@/styles/theme'
 
 export default function Layout({ children }: { children: ReactNode }) {
@@ -23,15 +23,13 @@ export default function Layout({ children }: { children: ReactNode }) {
           <Loading />
         </>
       ) : ( */}
-       <div className="flex h-screen flex-col antialiased bg-muted-foreground text-foreground">
-        <HeaderInside/>
-        <div className="flex-1">
-        {children}
-        </div>
-        <Toaster/>
-        <FooterInside/>
+      <div className="flex h-screen flex-col antialiased bg-muted-foreground text-foreground">
+        <HeaderInside />
+        <div className="flex-1">{children}</div>
+        <Toaster />
+        <FooterInside />
       </div>
       {/* )} */}
     </>
-  );
+  )
 }

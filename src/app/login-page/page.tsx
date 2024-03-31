@@ -13,21 +13,15 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import Image from "next/image";
-import LogoPotyguara from '../../../public/LogoRetangular.png'
+import LogoPotyguara from "../../../public/LogoRetangular.png";
+import { ChooseUserRole } from "@/components/Singup/dialogChooseRole";
+import { Suspense } from "react";
 
 export default function Login() {
   const router = useRouter();
 
   function handleNavigateToHomePage() {
     router.push(`/`);
-  }
-
-  function handleNavigateToSingupPageArtist() {
-    router.push(`/singup-artist`);
-  }
-
-  function handleNavigateToSingupPageViewer() {
-    router.push(`/singup-viewer`);
   }
 
   function handleNavigateToDashboard() {
@@ -129,32 +123,9 @@ export default function Login() {
                 </Button>
               </DialogTrigger>
               <DialogOverlay className="bg-background opacity-90" />
-              <DialogContent className="sm:max-w-[425px] md:h-52">
-                <DialogHeader>
-                  <DialogTitle className="text-md text-foreground">
-                    Gostariamos de saber qual é o seu perfil?
-                  </DialogTitle>
-                  <DialogDescription className="text-justify">
-                    No Potyguara você pode escolher dois caminhos... <br />O
-                    criador de conteúdo (O artista) ou o consumidor de cultura
-                    (O espectador).
-                  </DialogDescription>
-                </DialogHeader>
-                <DialogFooter className="flex justify-around sm:justify-around">
-                  <Button
-                    className="w-32 text-foreground"
-                    onClick={() => handleNavigateToSingupPageArtist()}
-                  >
-                    Artista
-                  </Button>
-                  <Button
-                    className="w-32 text-foreground"
-                    onClick={() => handleNavigateToSingupPageViewer()}
-                  >
-                    Espectador
-                  </Button>
-                </DialogFooter>
-              </DialogContent>
+              <Suspense>
+                <ChooseUserRole />
+              </Suspense>
             </Dialog>
           </p>
         </div>

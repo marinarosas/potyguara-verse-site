@@ -1,12 +1,18 @@
-"use client";
+'use client'
 
-import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/css";
-import "swiper/css/pagination";
-import { Pagination, EffectCoverflow } from "swiper/modules";
-import "./styles.css";
-import { useEffect, useState } from "react";
-import ReactPlayer from "react-player";
+import { Swiper, SwiperSlide } from 'swiper/react'
+import 'swiper/css'
+import 'swiper/css/pagination'
+import { Pagination, EffectCoverflow } from 'swiper/modules'
+import './styles.css'
+import { useEffect, useState } from 'react'
+import ReactPlayer from 'react-player'
+import LogoImd from '../../../public/1A-Primaria-Gradiente.svg'
+import LogoAndrea from '../../../public/logoandrea.png'
+import LogoGameLab from '../../../public/LOGO VERT BRANCO@3x.png'
+import LogoSebrae from '../../../public/logo 50 anos  roxo.png'
+import LogoSudene from '../../../public/sudene.png'
+import Image from 'next/image'
 
 const slides = [
   // {
@@ -15,39 +21,34 @@ const slides = [
   //   // subtitle: 'É inegociável o cumprimento da regulação e de todos os nossos contratos e compromissos firmados.',
   // },
   {
-    image: "/1A-Primaria-Gradiente.svg",
+    image: LogoImd,
     // title: "Metrópole Digital - IMD",
     // subtitle: 'O sucesso é uma via de mão dupla, nossos parceiros e colaboradores são chave para o nosso crescimento.',
   },
   {
-    image: "/logoandrea.png",
+    image: LogoAndrea,
     // title: "Andrea Arteterapeuta",
     // subtitle: 'A diversidade enriquece ambientes e as pessoas são o nosso maior capital',
   },
   {
-    image: "/LOGO VERT BRANCO@3x.png",
+    image: LogoGameLab,
     // title: "Game Lab",
     // subtitle: 'Proatividade, disposição e desenvoltura para resolver problemas.',
   },
   {
-    image: "/logo 50 anos  roxo.png",
+    image: LogoSebrae,
     // title: "Sebrae RN",
     // subtitle: 'Estar aberto para enxergar novas perspectivas, buscar diferentes soluções e protagonizar mudanças.',
   },
   {
-    image: "/sudene.png",
+    image: LogoSudene,
     // title: "Sudene",
     // subtitle: 'Humildade para entender que se pode aprender sempre mais e ousadia para buscar a evolução.',
   },
-];
+]
 
 export default function OurPartnership() {
-  const [isClient, setIsClient] = useState(false);
-  const [isHovered, setIsHovered] = useState(false);
-
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
+  const [isHovered, setIsHovered] = useState(false)
 
   return (
     <div
@@ -55,12 +56,12 @@ export default function OurPartnership() {
       id="ourpartnership"
     >
       <div
-      className="border-2 border-green-neon"
+        className="border-2 border-green-neon"
         style={{
           backgroundImage: `url(/Waveosund.png)`,
-          backgroundSize: "contain",
-          backgroundRepeat: "no-repeat",
-          backgroundPositionY: "center",
+          backgroundSize: 'contain',
+          backgroundRepeat: 'no-repeat',
+          backgroundPositionY: 'center',
         }}
       >
         <h2
@@ -80,7 +81,7 @@ export default function OurPartnership() {
           spaceBetween={30}
           navigation={true}
           loop={true}
-          effect={"coverflow"}
+          effect={'coverflow'}
           grabCursor={true}
           centeredSlides={true}
           coverflowEffect={{
@@ -97,7 +98,7 @@ export default function OurPartnership() {
           {slides.map((slide, index) => (
             <SwiperSlide key={index}>
               <div className="text-foreground items-center justify-center">
-                <img src={slide.image} alt="Logos" />
+                <Image src={slide.image} alt="Logos" />
               </div>
             </SwiperSlide>
           ))}
@@ -114,5 +115,5 @@ export default function OurPartnership() {
         onMouseLeave={() => setIsHovered(false)}
       />
     </div>
-  );
+  )
 }
