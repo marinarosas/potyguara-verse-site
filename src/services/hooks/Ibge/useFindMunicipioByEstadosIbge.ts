@@ -1,12 +1,11 @@
-// import { parseCookies } from "nookies";
+import { parseCookies } from "nookies";
 import useSWR from "swr";
-import { IArtist } from "@/types/artist";
+import { IMunicipioIbge } from "@/types/ibge";
 import axios from "axios";
 
-type IResponse = IArtist[];
+type IResponse = IMunicipioIbge[];
 
-export function useListArtistAll() {
-
+export function useFindMunicipioByEstadosIbge(estado: string) {
   const tenantId = process.env.NEXT_PUBLIC_TENANT_ID;
   const apiMasterKey = process.env.NEXT_PUBLIC_API_MASTER_KEY;
 
@@ -19,11 +18,11 @@ export function useListArtistAll() {
   };
 
   const { data, error, isLoading, isValidating, mutate } = useSWR<IResponse>(
-    `https://api.ycodify.com/v2/persistence/q/s/no-ac`,
+    `https://servicodados.ibge.gov.br/api/v1/localidades/estados/${estado}/municipios`,
     (url: string) =>
       axios
-        .post(
-          `https://api.ycodify.com/v2/persistence/q/s/no-ac`,
+        .get(
+          `https://servicodados.ibge.gov.br/api/v1/localidades/estados/${estado}/municipios`,
 
           {
             artist: {
@@ -48,10 +47,10 @@ export function useListArtistAll() {
   );
 
   return {
-    artists: data,
-    errorArtists: error,
-    isLoadingArtists: isLoading,
-    isValidatingArtists: isValidating,
-    mutateArtists: mutate,
+    municipios: data,
+    error,
+    isLoading,
+    isValidating,
+    mutateMunicipios: mutate,
   };
 }

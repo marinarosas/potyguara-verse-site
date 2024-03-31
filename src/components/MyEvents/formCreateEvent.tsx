@@ -1,7 +1,7 @@
-'use client'
+"use client";
 
-import { cn } from '@/lib/utils'
-import { Button } from '@/components/ui/button'
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -10,25 +10,25 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/ui/form'
-import { MdOutlineAddPhotoAlternate } from 'react-icons/md'
+} from "@/components/ui/form";
+import { MdOutlineAddPhotoAlternate } from "react-icons/md";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from '@/components/ui/popover'
-import { Calendar } from '@/components/ui/calendar'
-import { Input } from '../ui/input'
-import { CalendarIcon } from '@radix-ui/react-icons'
-import { Textarea } from '@/components/ui/textarea'
-import React from 'react'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { SubmitHandler, useForm } from 'react-hook-form'
-import { format } from 'date-fns'
-import axios from 'axios'
-import { z } from 'zod'
-import { DialogClose, DialogFooter } from '../ui/dialog'
-import { useToast } from '../ui/use-toast'
+} from "@/components/ui/popover";
+import { Calendar } from "@/components/ui/calendar";
+import { Input } from "../ui/input";
+import { CalendarIcon } from "@radix-ui/react-icons";
+import { Textarea } from "@/components/ui/textarea";
+import React, { useState } from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { format } from "date-fns";
+import axios from "axios";
+import { z } from "zod";
+import { DialogClose, DialogFooter } from "../ui/dialog";
+import { useToast } from "../ui/use-toast";
 
 const eventFormSchema = z.object({
   // artist: z.string(),
@@ -40,42 +40,42 @@ const eventFormSchema = z.object({
   description: z.string(),
   statuspayment: z.boolean(),
   // ecad: z.string(),
-})
+});
 
 interface Props {
-  setOpenDialogCreateEvent: any
+  setOpenDialogCreateEvent: any;
 }
 
 export function FormCreateEvent({ setOpenDialogCreateEvent }: Props) {
-  const { toast } = useToast()
+  const { toast } = useToast();
 
-  const [dateEvent, setDateEvent] = React.useState<Date>()
+  const [dateEvent, setDateEvent] = useState<Date>();
 
   const formEvent = useForm<z.infer<typeof eventFormSchema>>({
     resolver: zodResolver(eventFormSchema),
     defaultValues: {
       //   artist: "",
       //   eventdata: "",
-      nameevent: '',
-      timeevent: '',
-      durantionevent: '',
-      price: '',
-      description: '',
+      nameevent: "",
+      timeevent: "",
+      durantionevent: "",
+      price: "",
+      description: "",
       statuspayment: false,
       //   ecad: ""
     },
-  })
+  });
 
-  const tenantId = process.env.NEXT_PUBLIC_TENANT_ID
-  const apiMasterKey = process.env.NEXT_PUBLIC_API_MASTER_KEY
+  const tenantId = process.env.NEXT_PUBLIC_TENANT_ID;
+  const apiMasterKey = process.env.NEXT_PUBLIC_API_MASTER_KEY;
 
   const axiosConfig = {
     headers: {
-      'Content-Type': 'application/json',
-      'X-Tenant-ID': tenantId,
-      'X-API-Master-Key': apiMasterKey,
+      "Content-Type": "application/json",
+      "X-Tenant-ID": tenantId,
+      "X-API-Master-Key": apiMasterKey,
     },
-  }
+  };
 
   const handleCreateEvent: SubmitHandler<
     z.infer<typeof eventFormSchema>
@@ -89,9 +89,9 @@ export function FormCreateEvent({ setOpenDialogCreateEvent }: Props) {
   }) => {
     try {
       await axios.post(
-        'https://api.ycodify.com/v2/persistence/c/s/no-ac',
+        "https://api.ycodify.com/v2/persistence/c/s/no-ac",
         {
-          action: 'CREATE',
+          action: "CREATE",
           data: [
             {
               evento: {
@@ -105,23 +105,23 @@ export function FormCreateEvent({ setOpenDialogCreateEvent }: Props) {
             },
           ],
         },
-        axiosConfig,
-      )
+        axiosConfig
+      );
 
       toast({
-        title: 'Uhuu! Deu certo o cadastro.',
-        description: 'Cadastro do evento criado com sucesso.',
-      })
-      setOpenDialogCreateEvent(false)
+        title: "Uhuu! Deu certo o cadastro.",
+        description: "Cadastro do evento criado com sucesso.",
+      });
+      setOpenDialogCreateEvent(false);
     } catch (error) {
-      console.log(error)
+      console.log(error);
       toast({
-        title: 'Ops! Algo deu errado.',
-        description: 'O cadastro não foi criado, fale com a central.',
-      })
-      setOpenDialogCreateEvent(false)
+        title: "Ops! Algo deu errado.",
+        description: "O cadastro não foi criado, fale com a central.",
+      });
+      setOpenDialogCreateEvent(false);
     }
-  }
+  };
 
   return (
     <Form {...formEvent}>
@@ -165,15 +165,15 @@ export function FormCreateEvent({ setOpenDialogCreateEvent }: Props) {
             <Popover>
               <PopoverTrigger asChild>
                 <Button
-                  variant={'outline'}
+                  variant={"outline"}
                   className={cn(
-                    'flex w-full justify-start text-left font-normal text-background placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 bg-foreground',
-                    !dateEvent && 'text-muted-foreground',
+                    "flex w-full justify-start text-left font-normal text-background placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 bg-foreground",
+                    !dateEvent && "text-muted-foreground"
                   )}
                 >
                   <CalendarIcon className="mr-2 h-4 w-4" />
                   {dateEvent ? (
-                    format(dateEvent, 'PPP')
+                    format(dateEvent, "PPP")
                   ) : (
                     <span>Escolha uma data</span>
                   )}
@@ -264,7 +264,7 @@ export function FormCreateEvent({ setOpenDialogCreateEvent }: Props) {
               </FormControl>
               <FormDescription>
                 Lembre que esse valor é retirado a taxa da plataforma e
-                impostos. Taxa de transmissão a parte. Ler{' '}
+                impostos. Taxa de transmissão a parte. Ler{" "}
                 <span className="text-blue-500">Termo do usuário</span>.
               </FormDescription>
               <FormMessage />
@@ -287,5 +287,5 @@ export function FormCreateEvent({ setOpenDialogCreateEvent }: Props) {
         </Button>
       </DialogFooter>
     </Form>
-  )
+  );
 }
