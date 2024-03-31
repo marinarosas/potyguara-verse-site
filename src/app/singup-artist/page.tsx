@@ -22,7 +22,19 @@ import {
 } from "@/components/ui/form";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/components/ui/use-toast";
-import { Suspense } from "react";
+import { Suspense, useEffect, useState } from "react";
+import { useListEstadosIBGE } from "@/services/hooks/Ibge/useListEstadosIbge";
+import { useFindMunicipioByEstadosIbge } from "@/services/hooks/Ibge/useFindMunicipioByEstadosIbge";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { InputMasked } from "@/components/Form/inputMask";
 
 const formSchema = z.object({
   username: z.string().min(10, {
@@ -58,12 +70,28 @@ const formSchema = z.object({
     message: "Informe o CPF",
   }),
   allownotifications: z.boolean(),
+  acceptplataformterms: z.boolean(),
 });
 
 export default function SingupArtist() {
   const router = useRouter();
 
   const { toast } = useToast();
+
+  const { estados } = useListEstadosIBGE();
+
+  const [estadoIbge, setEstadoIbge] = useState<string>("");
+
+  const [zipcodeStreet, setZipcodeStreet] = useState<string>("");
+
+  const [userDocumentNumber, setUserDocumentNumber] = useState<string>("");
+
+  const { municipios } = useFindMunicipioByEstadosIbge(estadoIbge);
+
+  const [allowNotification, setAllowNotification] = useState<boolean>(false);
+
+  const [acceptTermsAndPolicy, setAcceptTermsAndPolicy] =
+    useState<boolean>(false);
 
   const searchParams = useSearchParams();
 
@@ -72,7 +100,11 @@ export default function SingupArtist() {
   const tenantId = process.env.NEXT_PUBLIC_TENANT_ID;
   const apiMasterKey = process.env.NEXT_PUBLIC_API_MASTER_KEY;
 
-  function handleNavigateToHomePage() {
+  function handleNavigateToLoginPage() {
+    router.push(`/login-page`);
+  }
+
+  function handleNavigateToHomePage(){
     router.push(`/`);
   }
 
@@ -92,6 +124,7 @@ export default function SingupArtist() {
       zipcode: "",
       documentnumber: "",
       allownotifications: false,
+      acceptplataformterms: false,
     },
   });
 
@@ -110,13 +143,9 @@ export default function SingupArtist() {
     streetname,
     streetcomplement,
     country,
-    state,
     city,
     email,
     aboutartist,
-    zipcode,
-    documentnumber,
-    allownotifications,
   }) => {
     console.log("entrou");
 
@@ -134,14 +163,15 @@ export default function SingupArtist() {
                 streetname,
                 streetcomplement,
                 country,
-                state,
+                state: estadoIbge,
                 city,
                 email,
                 aboutartist,
-                zipcode,
-                documentnumber,
-                allownotifications,
+                zipcode: zipcodeStreet,
+                documentnumber: userDocumentNumber,
+                allownotifications: allowNotification,
                 role: userRole,
+                acceptplataformterms: acceptTermsAndPolicy,
               },
             },
           ],
@@ -153,6 +183,8 @@ export default function SingupArtist() {
         title: "Uhuu! Cadastro realizado com sucesso.",
         description: "Cadastro do usuário criado com sucesso.",
       });
+
+      handleNavigateToLoginPage()
     } catch (error) {
       console.log(error);
       toast({
@@ -163,115 +195,59 @@ export default function SingupArtist() {
   };
 
   return (
-   <Suspense>
-       <main className="bg-muted-foreground text-foreground">
-      <Header />
-     <Form {...form}>
-        <form
-          onSubmit={form.handleSubmit(handleCreateArtist)}
-          className="px-28 py-8"
-        >
-          {/* Formulário */}
-          <div className="border-b border-gray-900/10 pb-12">
-            <h2 className="text-secondary text-xl font-semibold leading-7 pb-4">
-              Perfil do Artista
-            </h2>
-            <p className="mt-1 text-sm leading-6">
-              Olá. <br /> É aqui que sua jornada artística começa! <br />{" "}
-              Primeiro, precisamos saber um pouco mais sobre você e o seu
-              trabalho. Preencha os dados a seguir, para poder avançar para a
-              próxima etapa.
-            </p>
+      <main className="bg-muted-foreground text-foreground">
+        <Header />
+        <Form {...form}>
+          <form
+            onSubmit={form.handleSubmit(handleCreateArtist)}
+            className="px-28 py-8"
+          >
+            {/* Formulário */}
+            <div className="border-b border-gray-900/10 pb-12">
+              <h2 className="text-secondary text-xl font-semibold leading-7 pb-4">
+                Perfil do Artista
+              </h2>
+              <p className="mt-1 text-sm leading-6">
+                Olá. <br /> É aqui que sua jornada artística começa! <br />{" "}
+                Primeiro, precisamos saber um pouco mais sobre você e o seu
+                trabalho. Preencha os dados a seguir, para poder avançar para a
+                próxima etapa.
+              </p>
 
-            <div className="col-span-full pt-8">
-              <label
-                htmlFor="photo"
-                className="block text-sm font-medium leading-6"
-              >
-                Foto da pessoa ou grupo artístico
-              </label>
-              <div className="mt-2 flex items-center gap-x-3">
-                <UserCircleIcon
-                  className="h-12 w-12 text-gray-300"
-                  aria-hidden="true"
-                />
-                <Button type="button" className="text-white">
-                  Mudar
-                </Button>
+              <div className="col-span-full pt-8">
+                <label
+                  htmlFor="photo"
+                  className="block text-sm font-medium leading-6"
+                >
+                  Foto da pessoa ou grupo artístico
+                </label>
+                <div className="mt-2 flex items-center gap-x-3">
+                  <UserCircleIcon
+                    className="h-12 w-12 text-gray-300"
+                    aria-hidden="true"
+                  />
+                  <Button type="button" className="text-white">
+                    Mudar
+                  </Button>
+                </div>
               </div>
-            </div>
-            <FormField
-              control={form.control}
-              name="username"
-              render={({ field }) => (
-                <FormItem className="w-1/2 mt-8">
-                  <FormLabel>Nome artítico (Username)</FormLabel>
-                  <FormControl>
-                    <Input
-                      id="username"
-                      placeholder="Informe o nome artístico"
-                      className="text-background placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 bg-foreground"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormDescription>
-                    Esse será seu nome de usuário e login.
-                  </FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="aboutartist"
-              render={({ field }) => (
-                <FormItem className="mt-8">
-                  <FormLabel>Sobre</FormLabel>
-                  <FormControl>
-                    <Textarea
-                      id="aboutartist"
-                      placeholder="Informe o nome artístico"
-                      className="text-background placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 bg-foreground h-32"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormDescription>
-                    Escreva um pouco sobre seu trabalho.
-                  </FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </div>
-
-          <div className="mt-8">
-            <h2 className="text-base font-semibold leading-7">
-              Informação pessoal
-            </h2>
-            <p className="mt-1 text-sm leading-6">
-              Aqui, precismos que você preencha os dados pessoais de quem será o
-              admnistrador do artista ou grupo artístico dentro do Potyguara
-              Verse.
-            </p>
-            <div className="flex gap-4">
               <FormField
                 control={form.control}
-                name="name"
+                name="username"
                 render={({ field }) => (
                   <FormItem className="w-1/2 mt-8">
-                    <FormLabel>Nome completo</FormLabel>
+                    <FormLabel>Nome artítico (Username)</FormLabel>
                     <FormControl>
                       <Input
-                        id="name"
-                        placeholder="Informe o nome completo"
+                        id="username"
+                        placeholder="Informe o nome artístico"
                         className="text-background placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 bg-foreground"
                         {...field}
                       />
                     </FormControl>
-                    {/* <FormDescription>
-                    Esse será seu nome de usuário e login.
-                  </FormDescription> */}
+                    <FormDescription>
+                      Esse será seu nome de usuário e login.
+                    </FormDescription>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -279,17 +255,338 @@ export default function SingupArtist() {
 
               <FormField
                 control={form.control}
-                name="documentnumber"
+                name="aboutartist"
+                render={({ field }) => (
+                  <FormItem className="mt-8">
+                    <FormLabel>Sobre</FormLabel>
+                    <FormControl>
+                      <Textarea
+                        id="aboutartist"
+                        placeholder="Informe o nome artístico"
+                        className="text-background placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 bg-foreground h-32"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormDescription>
+                      Escreva um pouco sobre seu trabalho.
+                    </FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+
+            <div className="mt-8">
+              <h2 className="text-base font-semibold leading-7">
+                Informação pessoal
+              </h2>
+              <p className="mt-1 text-sm leading-6">
+                Aqui, precismos que você preencha os dados pessoais de quem será
+                o admnistrador do artista ou grupo artístico dentro do Potyguara
+                Verse.
+              </p>
+              <div className="flex gap-4">
+                <FormField
+                  control={form.control}
+                  name="name"
+                  render={({ field }) => (
+                    <FormItem className="w-1/2 mt-8">
+                      <FormLabel>Nome completo</FormLabel>
+                      <FormControl>
+                        <Input
+                          id="name"
+                          placeholder="Informe o nome completo"
+                          className="text-background placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 bg-foreground"
+                          {...field}
+                        />
+                      </FormControl>
+                      {/* <FormDescription>
+                    Esse será seu nome de usuário e login.
+                  </FormDescription> */}
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="documentnumber"
+                  render={({ field }) => (
+                    <FormItem className="w-1/2 mt-8">
+                      <FormLabel>CPF</FormLabel>
+                      <FormControl>
+                        {/* <Input
+                          id="documentnumber"
+                          placeholder="Informe o cpf"
+                          className="text-background placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 bg-foreground"
+                          // onChange={(e) => setDocumentNumber(e.target.value)}
+                          {...field}
+                        /> */}
+                        <InputMasked
+                          mask="999.999.999-99"
+                          id="documentnumber"
+                          placeholder="Informe o cpf"
+                          onChange={(e)=>{
+                            field.onChange(e.target.value)
+                            setUserDocumentNumber(e.target.value)
+                          }}
+                          // {...field}
+                        />
+                      </FormControl>
+                      {/* <FormDescription>
+                    Esse será seu nome de usuário e login.
+                  </FormDescription> */}
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+
+              <FormField
+                control={form.control}
+                name="email"
                 render={({ field }) => (
                   <FormItem className="w-1/2 mt-8">
-                    <FormLabel>CPF</FormLabel>
+                    <FormLabel>E-mail</FormLabel>
                     <FormControl>
                       <Input
-                        id="documentnumber"
-                        placeholder="Informe o cpf"
+                        id="email"
+                        placeholder="Informe o e-mail"
                         className="text-background placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 bg-foreground"
                         {...field}
                       />
+                    </FormControl>
+                    {/* <FormDescription>
+                    Esse será seu nome de usuário e login.
+                  </FormDescription> */}
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem className="w-1/2 mt-8">
+                    <FormLabel>Confirme o e-mail</FormLabel>
+                    <FormControl>
+                      <Input
+                        id="email"
+                        placeholder="Informe o e-mail novamente"
+                        className="text-background placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 bg-foreground"
+                        {...field}
+                      />
+                    </FormControl>
+                    {/* <FormDescription>
+                    Esse será seu nome de usuário e login.
+                  </FormDescription> */}
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <h2 className="text-base font-semibold leading-7 mt-8">
+                Endereço
+              </h2>
+
+              <div className="flex gap-4">
+                <FormField
+                  control={form.control}
+                  name="streetname"
+                  render={({ field }) => (
+                    <FormItem className="w-1/2 mt-4">
+                      <FormLabel>Rua</FormLabel>
+                      <FormControl>
+                        <Input
+                          id="streetname"
+                          placeholder="Informe a rua"
+                          className="text-background placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 bg-foreground"
+                          {...field}
+                        />
+                      </FormControl>
+                      {/* <FormDescription>
+                    Esse será seu nome de usuário e login.
+                  </FormDescription> */}
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="streetnumber"
+                  render={({ field }) => (
+                    <FormItem className="w-1/2 mt-4">
+                      <FormLabel>Número</FormLabel>
+                      <FormControl>
+                        <Input
+                          id="streetnumber"
+                          placeholder="Informe o número"
+                          className="text-background placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 bg-foreground"
+                          {...field}
+                        />
+                      </FormControl>
+                      {/* <FormDescription>
+                    Esse será seu nome de usuário e login.
+                  </FormDescription> */}
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+
+              <div className="flex gap-4">
+                <FormField
+                  control={form.control}
+                  name="streetcomplement"
+                  render={({ field }) => (
+                    <FormItem className="w-1/2 mt-4">
+                      <FormLabel>Complemento</FormLabel>
+                      <FormControl>
+                        <Input
+                          id="complement"
+                          placeholder="Informe o complemento, se houver."
+                          className="text-background placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 bg-foreground"
+                          {...field}
+                        />
+                      </FormControl>
+                      {/* <FormDescription>
+                    Esse será seu nome de usuário e login.
+                  </FormDescription> */}
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="country"
+                  render={({ field }) => (
+                    <FormItem className="w-1/2 mt-4">
+                      <FormLabel>País</FormLabel>
+                      <FormControl>
+                        <Input
+                          id="country"
+                          placeholder="Informe o país"
+                          className="text-background placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 bg-foreground"
+                          {...field}
+                        />
+                      </FormControl>
+                      {/* <FormDescription>
+                    Esse será seu nome de usuário e login.
+                  </FormDescription> */}
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+
+              <div className="flex gap-4">
+                <FormField
+                  control={form.control}
+                  name="state"
+                  render={({ field }) => (
+                    <FormItem className="w-1/2 mt-4">
+                      <FormLabel>Estados</FormLabel>
+                      <FormControl>
+                        <Select
+                          // onValueChange={field.onChange}
+
+                          onValueChange={(value) => {
+                            field.onChange(value);
+                            setEstadoIbge(value);
+                          }}
+                        >
+                          <SelectTrigger className="bg-foreground text-background placeholder:text-gray-400">
+                            <SelectValue placeholder="Selecione seu estado" />
+                          </SelectTrigger>
+                          <SelectContent className="text-foreground focus:ring-0 sm:text-sm sm:leading-6 bg-muted-foreground">
+                            <SelectGroup>
+                              {estados?.map((estado) => {
+                                return (
+                                  <SelectItem
+                                    key={estado.id}
+                                    value={estado.sigla}
+                                  >
+                                    {estado.sigla}
+                                  </SelectItem>
+                                );
+                              })}
+                            </SelectGroup>
+                          </SelectContent>
+                        </Select>
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="city"
+                  render={({ field }) => (
+                    <FormItem className="w-1/2 mt-4">
+                      <FormLabel>Cidade</FormLabel>
+                      <FormControl>
+                        <Select
+                          onValueChange={(value) => {
+                            field.onChange(value);
+                          }}
+                        >
+                          <SelectTrigger className="bg-foreground text-background placeholder:text-gray-400">
+                            <SelectValue placeholder="Selecione seu estado" />
+                          </SelectTrigger>
+                          <SelectContent className="text-foreground focus:ring-0 sm:text-sm sm:leading-6 bg-muted-foreground">
+                            <SelectGroup>
+                              {municipios?.map((municipio) => {
+                                return (
+                                  municipio.microrregiao.mesorregiao.UF
+                                    .sigla === estadoIbge && (
+                                    <SelectItem
+                                      key={municipio.id}
+                                      value={municipio.nome}
+                                    >
+                                      {municipio.nome}
+                                    </SelectItem>
+                                  )
+                                );
+                              })}
+                            </SelectGroup>
+                          </SelectContent>
+                        </Select>
+                        {/* <Input
+                          id="city"
+                          placeholder="Informe a cidade"
+                          className="text-background placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 bg-foreground"
+                          {...field}
+                        /> */}
+                      </FormControl>
+                      {/* <FormDescription>
+                    Esse será seu nome de usuário e login.
+                  </FormDescription> */}
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+
+              <FormField
+                control={form.control}
+                name="zipcode"
+                render={({ field }) => (
+                  <FormItem className="w-1/2 mt-4">
+                    <FormLabel>CEP</FormLabel>
+                    <FormControl>
+                    <InputMasked
+                          mask="99.999-999"
+                          id="zipcode"
+                          placeholder="Informe o CEP"
+                          onChange={(e)=>{
+                            field.onChange(e.target.value)
+                            setZipcodeStreet(e.target.value)
+                          }}
+                          // {...field}
+                        />
+                      
                     </FormControl>
                     {/* <FormDescription>
                     Esse será seu nome de usuário e login.
@@ -300,228 +597,24 @@ export default function SingupArtist() {
               />
             </div>
 
-            <FormField
-              control={form.control}
-              name="email"
-              render={({ field }) => (
-                <FormItem className="w-1/2 mt-8">
-                  <FormLabel>E-mail</FormLabel>
-                  <FormControl>
-                    <Input
-                      id="email"
-                      placeholder="Informe o e-mail"
-                      className="text-background placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 bg-foreground"
-                      {...field}
-                    />
-                  </FormControl>
-                  {/* <FormDescription>
-                    Esse será seu nome de usuário e login.
-                  </FormDescription> */}
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="email"
-              render={({ field }) => (
-                <FormItem className="w-1/2 mt-8">
-                  <FormLabel>Confirme o e-mail</FormLabel>
-                  <FormControl>
-                    <Input
-                      id="email"
-                      placeholder="Informe o e-mail novamente"
-                      className="text-background placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 bg-foreground"
-                      {...field}
-                    />
-                  </FormControl>
-                  {/* <FormDescription>
-                    Esse será seu nome de usuário e login.
-                  </FormDescription> */}
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <h2 className="text-base font-semibold leading-7 mt-8">Endereço</h2>
-
-            <div className="flex gap-4">
-              <FormField
-                control={form.control}
-                name="streetname"
-                render={({ field }) => (
-                  <FormItem className="w-1/2 mt-4">
-                    <FormLabel>Rua</FormLabel>
-                    <FormControl>
-                      <Input
-                        id="streetname"
-                        placeholder="Informe a rua"
-                        className="text-background placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 bg-foreground"
-                        {...field}
-                      />
-                    </FormControl>
-                    {/* <FormDescription>
-                    Esse será seu nome de usuário e login.
-                  </FormDescription> */}
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="streetnumber"
-                render={({ field }) => (
-                  <FormItem className="w-1/2 mt-4">
-                    <FormLabel>Número</FormLabel>
-                    <FormControl>
-                      <Input
-                        id="streetnumber"
-                        placeholder="Informe o número"
-                        className="text-background placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 bg-foreground"
-                        {...field}
-                      />
-                    </FormControl>
-                    {/* <FormDescription>
-                    Esse será seu nome de usuário e login.
-                  </FormDescription> */}
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+            <div className="mt-6 flex items-center justify-end gap-x-6">
+              <button
+                type="button"
+                className="text-sm font-semibold leading-6 hover:text-red-600"
+                onClick={() => handleNavigateToHomePage()}
+              >
+                Cancel
+              </button>
+              <Button
+                type="submit"
+                variant="ghost"
+                className="hover:bg-transparent hover:text-secondary"
+              >
+                Save
+              </Button>
             </div>
 
-            <div className="flex gap-4">
-              <FormField
-                control={form.control}
-                name="streetcomplement"
-                render={({ field }) => (
-                  <FormItem className="w-1/2 mt-4">
-                    <FormLabel>streetcomplemento</FormLabel>
-                    <FormControl>
-                      <Input
-                        id="complement"
-                        placeholder="Informe o complemento, se houver."
-                        className="text-background placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 bg-foreground"
-                        {...field}
-                      />
-                    </FormControl>
-                    {/* <FormDescription>
-                    Esse será seu nome de usuário e login.
-                  </FormDescription> */}
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="country"
-                render={({ field }) => (
-                  <FormItem className="w-1/2 mt-4">
-                    <FormLabel>País</FormLabel>
-                    <FormControl>
-                      <Input
-                        id="country"
-                        placeholder="Informe o país"
-                        className="text-background placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 bg-foreground"
-                        {...field}
-                      />
-                    </FormControl>
-                    {/* <FormDescription>
-                    Esse será seu nome de usuário e login.
-                  </FormDescription> */}
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-
-            <div className="flex gap-4">
-              <FormField
-                control={form.control}
-                name="state"
-                render={({ field }) => (
-                  <FormItem className="w-1/2 mt-4">
-                    <FormLabel>Estado</FormLabel>
-                    <FormControl>
-                      <Input
-                        id="state"
-                        placeholder="Informe o estado"
-                        className="text-background placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 bg-foreground"
-                        {...field}
-                      />
-                    </FormControl>
-                    {/* <FormDescription>
-                    Esse será seu nome de usuário e login.
-                  </FormDescription> */}
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="city"
-                render={({ field }) => (
-                  <FormItem className="w-1/2 mt-4">
-                    <FormLabel>Cidade</FormLabel>
-                    <FormControl>
-                      <Input
-                        id="city"
-                        placeholder="Informe a cidade"
-                        className="text-background placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 bg-foreground"
-                        {...field}
-                      />
-                    </FormControl>
-                    {/* <FormDescription>
-                    Esse será seu nome de usuário e login.
-                  </FormDescription> */}
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-
-            <FormField
-              control={form.control}
-              name="zipcode"
-              render={({ field }) => (
-                <FormItem className="w-1/2 mt-4">
-                  <FormLabel>CEP</FormLabel>
-                  <FormControl>
-                    <Input
-                      id="zipcode"
-                      placeholder="Informe o CEP"
-                      className="text-background placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 bg-foreground"
-                      {...field}
-                    />
-                  </FormControl>
-                  {/* <FormDescription>
-                    Esse será seu nome de usuário e login.
-                  </FormDescription> */}
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </div>
-
-          <div className="mt-6 flex items-center justify-end gap-x-6">
-            <button
-              type="button"
-              className="text-sm font-semibold leading-6 hover:text-red-600"
-              onClick={() => handleNavigateToHomePage()}
-            >
-              Cancel
-            </button>
-            <Button
-              type="submit"
-              variant="ghost"
-              className="hover:bg-transparent hover:text-secondary"
-            >
-              Save
-            </Button>
-          </div>
-
-          {/* <div className="mt-6 flex items-center justify-end gap-x-6">
+            {/* <div className="mt-6 flex items-center justify-end gap-x-6">
             <button
               type="button"
               className="text-sm font-semibold leading-6 hover:text-red-600"
@@ -561,10 +654,9 @@ export default function SingupArtist() {
               </DialogContent>
             </Dialog>
           </div> */}
-        </form>
-      </Form>
-      <Footer />
-    </main>
-   </Suspense>
+          </form>
+        </Form>
+        <Footer />
+      </main>
   );
 }
