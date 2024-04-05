@@ -44,7 +44,7 @@ export function CardSmallInfo() {
   ]
 
   return (
-    <div className="flex gap-4">
+    <div className="flex gap-4 flex-col lg:flex-row">
       {mainInfoDashboard.map((info) => {
         return (
           <Card

@@ -31,7 +31,7 @@ export function FooterInside() {
   }
 
   return (
-    <footer className="h-16 flex bg-muted-foreground  text-foreground items-center justify-between px-8 border-t-2">
+    <footer className="min-h-16 flex bg-muted-foreground  text-foreground items-center justify-between px-8 border-t-2">
       <p className="text-xs w-1/3">
         Copyright 2023 ©Potyguara Verse - Todos os direitos reservados.
       </p>

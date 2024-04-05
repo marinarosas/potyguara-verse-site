@@ -9,7 +9,7 @@ import QualquerCoisa from '../../../public/BgSite.png'
 
 export function CardTips() {
   return (
-    <Card className="flex w-1/2 h-1/2 break-words bg-transparent shadow-md rounded-2xl bg-clip-border border-2 relative overflow-hidden">
+    <Card className="flex w-full lg:w-1/2 h-1/2 break-words bg-transparent shadow-md rounded-2xl bg-clip-border border-2 relative overflow-hidden">
       <CardContent className="flex w-full items-center">
         {/* Left Side */}
         <div className="w-1/2 h-full p-6">

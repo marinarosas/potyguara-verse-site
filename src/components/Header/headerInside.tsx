@@ -99,7 +99,7 @@ export function HeaderInside() {
   }
 
   return (
-    <header className=" h-16 w-full flex items-center justify-between px-8 border-b-2">
+    <header className="min-h-16 w-full flex items-center justify-between px-8 border-b-2">
       {/* Logo side */}
       <div className="flex items-center justify-start">
         {/* Logo */}

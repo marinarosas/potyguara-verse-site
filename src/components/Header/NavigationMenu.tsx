@@ -52,7 +52,7 @@ export function NavigationMenuHeader() {
     <NavigationMenu className="pl-8">
       <NavigationMenuList>
         <NavigationMenuItem>
-          <Link href="/docs" legacyBehavior passHref>
+          <Link href="/app/dashboard" legacyBehavior passHref>
             <NavigationMenuLink className={navigationMenuTriggerStyle()}>
               Ínicio
             </NavigationMenuLink>

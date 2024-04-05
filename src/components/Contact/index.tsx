@@ -12,13 +12,13 @@ import { Suspense } from "react";
 export function Contact() {
   return (
     <div
-      className="h-full bg-muted-foreground flex flex-col md:flex-row lg:flex-row"
+      className="h-full bg-muted-foreground flex flex-col lg:flex-row"
       id="contact"
     >
       {/* Contatos */}
-      <div className="h-screen md:w-1/2 lg:w-1/2 flex justify-center items-center -mt-10 md:mt-0 lg:mt-0">
-        <div className="w-9/12 md:w-7/12 lg:w-7/12 md:h-5/6 lg:5/6 rounded-l-3xl bg-gradient-to-b from-secondary to-foreground text-background">
-          <form className="p-2 md:p-4 lg:p-4">
+      <div className="h-screen lg:w-1/2 flex justify-center items-center -mt-10 md:mt-0 lg:mt-0">
+        <div className="w-9/12 lg:w-7/12 md:h-5/6 lg:5/6 rounded-l-3xl bg-gradient-to-b from-secondary to-foreground text-background">
+          <form className="p-2 lg:p-4">
             <div className="space-y-4">
               <div>
                 <h2 className="text-base font-semibold leading-7 text-gray-900">
