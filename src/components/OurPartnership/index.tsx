@@ -87,7 +87,7 @@ export default function OurPartnership() {
               stretch: 0,
               depth: 100,
               modifier: 1,
-              slideShadows: true,
+              slideShadows: false,
             }}
             pagination={true}
             modules={[EffectCoverflow, Pagination]}
@@ -95,7 +95,7 @@ export default function OurPartnership() {
           >
             {slides.map((slide, index) => (
               <SwiperSlide key={index}>
-                <div className="text-foreground items-center justify-center h-fit">
+                <div className=" text-foreground items-center justify-center h-fit">
                   <Image src={slide.image} alt="Logos" />
                 </div>
               </SwiperSlide>

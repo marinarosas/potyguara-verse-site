@@ -1,9 +1,13 @@
 'use client'
 
+import { useTheme } from 'next-themes'
 import React, { useEffect, useState } from 'react'
 import { Chrono } from 'react-chrono'
 
 export function Aboutus() {
+
+  const { theme } = useTheme()
+
   const [isClient, setIsClient] = useState(false)
 
   useEffect(() => {
@@ -118,8 +122,8 @@ export function Aboutus() {
             theme={{
               primary: '#F24F00',
               secondary: '#F24F00',
-              cardBgColor: '#c4c4c4',
-              titleColor: '#fff',
+              cardBgColor: theme === 'light' ? '#000' : '#fff',
+              titleColor: theme === 'light'? '#fff' : '#000',
               titleColorActive: '#fff',
               cardSubtitleColor: '#000',
               cardTextColor: '#000',

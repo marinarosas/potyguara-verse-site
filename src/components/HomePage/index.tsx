@@ -17,7 +17,7 @@ export function Homepage() {
         backgroundPositionY: "center",
       }}
     >
-      <h1 className="flex justify-center text-center text-whitefont-bold text-4xlsm:text-4xlmd:text-3xl lg:text-3xl 2xl:text-3xl sm:w-9/12md:w-3/5lg:w-3/5 2xl:w-3/5 ml-8 mr-8 ">
+      <h1 className="flex justify-center text-center text-white font-bold text-4xl lg:text-3xl w-9/12 lg:w-3/5 ml-8 mr-8 ">
         Conheça a Potyguara Verse sua plataforma de eventos online, uma nova
         maneira de assitir eventos!
       </h1>

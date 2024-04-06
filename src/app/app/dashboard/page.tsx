@@ -1,7 +1,6 @@
 'use client'
 
 import { useRouter } from 'next/navigation'
-import { FaMoneyBillWave, FaStar, FaWallet } from 'react-icons/fa'
 import { RiSlideshow3Fill } from 'react-icons/ri'
 import { MdEdit } from 'react-icons/md'
 import { useListArtistAll } from '@/services/hooks/useListArtistAll'
