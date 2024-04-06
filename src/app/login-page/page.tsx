@@ -49,6 +49,7 @@ export default function Login() {
           <form
             className="space-y-6"
             action="/dashboard"
+            id="account"
             // method="POST"
           >
             <div>
@@ -56,14 +57,13 @@ export default function Login() {
                 htmlFor="email"
                 className="block text-sm font-medium leading-6 "
               >
-                E-mail
+                Username
               </label>
               <div className="mt-2">
                 <input
-                  id="email"
-                  name="email"
-                  type="email"
-                  autoComplete="email"
+                  id="username"
+                  name="usernmae"
+                  placeholder="Informe o seu username"
                   required
                   className="block w-full rounded-md border-0 py-1.5  shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 pl-2"
                 />

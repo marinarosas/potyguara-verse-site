@@ -27,24 +27,24 @@ export function ChooseUserRole() {
   );
 
   function handleNavigateToSingupPageArtist() {
-    router.push(`/singup-artist` + "?" + createQueryString("role", "Artist"));
+    router.push(`/singup-artist` + "?" + createQueryString("role", "ARTIST"));
   }
 
   function handleNavigateToSingupPageViewer() {
-    router.push(`/singup-viewer` + "?" + createQueryString("role", "Viewer"));
+    router.push(`/singup-viewer` + "?" + createQueryString("role", "VIEWER"));
   }
   return (
-    <DialogContent className="sm:max-w-[425px] md:h-52">
+    <DialogContent className="h-60 lg:h-52 w-96 lg:w-full">
       <DialogHeader>
         <DialogTitle className="text-md text-foreground">
           Gostariamos de saber qual é o seu perfil?
         </DialogTitle>
-        <DialogDescription className="text-justify  text-foreground">
+        <DialogDescription className="text-center lg:text-justify  text-foreground">
           No Potyguara você pode escolher dois caminhos... <br />O criador de
           conteúdo (O artista) ou o consumidor de cultura (O espectador).
         </DialogDescription>
       </DialogHeader>
-      <DialogFooter className="flex justify-around sm:justify-around">
+      <DialogFooter className="flex flex-row justify-between lg:justify-around">
         <Button
           className="w-32 text-foreground"
           onClick={() => handleNavigateToSingupPageArtist()}

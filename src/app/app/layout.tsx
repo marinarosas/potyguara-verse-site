@@ -23,7 +23,7 @@ export default function Layout({ children }: { children: ReactNode }) {
           <Loading />
         </>
       ) : ( */}
-      <div className="flex h-screen flex-col antialiased bg-muted-foreground text-foreground">
+      <div className="flex flex-col antialiased bg-muted-foreground text-foreground min-h-full">
         <HeaderInside />
         <div className="flex-1">{children}</div>
         <Toaster />
