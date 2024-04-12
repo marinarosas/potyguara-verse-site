@@ -39,6 +39,7 @@ export function TableEvents() {
       description: "",
       statusEvent: "Ativo",
       ecad: "",
+      eventImage: "",
     },
     {
       nameevent: "Samba Rock",
@@ -51,6 +52,7 @@ export function TableEvents() {
       description: "",
       statusEvent: "Cancelado",
       ecad: "",
+      eventImage: "",
     },
     {
       nameevent: "MPB na praia",
@@ -63,6 +65,7 @@ export function TableEvents() {
       description: "",
       statusEvent: "Finalizado",
       ecad: "",
+      eventImage: "",
     },
     {
       nameevent: "Sabadásso",
@@ -75,6 +78,7 @@ export function TableEvents() {
       description: "",
       statusEvent: "Ativo",
       ecad: "",
+      eventImage: "",
     },
     {
       nameevent: "Rock Geral",
@@ -87,6 +91,7 @@ export function TableEvents() {
       description: "",
       statusEvent: "Cancelado",
       ecad: "",
+      eventImage: "",
     },
     {
       nameevent: "Domingo Legal",
@@ -99,6 +104,7 @@ export function TableEvents() {
       description: "",
       statusEvent: "Finalizado",
       ecad: "",
+      eventImage: "",
     },
     {
       nameevent: "Trip Rock",
@@ -111,6 +117,7 @@ export function TableEvents() {
       description: "Rock clássico",
       statusEvent: "Finalizado",
       ecad: "",
+      eventImage: "",
     },
   ];
   return (

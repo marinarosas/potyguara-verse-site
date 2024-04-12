@@ -9,7 +9,7 @@
   }
   
   body {
-    background: #eee;
+    background: transparent;
     font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
     font-size: 14px;
     color: #000;
@@ -39,6 +39,7 @@
   .swiper-slide img {
     display: block;
     width: 90%;
+    background: transparent;
     height: 100%;
     object-fit: cover;
   }

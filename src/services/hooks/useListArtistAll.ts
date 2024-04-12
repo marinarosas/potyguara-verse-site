@@ -26,7 +26,7 @@ export function useListArtistAll() {
           `https://api.ycodify.com/v2/persistence/q/s/no-ac`,
 
           {
-            artist: {
+            userplayer: {
               username: "",
               name: "",
               numberstreet: "",
