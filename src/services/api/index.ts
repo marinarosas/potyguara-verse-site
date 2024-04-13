@@ -13,8 +13,8 @@ export const ycodifyQuery = axios.create({
   baseURL: YCODIFY_BASE_URL,
   headers: {
     "Content-Type": "application/json",
-    "X-Tenant-ID": process.env.YCODIFY_TENANT_ID,
-    "X-API-Master-Key": process.env.YCODIFY_API_MASTER_KEY,
+    "X-Tenant-ID": process.env.NEXT_PUBLIC_TENANT_ID,
+    "X-API-Master-Key": process.env.NEXT_PUBLIC_API_MASTER_KEY,
   },
 });
 
