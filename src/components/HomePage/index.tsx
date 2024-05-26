@@ -18,8 +18,8 @@ export function Homepage() {
       }}
     >
       <h1 className="flex justify-center text-center text-white font-bold text-4xl lg:text-3xl px-8 ">
-        Conheça a Potyguara Verse um universo de jogos e eventos online, uma nova
-        maneira de assitir eventos!
+        Conheça a Potyguara Verse, uma nova
+        maneira de assitir eventos online, além de ser um universo de jogos!
       </h1>
       {/* <div className="flex flex-col lg:flex-row gap-12">
         <Button variant="default" size="lg" >Baixe a plataforma</Button>
