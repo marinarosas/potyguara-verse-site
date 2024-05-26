@@ -90,8 +90,8 @@ export function Header() {
           <Image
             src={LogoPotyguara}
             alt="Logo Potyguara"
-            height={100}
-            width={100}
+            height={140}
+            width={140}
             onClick={() => handleNavigateToHome()}
           />
         </div>
@@ -147,7 +147,7 @@ export function Header() {
           >
             Contato
           </a>
-          <Popover className="relative">
+          {/* <Popover className="relative">
             <Popover.Button className="flex items-center gap-x-1 text-sm font-semibold leading-6">
               Baixar plataforma
               <ChevronDownIcon
@@ -205,10 +205,10 @@ export function Header() {
                 </div>
               </Popover.Panel>
             </Transition>
-          </Popover>
+          </Popover> */}
         </Popover.Group>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end lg:space-x-4 h-20 items-center">
-          <DropdownMenu>
+          {/* <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button
                 className="lg:w-fit md:w-fit sm:w-fit"
@@ -231,13 +231,13 @@ export function Header() {
                 Dark
               </DropdownMenuItem>
             </DropdownMenuContent>
-          </DropdownMenu>
-          <a
+          </DropdownMenu> */}
+          {/* <a
             className="text-sm font-semibold leading-6 hover:text-primary hover:cursor-pointer"
             onClick={() => handleNavigateToLoginPage()}
           >
             Log in <span aria-hidden="true">&rarr;</span>
-          </a>
+          </a> */}
         </div>
       </nav>
 
@@ -291,7 +291,7 @@ export function Header() {
                 >
                   Contato
                 </a>
-                <Disclosure as="div" className="-mx-3">
+                {/* <Disclosure as="div" className="-mx-3">
                   {({ open }) => (
                     <>
                       <Disclosure.Button className="flex w-full items-center justify-between rounded-lg py-2 pl-3 pr-3.5 text-base font-semibold leading-7 hover:bg-gray-50 hover:text-background">
@@ -318,16 +318,16 @@ export function Header() {
                       </Disclosure.Panel>
                     </>
                   )}
-                </Disclosure>
+                </Disclosure> */}
               </div>
               <div className="flex pt-4 justify-between">
-                <a
+                {/* <a
                   href="#"
                   className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 hover:text-orange-md"
                   onClick={() => handleNavigateToLoginPage()}
                 >
                   Log in
-                </a>
+                </a> */}
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
                     <Button variant="outline" size="icon">

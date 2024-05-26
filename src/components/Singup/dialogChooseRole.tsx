@@ -27,11 +27,11 @@ export function ChooseUserRole() {
   );
 
   function handleNavigateToSingupPageArtist() {
-    router.push(`/singup-artist` + "?" + createQueryString("role", "ARTIST"));
+    router.push(`/singup-page` + "?" + createQueryString("role", "ARTIST"));
   }
 
   function handleNavigateToSingupPageViewer() {
-    router.push(`/singup-viewer` + "?" + createQueryString("role", "VIEWER"));
+    router.push(`/singup-page` + "?" + createQueryString("role", "VIEWER"));
   }
   return (
     <DialogContent className="h-60 lg:h-52 w-96 lg:w-full">
