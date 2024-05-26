@@ -56,10 +56,6 @@ export default function SingupPage() {
 
   // const [allowNotification, setAllowNotification] = useState<boolean>(false);
 
-  const searchParams = useSearchParams();
-
-  const userRole = searchParams.get("role");
-
   function handleNavigateToLoginPage() {
     router.push(`/login-page`);
   }
@@ -71,24 +67,24 @@ export default function SingupPage() {
   const form = useForm<z.infer<typeof CreateUserPlayerformSchema>>({
     resolver: zodResolver(CreateUserPlayerformSchema),
     defaultValues: {
-      username: "",
-      name: "",
-      password: "",
-      streetnumber: "",
-      streetname: "",
-      streetcomplement: "",
-      country: "",
-      state: "",
-      city: "",
-      email: "",
-      aboutartist: "",
-      zipcode: "",
-      documentnumber: "",
-      avatar: "",
-      skins: "",
-      artisticname: "",
-      allownotifications: false,
-      acceptplataformterms: false,
+      // username: "",
+      // name: "",
+      // password: "",
+      // streetnumber: "",
+      // streetname: "",
+      // streetcomplement: "",
+      // country: "",
+      // state: "",
+      // city: "",
+      // email: "",
+      // aboutartist: "",
+      // zipcode: "",
+      // documentnumber: "",
+      // avatar: "",
+      // skins: "",
+      // artisticname: "",
+      // allownotifications: false,
+      // acceptplataformterms: false,
     },
   });
 
@@ -99,7 +95,6 @@ export default function SingupPage() {
       username,
       email,
       password,
-      role: userRole as string,
       organizationUuid: uuid(),
     });
 

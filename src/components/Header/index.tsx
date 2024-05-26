@@ -90,8 +90,8 @@ export function Header() {
           <Image
             src={LogoPotyguara}
             alt="Logo Potyguara"
-            height={100}
-            width={100}
+            height={140}
+            width={140}
             onClick={() => handleNavigateToHome()}
           />
         </div>
@@ -208,7 +208,7 @@ export function Header() {
           </Popover> */}
         </Popover.Group>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end lg:space-x-4 h-20 items-center">
-          <DropdownMenu>
+          {/* <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button
                 className="lg:w-fit md:w-fit sm:w-fit"
@@ -231,7 +231,7 @@ export function Header() {
                 Dark
               </DropdownMenuItem>
             </DropdownMenuContent>
-          </DropdownMenu>
+          </DropdownMenu> */}
           {/* <a
             className="text-sm font-semibold leading-6 hover:text-primary hover:cursor-pointer"
             onClick={() => handleNavigateToLoginPage()}

@@ -10,7 +10,7 @@ import LogoAndrea from '../../../public/logoandrea.png'
 import LogoGameLab from '../../../public/LOGO VERT BRANCO@3x.png'
 import LogoSebrae from '../../../public/logo 50 anos  roxo.png'
 import LogoSudene from '../../../public/sudene.png'
-import GuitauraLogo from '../../../public/guitauraLogo.jpeg'
+import LogoGuitaura from '../../../public/logoGuitaura.png'
 import Image from 'next/image'
 
 const slides = [
@@ -25,7 +25,7 @@ const slides = [
     // subtitle: 'O sucesso é uma via de mão dupla, nossos parceiros e colaboradores são chave para o nosso crescimento.',
   },
   {
-    image: GuitauraLogo,
+    image: LogoGuitaura,
     // title: "Andrea Arteterapeuta",
     // subtitle: 'A diversidade enriquece ambientes e as pessoas são o nosso maior capital',
   },

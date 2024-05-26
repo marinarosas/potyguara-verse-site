@@ -69,7 +69,8 @@ const carouselService = [
 export default function ProductCategory() {
   const splideRef = useRef<Splide | null>(null)
 
-  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768)
+  // const [isMobile, setIsMobile] = useState(window.innerWidth <= 768)
+  const [isMobile, setIsMobile] = useState('')
 
   const handleNextSlide = () => {
     const splideInstance = splideRef.current?.splide
