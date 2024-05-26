@@ -103,6 +103,11 @@ export default function SingupPage() {
       organizationUuid: uuid(),
     });
 
+     toast({
+      title: "Uhuu! Cadastro realizado com sucesso.",
+      description: "Cadastro do usuário criado com sucesso.",
+    });
+
     handleNavigateToLoginPage();
   };
 
