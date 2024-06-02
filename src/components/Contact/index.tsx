@@ -145,7 +145,7 @@ export function Contact() {
       </div>
 
       {/* Final call singup */}
-      {/* <div className="h-96 md:h-full lg:h-full w-1/2 justify-center align-middle space-y-8 m-auto">
+      <div className="h-96 md:h-full lg:h-full w-1/2 justify-center align-middle space-y-8 m-auto">
         <h1 className="text-foreground text-3xl text-center items-center">
           Bora curtir o <br /> primeiro show?
         </h1>
@@ -172,15 +172,8 @@ export function Contact() {
             Comunidade Steam
           </Button>
         </div>
-      </div> */}
-       <div className="h-96 md:h-full lg:h-full w-1/2 justify-center align-middle space-y-8 m-auto">
-        <h1 className="text-foreground text-3xl text-center items-center">
-          Bora curtir o <br /> primeiro show?
-        </h1>
-        <div className="flex flex-col gap-8 items-center ">
-        <ReactPlayer url='https://youtu.be/v-M28eX_WvY'/>
-        </div>
       </div>
+    
     </div>
   );
 }
