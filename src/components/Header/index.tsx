@@ -68,7 +68,7 @@ export function Header() {
   // };
 
   function handleNavigateToLoginPage() {
-    router.push(`/login-page`)
+    router.push(`/sing-in`)
   }
 
   function handleNavigateToHomePage(path: string) {

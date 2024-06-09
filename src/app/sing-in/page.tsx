@@ -2,30 +2,45 @@
 
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogOverlay,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
+import { Dialog, DialogOverlay, DialogTrigger } from "@/components/ui/dialog";
 import Image from "next/image";
 import LogoPotyguara from "../../../public/LogoRetangular.png";
 import { ChooseUserRole } from "@/components/Singup/dialogChooseRole";
 import { Suspense } from "react";
+import { useAuth } from "@/contexts/AuthContext";
+import { z } from "zod";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Input } from "@/components/ui/input";
+import { FormLabel } from "@/components/ui/form";
 
-export default function Login() {
+const signInFormSchema = z.object({
+  email: z.string().email(),
+  password: z.string(),
+});
+
+type SignInFormSchema = z.infer<typeof signInFormSchema>;
+
+export default function SingIn() {
   const router = useRouter();
+  const { signIn } = useAuth();
+
+  const { register, handleSubmit, formState } = useForm<SignInFormSchema>({
+    resolver: zodResolver(signInFormSchema),
+  });
+
+  const { errors } = formState;
+
+  const handleSignIn: SubmitHandler<SignInFormSchema> = async ({
+    email,
+    password,
+  }) => {
+    await signIn({ email, password });
+  };
 
   function handleNavigateToHomePage() {
     router.push(`/`);
-  }
-
-  function handleNavigateToDashboard() {
-    router.push(`/app/dashboard`);
   }
 
   return (
@@ -46,38 +61,25 @@ export default function Login() {
         </div>
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form
-            className="space-y-6"
-            action="/dashboard"
-            id="account"
-            // method="POST"
-          >
+          <div className="space-y-6">
             <div>
-              <label
-                htmlFor="email"
-                className="block text-sm font-medium leading-6 "
-              >
-                Username
-              </label>
+              <label>Email</label>
               <div className="mt-2">
-                <input
-                  id="username"
-                  name="usernmae"
-                  placeholder="Informe o seu username"
+                <Input
+                  id="email"
+                  placeholder="Informe o seu e-mail"
+                  type="email"
+                  {...register("email")}
                   required
                   className="block w-full rounded-md border-0 py-1.5  text-background shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-background focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 pl-2"
                 />
+                {errors.email && <span>{errors.email.message}</span>}
               </div>
             </div>
 
             <div>
               <div className="flex items-center justify-between">
-                <label
-                  htmlFor="password"
-                  className="block text-sm font-medium leading-6 "
-                >
-                  Senha
-                </label>
+                <label>Senha</label>
                 <div className="text-sm">
                   <a
                     href="#"
@@ -88,28 +90,30 @@ export default function Login() {
                 </div>
               </div>
               <div className="mt-2">
-                <input
+                <Input
                   id="password"
-                  name="password"
                   type="password"
-                  autoComplete="current-password"
+                  {...register("password")}
                   required
                   className="block w-full rounded-md border-0 py-1.5  text-background shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-background focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 pl-2"
                 />
+                {errors.password && <span>{errors.password.message}</span>}
               </div>
             </div>
 
-            <div>
-              {/* <Button
-                onClick={() => handleNavigateToDashboard()}
-                className="flex w-full justify-center rounded-md px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-              >
-                Entrar
-              </Button> */}
-            </div>
-          </form>
+            <div></div>
+          </div>
+          <div className="flex items-center space-x-2 pb-4">
+            <Checkbox id="conection" />
+            <label
+              htmlFor="conection"
+              className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+            >
+              Fique conectado uma semana.
+            </label>
+          </div>
           <Button
-            onClick={() => handleNavigateToDashboard()}
+            onClick={handleSubmit(handleSignIn)}
             className="flex w-full justify-center rounded-md px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
           >
             Entrar
