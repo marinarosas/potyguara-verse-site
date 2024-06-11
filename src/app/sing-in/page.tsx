@@ -13,7 +13,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
-import { FormLabel } from "@/components/ui/form";
+import { Label } from "@/components/ui/label";
 
 const signInFormSchema = z.object({
   email: z.string().email(),
@@ -26,16 +26,21 @@ export default function SingIn() {
   const router = useRouter();
   const { signIn } = useAuth();
 
-  const { register, handleSubmit, formState } = useForm<SignInFormSchema>({
+  const {
+    register,
+    handleSubmit,
+    formState: { isSubmitting },
+  } = useForm<SignInFormSchema>({
     resolver: zodResolver(signInFormSchema),
   });
-
-  const { errors } = formState;
 
   const handleSignIn: SubmitHandler<SignInFormSchema> = async ({
     email,
     password,
   }) => {
+    console.log('email', email);
+    console.log('senha', password);
+
     await signIn({ email, password });
   };
 
@@ -59,65 +64,44 @@ export default function SingIn() {
             Entre na sua conta
           </h2>
         </div>
-
-        <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <div className="space-y-6">
-            <div>
-              <label>Email</label>
-              <div className="mt-2">
-                <Input
-                  id="email"
-                  placeholder="Informe o seu e-mail"
-                  type="email"
-                  {...register("email")}
-                  required
-                  className="block w-full rounded-md border-0 py-1.5  text-background shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-background focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 pl-2"
-                />
-                {errors.email && <span>{errors.email.message}</span>}
-              </div>
+        <div className="mt-4 mx-auto w-full max-w-sm">
+          <form className="space-y-6" onSubmit={handleSubmit(handleSignIn)}>
+            <div className="space-y-2">
+              <Label htmlFor="email">Seu e-mail</Label>
+              <Input
+                placeholder="Informe o seu e-mail"
+                id="email"
+                type="email"
+                {...register("email")}
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="email">Sua senha</Label>
+              <Input
+                placeholder="Informe sua senha"
+                id="password"
+                type="password"
+                {...register("password")}
+              />
             </div>
 
-            <div>
-              <div className="flex items-center justify-between">
-                <label>Senha</label>
-                <div className="text-sm">
-                  <a
-                    href="#"
-                    className="font-semibold text-secondary-foreground hover:text-secondary"
-                  >
-                    Esqueceu sua senha?
-                  </a>
-                </div>
-              </div>
-              <div className="mt-2">
-                <Input
-                  id="password"
-                  type="password"
-                  {...register("password")}
-                  required
-                  className="block w-full rounded-md border-0 py-1.5  text-background shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-background focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 pl-2"
-                />
-                {errors.password && <span>{errors.password.message}</span>}
-              </div>
-            </div>
-
-            <div></div>
-          </div>
-          <div className="flex items-center space-x-2 pb-4">
-            <Checkbox id="conection" />
-            <label
-              htmlFor="conection"
-              className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+            <Button
+              type="submit"
+              disabled={isSubmitting}
+              className="flex w-full justify-center rounded-md px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
             >
-              Fique conectado uma semana.
-            </label>
-          </div>
-          <Button
-            onClick={handleSubmit(handleSignIn)}
-            className="flex w-full justify-center rounded-md px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-          >
-            Entrar
-          </Button>
+              Entrar
+            </Button>
+            <div className="flex items-center space-x-2">
+              <Checkbox id="conection" />
+              <label
+                htmlFor="conection"
+                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+              >
+                Fique conectado uma semana.
+              </label>
+            </div>
+          </form>
           <p className="mt-10 text-center text-sm text-gray-500">
             Não é um membro?{" "}
             <Dialog>

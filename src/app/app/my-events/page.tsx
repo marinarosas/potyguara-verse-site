@@ -87,7 +87,7 @@ export default function MyEvents() {
                 </CardContent>
                 <CardFooter>
                   <div className="text-xs text--foreground pt-4">
-                    Showing <strong>1-10</strong> of <strong>32</strong>{" "}
+                    Showing <strong>1-10</strong> of <strong>15</strong>{" "}
                     products
                   </div>
                 </CardFooter>

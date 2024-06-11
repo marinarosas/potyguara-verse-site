@@ -22,7 +22,7 @@ interface IUser {
   name: string | undefined;
   username: string | undefined;
   email: string | undefined;
-  role?: string
+  role?: string;
 }
 
 interface ISignIn {
@@ -31,14 +31,13 @@ interface ISignIn {
 }
 
 interface AuthContextData {
-  signIn(data: ISignIn): Promise<void>
-  meRefetch: () => Promise<void>
-  setToken: Dispatch<SetStateAction<string | undefined>>
-  user: IUser
-  token: string | undefined
-  isLoading: boolean
   signIn(data: ISignIn): Promise<void>;
-  logout(): void;
+  meRefetch: () => Promise<void>;
+  setToken: Dispatch<SetStateAction<string | undefined>>;
+  user: IUser;
+  token: string | undefined;
+  isLoading: boolean;
+  signOut(): void;
 }
 
 interface Props {
@@ -57,91 +56,105 @@ export function AuthProvider({ children }: Props) {
   const [token, setToken] = useState<string | undefined>("");
   const [isLoading, setIsloading] = useState(false);
 
-  const signIn = useCallback(
-    async ({ email, password }: ISignIn) => {
-      try {
-        const {
-          data: { user, token },
-        } = await poty.post("/sing-in", { email, password });
+  async function signIn({ email, password }: ISignIn) {
+    try {
+      const {
+        data: { user, token },
+      } = await poty.post("/sing-in", { email, password });
 
-        if (user.disabled) {
-          toast({
-            title: "Ops!",
-            description: "Usuário desabilitado, contate o administrador",
-            duration: 3000,
-            type: "background",
-            variant: "default",
-          });
+      console.log('email singin', email);
+      console.log('senha singin', password);
 
-          return;
-        }
+      console.log("entrou");
 
-        if (user?.tipo_usuario?.tipo === "VIEWER") {
-          toast({
-            title: "Ops!",
-            description: "Acesso não autorizado",
-            duration: 3000,
-            type: "background",
-            variant: "default",
-          });
+      // if (user.disabled) {
+      //   toast({
+      //     title: "Ops!",
+      //     description: "Usuário desabilitado, contate o administrador",
+      //     duration: 3000,
+      //     type: "background",
+      //     variant: "default",
+      //   });
 
-          return;
-        }
+      //   return;
+      // }
 
-        setCookie(undefined, "potyverse@token", String(token), {
-          maxAge: 60 * 60 * 24 * 30, // 30 days,
-          path: "/",
-        });
+      // if (user?.tipo_usuario?.tipo === "VIEWER") {
+      //   toast({
+      //     title: "Ops!",
+      //     description: "Acesso não autorizado",
+      //     duration: 3000,
+      //     type: "background",
+      //     variant: "default",
+      //   });
 
-        setUser({
-          id: user.id,
-          name: user.name,
-          username: user.username,
-          email: user.email,
-          role: user.role,
-        });
+      //   return;
+      // }
 
-        setToken(token);
+      console.log("antes de setar os cookies");
 
-        poty.defaults.headers.Authorization = `Bearer ${token}`;
+      setCookie(undefined, "potyverse@token", String(token), {
+        maxAge: 60 * 60 * 24 * 30, // 30 days,
+        path: "/",
+      });
 
-        router.push("/app/dashboard");
+      console.log("antes de setar as infos");
 
-        toast({
-          title: "Sucesso!",
-          description: "Estamos redirecionando para o dashboard",
-          duration: 3000,
-          type: "background",
-          variant: "default",
-        });
-      } catch (error) {
-        if (error instanceof AxiosError) {
-          toast({
-            title: "Ops!",
-            description: error.response?.data?.message
-              ? error.response?.data?.message
-              : "Verifique as informações fornecidas",
-            duration: 3000,
-            type: "background",
-            variant: "default",
-          });
+      // setUser({
+      //   id: user.id,
+      //   name: user.name,
+      //   username: user.username,
+      //   email: user.email,
+      //   role: user.role,
+      // });
 
-          return;
-        }
+      console.log("antes de setar o token");
 
+      setToken(token);
+
+      console.log("antes do poty header");
+
+      poty.defaults.headers.Authorization = `Bearer ${token}`;
+
+      console.log("antes de ir pro dashboard");
+
+      router.push("/app/dashboard");
+
+      console.log("passou do dashboard");
+
+      toast({
+        title: "Sucesso!",
+        description: "Estamos redirecionando para o dashboard",
+        duration: 3000,
+        type: "background",
+        variant: "default",
+      });
+    } catch (error) {
+      if (error instanceof AxiosError) {
         toast({
           title: "Ops!",
-          description: "Ocorreu um erro",
+          description: error.response?.data?.message
+            ? error.response?.data?.message
+            : "Verifique as informações fornecidas",
           duration: 3000,
           type: "background",
           variant: "default",
         });
 
-        // console.log(error.response?.data?.message)
+        return;
       }
-    },
-    [router, toast]
-  );
+
+      toast({
+        title: "Ops!",
+        description: "Ocorreu um erro",
+        duration: 3000,
+        type: "background",
+        variant: "default",
+      });
+
+      // console.log(error.response?.data?.message)
+    }
+  }
 
   useEffect(() => {
     const { "potyverse@token": token } = parseCookies();
@@ -198,7 +211,7 @@ export function AuthProvider({ children }: Props) {
     }
   }, [token, setUser, setToken]);
 
-  const logout = useCallback(() => {
+  const signOut = useCallback(() => {
     setCookie(undefined, "potyverse@token", "", {
       maxAge: 0,
       path: "/",
@@ -220,7 +233,7 @@ export function AuthProvider({ children }: Props) {
         meRefetch,
         isLoading,
         setToken,
-        logout,
+        signOut,
       }}
     >
       {children}
