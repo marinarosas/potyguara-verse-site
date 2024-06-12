@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { parseCookies, setCookie } from "nookies";
+import { parseCookies, setCookie } from 'nookies'
 import {
   createContext,
   Dispatch,
@@ -9,63 +9,60 @@ import {
   useContext,
   useEffect,
   useState,
-} from "react";
+} from 'react'
 
-import { useToast } from "@/components/ui/use-toast";
+import { useToast } from '@/components/ui/use-toast'
 
-import { usePathname, useRouter } from "next/navigation";
-import { poty } from "@/services/api";
-import { AxiosError } from "axios";
+import { usePathname, useRouter } from 'next/navigation'
+import { poty } from '@/services/api'
+import { AxiosError } from 'axios'
 
 interface IUser {
-  id: string | undefined;
-  name: string | undefined;
-  username: string | undefined;
-  email: string | undefined;
-  role?: string;
+  id: string | undefined
+  name: string | undefined
+  username: string | undefined
+  email: string | undefined
+  role?: string
 }
 
 interface ISignIn {
-  email: string;
-  password: string;
+  email: string
+  password: string
 }
 
 interface AuthContextData {
-  signIn(data: ISignIn): Promise<void>;
-  meRefetch: () => Promise<void>;
-  setToken: Dispatch<SetStateAction<string | undefined>>;
-  user: IUser;
-  token: string | undefined;
-  isLoading: boolean;
-  signOut(): void;
+  signIn(data: ISignIn): Promise<void>
+  meRefetch: () => Promise<void>
+  setToken: Dispatch<SetStateAction<string | undefined>>
+  user: IUser
+  token: string | undefined
+  isLoading: boolean
+  signOut(): void
 }
 
 interface Props {
-  children: ReactNode;
+  children: ReactNode
 }
 
-const AuthContext = createContext<AuthContextData>({} as AuthContextData);
+const AuthContext = createContext<AuthContextData>({} as AuthContextData)
 
 export function AuthProvider({ children }: Props) {
-  const { toast } = useToast();
-  const router = useRouter();
+  const { toast } = useToast()
+  const router = useRouter()
 
-  const asPath = usePathname();
+  const asPath = usePathname()
 
-  const [user, setUser] = useState<IUser>({} as IUser);
-  const [token, setToken] = useState<string | undefined>("");
-  const [isLoading, setIsloading] = useState(false);
+  const [user, setUser] = useState<IUser>({} as IUser)
+  const [token, setToken] = useState<string | undefined>('')
+  const [isLoading, setIsloading] = useState(false)
 
   async function signIn({ email, password }: ISignIn) {
     try {
       const {
         data: { user, token },
-      } = await poty.post("/sing-in", { email, password });
+      } = await poty.post('/sing-in', { email, password })
 
-      console.log('email singin', email);
-      console.log('senha singin', password);
-
-      console.log("entrou");
+      console.log('data dentro do singin', user)
 
       // if (user.disabled) {
       //   toast({
@@ -79,125 +76,119 @@ export function AuthProvider({ children }: Props) {
       //   return;
       // }
 
-      // if (user?.tipo_usuario?.tipo === "VIEWER") {
-      //   toast({
-      //     title: "Ops!",
-      //     description: "Acesso não autorizado",
-      //     duration: 3000,
-      //     type: "background",
-      //     variant: "default",
-      //   });
+      if (!token) {
+        toast({
+          title: 'Ops!',
+          description: 'Usuário não está logado',
+          duration: 3000,
+          type: 'background',
+          variant: 'default',
+        })
 
-      //   return;
-      // }
+        router.push('/sing-in')
 
-      console.log("antes de setar os cookies");
+        return
+      }
 
-      setCookie(undefined, "potyverse@token", String(token), {
+      setCookie(undefined, 'potyverse@token', String(token), {
         maxAge: 60 * 60 * 24 * 30, // 30 days,
-        path: "/",
-      });
+        path: '/',
+      })
 
-      console.log("antes de setar as infos");
+      setUser({
+        id: user.id,
+        name: user.name,
+        username: user.username,
+        email: user.email,
+        role: user.role,
+      })
 
-      // setUser({
-      //   id: user.id,
-      //   name: user.name,
-      //   username: user.username,
-      //   email: user.email,
-      //   role: user.role,
-      // });
+      setToken(token)
 
-      console.log("antes de setar o token");
+      poty.defaults.headers.Authorization = `Bearer ${token}`
 
-      setToken(token);
-
-      console.log("antes do poty header");
-
-      poty.defaults.headers.Authorization = `Bearer ${token}`;
-
-      console.log("antes de ir pro dashboard");
-
-      router.push("/app/dashboard");
-
-      console.log("passou do dashboard");
+      router.push('/app/dashboard')
 
       toast({
-        title: "Sucesso!",
-        description: "Estamos redirecionando para o dashboard",
+        title: 'Sucesso!',
+        description: 'Estamos redirecionando para o dashboard',
         duration: 3000,
-        type: "background",
-        variant: "default",
-      });
+        type: 'background',
+        variant: 'default',
+      })
     } catch (error) {
       if (error instanceof AxiosError) {
         toast({
-          title: "Ops!",
+          title: 'Ops!',
           description: error.response?.data?.message
             ? error.response?.data?.message
-            : "Verifique as informações fornecidas",
+            : 'Verifique as informações fornecidas',
           duration: 3000,
-          type: "background",
-          variant: "default",
-        });
+          type: 'background',
+          variant: 'default',
+        })
 
-        return;
+        return
       }
 
       toast({
-        title: "Ops!",
-        description: "Ocorreu um erro",
+        title: 'Ops!',
+        description: 'Ocorreu um erro',
         duration: 3000,
-        type: "background",
-        variant: "default",
-      });
+        type: 'background',
+        variant: 'default',
+      })
 
       // console.log(error.response?.data?.message)
     }
   }
 
   useEffect(() => {
-    const { "potyverse@token": token } = parseCookies();
+    const { 'potyverse@token': token } = parseCookies()
 
-    setIsloading(true);
+    console.log('token useEffect', token)
+
+    setIsloading(true)
 
     poty
-      .get("/users/me", { headers: { Authorization: `Bearer ${token}` } })
+      .get('/users/me', { headers: { Authorization: `Bearer ${token}` } })
       .then(({ data: { user, token } }) => {
         setUser({
           id: user.id,
           name: user.name,
           username: user.username,
           email: user.email,
-          role: user.role,
-        });
+          role: user.tipo_usuario,
+        })
 
-        setToken(token);
+        setToken(token)
 
-        setIsloading(false);
+        console.log('useeffect', user)
 
-        poty.defaults.headers.Authorization = `Bearer ${token}`;
+        setIsloading(false)
 
-        if (asPath === "/") {
-          router.push("/app/dashboard");
-        }
+        poty.defaults.headers.Authorization = `Bearer ${token}`
+
+        //     if (asPath === '/') {
+        //       router.push('/app/dashboard')
+        //     }
+        //   })
+        //   .catch(() => {
+        //     setIsloading(false)
+
+        //     if (!asPath.startsWith('/password')) {
+        //       router.push('/')
+        //     }
       })
-      .catch(() => {
-        setIsloading(false);
-
-        if (!asPath.startsWith("/password")) {
-          router.push("/");
-        }
-      });
-  }, [router]);
+  }, [router])
 
   const meRefetch = useCallback(async () => {
     if (token) {
       const {
         data: { user, token: newToken },
-      } = await poty.get("/users/me", {
+      } = await poty.get('/users/me', {
         headers: { Authorization: `Bearer ${token}` },
-      });
+      })
 
       setUser({
         id: user.id,
@@ -205,24 +196,24 @@ export function AuthProvider({ children }: Props) {
         username: user.usersame,
         email: user.email,
         role: user.role,
-      });
+      })
 
-      setToken(newToken);
+      setToken(newToken)
     }
-  }, [token, setUser, setToken]);
+  }, [token, setUser, setToken])
 
   const signOut = useCallback(() => {
-    setCookie(undefined, "potyverse@token", "", {
+    setCookie(undefined, 'potyverse@token', '', {
       maxAge: 0,
-      path: "/",
-    });
+      path: '/',
+    })
 
-    setUser({} as IUser);
+    setUser({} as IUser)
 
-    setToken("");
+    setToken('')
 
-    router.push("/");
-  }, []);
+    router.push('/')
+  }, [])
 
   return (
     <AuthContext.Provider
@@ -238,15 +229,15 @@ export function AuthProvider({ children }: Props) {
     >
       {children}
     </AuthContext.Provider>
-  );
+  )
 }
 
 export function useAuth(): AuthContextData {
-  const context = useContext(AuthContext);
+  const context = useContext(AuthContext)
 
   if (!context) {
-    throw new Error("useAuth must be used within an AuthProvider");
+    throw new Error('useAuth must be used within an AuthProvider')
   }
 
-  return context;
+  return context
 }

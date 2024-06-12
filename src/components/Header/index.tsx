@@ -27,6 +27,7 @@ import {
 } from '@/components/ui/dropdown-menu'
 import Image from 'next/image'
 import LogoPotyguara from '../../../public/LogoRetangular.png'
+import { MoveRight } from 'lucide-react'
 
 const products = [
   {
@@ -232,12 +233,13 @@ export function Header() {
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
-          <a
-            className="text-sm font-semibold leading-6 hover:text-primary hover:cursor-pointer"
+          <Button
+            variant="ghost"
+            className="flex gap-2 text-sm font-semibold leading-6 hover:text-primary hover:cursor-pointer"
             onClick={() => handleNavigateToLoginPage()}
           >
-            Log in <span aria-hidden="true">&rarr;</span>
-          </a>
+            Log in <MoveRight size={18} strokeWidth={1.25} />
+          </Button>
         </div>
       </nav>
 

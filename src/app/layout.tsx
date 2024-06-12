@@ -1,19 +1,19 @@
-"use client";
+'use client'
 
-import { Inter } from "next/font/google";
-import "./globals.css";
-import { ThemeProvider } from "@/components/theme-provider";
-import { Toaster } from "@/components/ui/toaster";
-import { AppProvider } from "@/contexts";
-import { SWRConfig } from "swr";
-import { poty } from "@/services/api";
+import { Inter } from 'next/font/google'
+import './globals.css'
+import { ThemeProvider } from '@/components/theme-provider'
+import { Toaster } from '@/components/ui/toaster'
+import { AppProvider } from '@/contexts'
+import { SWRConfig } from 'swr'
+import { poty } from '@/services/api'
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ subsets: ['latin'] })
 
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: React.ReactNode
 }>) {
   return (
     <html lang="en">
@@ -47,7 +47,7 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-             <SWRConfig
+            <SWRConfig
               value={{
                 fetcher: (url) => poty.get(url).then((res) => res.data),
               }}
@@ -59,5 +59,5 @@ export default function RootLayout({
         </AppProvider>
       </body>
     </html>
-  );
+  )
 }
