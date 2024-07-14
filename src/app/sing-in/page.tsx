@@ -1,30 +1,30 @@
-"use client";
+'use client'
 
-import { Button } from "@/components/ui/button";
-import { useRouter } from "next/navigation";
-import { Dialog, DialogOverlay, DialogTrigger } from "@/components/ui/dialog";
-import Image from "next/image";
-import LogoPotyguara from "../../../public/LogoRetangular.png";
-import { ChooseUserRole } from "@/components/Singup/dialogChooseRole";
-import { Suspense } from "react";
-import { useAuth } from "@/contexts/AuthContext";
-import { z } from "zod";
-import { SubmitHandler, useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import { Button } from '@/components/ui/button'
+import { useRouter } from 'next/navigation'
+import { Dialog, DialogOverlay, DialogTrigger } from '@/components/ui/dialog'
+import Image from 'next/image'
+import LogoPotyguara from '../../../public/LogoRetangular.png'
+import { ChooseUserRole } from '@/components/Singup/dialogChooseRole'
+import { Suspense } from 'react'
+import { useAuth } from '@/contexts/AuthContext'
+import { z } from 'zod'
+import { SubmitHandler, useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { Checkbox } from '@/components/ui/checkbox'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
 
 const signInFormSchema = z.object({
   email: z.string().email(),
   password: z.string(),
-});
+})
 
-type SignInFormSchema = z.infer<typeof signInFormSchema>;
+type SignInFormSchema = z.infer<typeof signInFormSchema>
 
 export default function SingIn() {
-  const router = useRouter();
-  const { signIn } = useAuth();
+  const router = useRouter()
+  const { signIn } = useAuth()
 
   const {
     register,
@@ -32,20 +32,20 @@ export default function SingIn() {
     formState: { isSubmitting },
   } = useForm<SignInFormSchema>({
     resolver: zodResolver(signInFormSchema),
-  });
+  })
 
   const handleSignIn: SubmitHandler<SignInFormSchema> = async ({
     email,
     password,
   }) => {
-    console.log('email', email);
-    console.log('senha', password);
+    console.log('email', email)
+    console.log('senha', password)
 
-    await signIn({ email, password });
-  };
+    await signIn({ email, password })
+  }
 
   function handleNavigateToHomePage() {
-    router.push(`/`);
+    router.push(`/`)
   }
 
   return (
@@ -72,7 +72,7 @@ export default function SingIn() {
                 placeholder="Informe o seu e-mail"
                 id="email"
                 type="email"
-                {...register("email")}
+                {...register('email')}
               />
             </div>
             <div className="space-y-2">
@@ -81,7 +81,7 @@ export default function SingIn() {
                 placeholder="Informe sua senha"
                 id="password"
                 type="password"
-                {...register("password")}
+                {...register('password')}
               />
             </div>
 
@@ -103,7 +103,7 @@ export default function SingIn() {
             </div>
           </form>
           <p className="mt-10 text-center text-sm text-gray-500">
-            Não é um membro?{" "}
+            Não é um membro?{' '}
             <Dialog>
               <DialogTrigger asChild>
                 <Button variant="ghost" className="hover:bg-transparent">
@@ -119,5 +119,5 @@ export default function SingIn() {
         </div>
       </div>
     </main>
-  );
+  )
 }

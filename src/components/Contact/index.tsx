@@ -1,58 +1,61 @@
-"use client";
+'use client'
 
-import { Button } from "../ui/button";
-import {
-  Dialog,
-  DialogOverlay,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import { ChooseUserRole } from "../Singup/dialogChooseRole";
-import { Suspense, useState } from "react";
-import { useToast } from "../ui/use-toast";
+import { Button } from '../ui/button'
+import { Dialog, DialogOverlay, DialogTrigger } from '@/components/ui/dialog'
+import { ChooseUserRole } from '../Singup/dialogChooseRole'
+import { Suspense, useState } from 'react'
+import { useToast } from '../ui/use-toast'
 import emailjs from '@emailjs/browser'
 import ReactPlayer from 'react-player'
-
+import { Textarea } from '@/components/ui/textarea'
 
 export function Contact() {
-
-  const { toast } = useToast();
-
+  const { toast } = useToast()
 
   const [name, setName] = useState<string>('')
   const [email, setEmail] = useState<string>('')
   const [message, setMessage] = useState<string>('')
 
-  function sendEmail(e){
+  function sendEmail(e) {
     e.preventDefault()
 
-    if(name === '' || email === '' || message === '' ){
+    if (name === '' || email === '' || message === '') {
       return toast({
-        title: "Ops! Algo deu errado.",
-        description: "Você precisa preencher todos os campos para enviar uma mensagem.",
-      });
+        title: 'Ops! Algo deu errado.',
+        description:
+          'Você precisa preencher todos os campos para enviar uma mensagem.',
+      })
     }
 
     const templateParams = {
       from_name: name,
-      message: message,
-      email: email,
+      message,
+      email,
     }
 
-    emailjs.send("service_zbxi0nc","template_dgvmqfp", templateParams, "4cE3-qpOkYN-q8Pk6")
-    .then((response)=>{
-      setName('')
-      setEmail('')
-      setMessage('')
+    emailjs
+      .send(
+        'service_zbxi0nc',
+        'template_dgvmqfp',
+        templateParams,
+        '4cE3-qpOkYN-q8Pk6',
+      )
+      .then(
+        (response) => {
+          setName('')
+          setEmail('')
+          setMessage('')
 
-      return toast({
-        title: "Uhuu! E-mail enviado com sucesso!",
-      });
-      
-    }, (err)=>{
-      return toast({
-        title: "Ops! Algo deu errado ao enviar o e-mail.",
-      });
-    })
+          return toast({
+            title: 'Uhuu! E-mail enviado com sucesso!',
+          })
+        },
+        (err) => {
+          return toast({
+            title: 'Ops! Algo deu errado ao enviar o e-mail.',
+          })
+        },
+      )
   }
 
   return (
@@ -88,7 +91,7 @@ export function Contact() {
                         placeholder="Digite seu nome"
                         value={name}
                         autoComplete="given-name"
-                        onChange={(e)=>setName(e.target.value)}
+                        onChange={(e) => setName(e.target.value)}
                         className="block w-full pl-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 bg-gray-light focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 "
                       />
                     </div>
@@ -108,7 +111,7 @@ export function Contact() {
                         autoComplete="email"
                         placeholder="Digite seu e-mail"
                         value={email}
-                        onChange={(e)=>setEmail(e.target.value)}
+                        onChange={(e) => setEmail(e.target.value)}
                         className="block w-full pl-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 bg-gray-light focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                       />
                     </div>
@@ -122,14 +125,14 @@ export function Contact() {
                       Mensagem
                     </label>
                     <div className="mt-2">
-                      <textarea
+                      <Textarea
                         name="about"
                         rows={8}
                         placeholder="Digite sua mensagem..."
                         value={message}
-                        onChange={(e)=>setMessage(e.target.value)}
+                        onChange={(e) => setMessage(e.target.value)}
                         className="block w-full pl-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 bg-gray-light focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                        defaultValue={""}
+                        defaultValue={''}
                       />
                     </div>
                   </div>
@@ -138,7 +141,9 @@ export function Contact() {
             </div>
 
             <div className="mt-6 flex items-center justify-end gap-x-6">
-              <Button className="text-foreground" type="submit">Enviar</Button>
+              <Button className="text-foreground" type="submit">
+                Enviar
+              </Button>
             </div>
           </form>
         </div>
@@ -164,7 +169,7 @@ export function Contact() {
             </DialogTrigger>
             <DialogOverlay className="bg-background opacity-90 w-screen" />
             <Suspense>
-            <ChooseUserRole />
+              <ChooseUserRole />
             </Suspense>
           </Dialog>
 
@@ -173,7 +178,6 @@ export function Contact() {
           </Button>
         </div>
       </div>
-    
     </div>
-  );
+  )
 }

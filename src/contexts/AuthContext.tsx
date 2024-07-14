@@ -152,22 +152,21 @@ export function AuthProvider({ children }: Props) {
 
     poty
       .get('/users/me', { headers: { Authorization: `Bearer ${token}` } })
-      .then(({ data: { user, token } }) => {
+      .then(({ data: { userProfile, token } }) => {
+        console.log('useeffect', userProfile)
         setUser({
-          id: user.id,
-          name: user.name,
-          username: user.username,
-          email: user.email,
-          role: user.tipo_usuario,
+          id: userProfile.id,
+          name: userProfile.name,
+          username: userProfile.username,
+          email: userProfile.email,
+          role: userProfile.tipo_usuario,
         })
 
         setToken(token)
 
-        console.log('useeffect', user)
-
         setIsloading(false)
 
-        poty.defaults.headers.Authorization = `Bearer ${token}`
+        // poty.defaults.headers.Authorization = `Bearer ${token}`
 
         //     if (asPath === '/') {
         //       router.push('/app/dashboard')

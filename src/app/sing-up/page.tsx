@@ -1,14 +1,13 @@
-"use client";
+'use client'
 
-import { Footer } from "@/components/Footer";
-import { Header } from "@/components/Header";
-import { Button } from "@/components/ui/button";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useRouter, useSearchParams } from "next/navigation";
-import { useForm } from "react-hook-form";
-import { Input } from "@/components/ui/input";
-import { SubmitHandler } from "react-hook-form";
-import { z } from "zod";
+import { Footer } from '@/components/Footer'
+import { Header } from '@/components/Header'
+import { Button } from '@/components/ui/button'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useRouter, useSearchParams } from 'next/navigation'
+import { useForm, SubmitHandler } from 'react-hook-form'
+import { Input } from '@/components/ui/input'
+import { z } from 'zod'
 import {
   Form,
   FormControl,
@@ -17,52 +16,52 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { useToast } from "@/components/ui/use-toast";
-import { Suspense, useEffect, useState } from "react";
-import { InputMasked } from "@/components/Form/inputMask";
-import { createExternalAccount } from "@/services/hooks/createExternalAccount";
-import uuid from "react-uuid";
-import Link from "next/link";
-import { api } from "@/services/api";
+} from '@/components/ui/form'
+import { useToast } from '@/components/ui/use-toast'
+import { Suspense, useEffect, useState } from 'react'
+import { InputMasked } from '@/components/Form/inputMask'
+import { createExternalAccount } from '@/services/hooks/createExternalAccount'
+import uuid from 'react-uuid'
+import Link from 'next/link'
+import { poty } from '@/services/api'
 
 const signUpFormSchema = z.object({
   name: z.string(),
   email: z.string().email(),
   username: z.string(),
   password: z.string(),
-});
+})
 
-type SignUpFormSchema = z.infer<typeof signUpFormSchema>;
+type SignUpFormSchema = z.infer<typeof signUpFormSchema>
 
 export default function SingupPage() {
-  const router = useRouter();
+  const router = useRouter()
 
-  const { toast } = useToast();
+  const { toast } = useToast()
 
-  const searchParams = useSearchParams();
+  const searchParams = useSearchParams()
 
-  const userRole = searchParams.get("role");
+  const userRole = searchParams.get('role')
 
   const [passwordChecked, setPasswordChecked] = useState<string | undefined>(
-    undefined
-  );
+    undefined,
+  )
 
   // const [allowNotification, setAllowNotification] = useState<boolean>(false);
 
   function handleNavigateToHomePage() {
-    router.push(`/`);
+    router.push(`/`)
   }
 
   const form = useForm<z.infer<typeof signUpFormSchema>>({
     resolver: zodResolver(signUpFormSchema),
     defaultValues: {
-      name: "",
-      username: "",
-      email: "",
-      password: "",
+      name: '',
+      username: '',
+      email: '',
+      password: '',
     },
-  });
+  })
 
   const handleSignUp: SubmitHandler<SignUpFormSchema> = async ({
     name,
@@ -72,50 +71,50 @@ export default function SingupPage() {
   }) => {
     if (password !== passwordChecked) {
       toast({
-        title: "Ops!",
-        description: "As senhas não batem",
+        title: 'Ops!',
+        description: 'As senhas não batem',
         duration: 3000,
-        type: "background",
-        variant: "default",
-      });
+        type: 'background',
+        variant: 'default',
+      })
 
-      return;
+      return
     }
 
     try {
-      await api.post("/sing-up", {
+      await poty.post('/sing-up', {
         email,
         name,
         username,
         password,
         role: userRole,
-      });
+      })
 
       // setIsLoadingCreateUser(false)
 
       // await mutateUsers()
 
       toast({
-        title: "Sucesso!",
-        description: "Usuário criado",
+        title: 'Sucesso!',
+        description: 'Usuário criado',
         duration: 3000,
-        type: "background",
-        variant: "default",
-      });
+        type: 'background',
+        variant: 'default',
+      })
 
-      router.push(`/sing-in`);
+      router.push(`/sing-in`)
     } catch (error) {
       // setIsLoadingCreateUser(false)
 
       toast({
-        title: "Ops!",
-        description: "Houve um error ao criar o usuário",
+        title: 'Ops!',
+        description: 'Houve um error ao criar o usuário',
         duration: 3000,
-        type: "background",
-        variant: "default",
-      });
+        type: 'background',
+        variant: 'default',
+      })
     }
-  };
+  }
 
   return (
     <main className="bg-muted-foreground text-foreground">
@@ -200,7 +199,7 @@ export default function SingupPage() {
                 )}
               />
               <div className="w-1/2 flex mt-8 gap-10">
-                {" "}
+                {' '}
                 <FormField
                   control={form.control}
                   name="password"
@@ -253,21 +252,21 @@ export default function SingupPage() {
               </div> */}
               <div className="flex items-center space-x-2">
                 <span>
-                  Ao cadastrar, você aceita os{" "}
+                  Ao cadastrar, você aceita os{' '}
                   <Link
                     href="www.google.com"
                     className="text-blue-500 underline"
                   >
                     termos
-                  </Link>{" "}
-                  e{" "}
+                  </Link>{' '}
+                  e{' '}
                   <Link
                     href="wwww.google.com"
                     className="text-blue-500 underline"
                   >
                     políticas
-                  </Link>{" "}
-                  da plataforma Potyguara Verse.{" "}
+                  </Link>{' '}
+                  da plataforma Potyguara Verse.{' '}
                 </span>
               </div>
             </div>
@@ -293,5 +292,5 @@ export default function SingupPage() {
       </Form>
       <Footer />
     </main>
-  );
+  )
 }
