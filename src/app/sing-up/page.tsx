@@ -18,10 +18,7 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { useToast } from '@/components/ui/use-toast'
-import { Suspense, useEffect, useState } from 'react'
-import { InputMasked } from '@/components/Form/inputMask'
-import { createExternalAccount } from '@/services/hooks/createExternalAccount'
-import uuid from 'react-uuid'
+import { useState } from 'react'
 import Link from 'next/link'
 import { poty } from '@/services/api'
 
@@ -199,7 +196,6 @@ export default function SingupPage() {
                 )}
               />
               <div className="w-1/2 flex mt-8 gap-10">
-                {' '}
                 <FormField
                   control={form.control}
                   name="password"

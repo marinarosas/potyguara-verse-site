@@ -5,23 +5,13 @@ import { useState } from 'react'
 import { ChartPieIcon, CursorArrowRaysIcon } from '@heroicons/react/24/outline'
 import { PhoneIcon, PlayCircleIcon } from '@heroicons/react/20/solid'
 import { useTheme } from 'next-themes'
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogOverlay,
-  DialogTitle,
-  DialogTrigger,
-} from '@/components/ui/dialog'
+import { Dialog, DialogTrigger } from '@/components/ui/dialog'
 
 import * as React from 'react'
 
 import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
 
-import Link from 'next/link'
-// import { Icons } from "@/components/icons";
 import { NavigationMenuLink } from '@/components/ui/navigation-menu'
 import {
   DropdownMenu,
@@ -47,8 +37,9 @@ import Image from 'next/image'
 import LogoPotyguara from '../../../public/LogoRetangular.png'
 import BrasaoPreto from '../../../public/brasao_preto.png'
 import { NavigationMenuHeader } from './NavigationMenu'
-import { FormCreateEvent } from '../MyEvents/formCreateEvent'
 import { useAuth } from '@/contexts/AuthContext'
+import { EventCreateDialog } from '../TableEvents/event-create-dialog'
+import { Plus } from 'lucide-react'
 
 const products = [
   {
@@ -75,7 +66,7 @@ export function HeaderInside() {
 
   const { setTheme } = useTheme()
 
-  const [openDialogCreateEvent, setOpenDialogCreateEvent] = useState(false)
+  const [isCreateEventOpen, setIsCreateEventOpen] = useState(false)
 
   function handleNavigateToLoginPage() {
     router.push(`/app/login-page`)
@@ -104,37 +95,25 @@ export function HeaderInside() {
 
       {/* Coins side */}
       <div className="flex items-center justify-end gap-4 w-full">
-        <Dialog
-          open={openDialogCreateEvent}
-          onOpenChange={setOpenDialogCreateEvent}
-        >
-          <DialogTrigger asChild>
-            <Button className="text-white text-xs py-2.5 text-center items-center">
-              Criar evento
-            </Button>
-          </DialogTrigger>
-          <DialogOverlay className="bg-muted-foregorund opacity-90" />
-          <DialogContent className="h-5/6 max-w-4xl">
-            <DialogHeader>
-              <DialogTitle
-                onClick={() => {
-                  setOpenDialogCreateEvent(true)
-                }}
-              >
-                Criar evento
-              </DialogTitle>
-              <DialogDescription>
-                Crie seu evento aqui, quanto mais detalhes melhor a experiência
-                do seu fã.
-              </DialogDescription>
-            </DialogHeader>
+        <form className="flex items-center justify-between gap-2">
+          <div></div>
 
-            {/* Formulario evento */}
-            <FormCreateEvent
-              setOpenDialogCreateEvent={setOpenDialogCreateEvent}
-            />
-          </DialogContent>
-        </Dialog>
+          {user.role === 'ARTIST' && (
+            <Dialog
+              open={isCreateEventOpen}
+              onOpenChange={setIsCreateEventOpen}
+            >
+              <DialogTrigger asChild>
+                <Button type="button" variant="default">
+                  <Plus className="mr-2 h-4 w-4" />
+                  Criar Evento
+                </Button>
+              </DialogTrigger>
+
+              <EventCreateDialog setIsCreateEventOpen={setIsCreateEventOpen} />
+            </Dialog>
+          )}
+        </form>
 
         <DropdownMenu>
           <DropdownMenuTrigger asChild>

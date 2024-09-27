@@ -10,10 +10,6 @@ import Loading from './loading'
 export default function Layout({ children }: { children: ReactNode }) {
   const { user } = useAuth()
 
-  useEffect(() => {
-    console.log('usuario', user)
-  }, [user])
-
   return (
     <>
       {!user?.id ? (
@@ -22,9 +18,9 @@ export default function Layout({ children }: { children: ReactNode }) {
         </>
       ) : (
         <>
-          <div className="flex flex-col antialiased bg-muted-foreground text-foreground min-h-full">
+          <div className="flex flex-col antialiased bg-muted-foreground text-foreground h-screen">
             <HeaderInside />
-            <div className="flex-1">{children}</div>
+            <div className="flex flex-col flex-1">{children}</div>
             <Toaster />
             <FooterInside />
           </div>

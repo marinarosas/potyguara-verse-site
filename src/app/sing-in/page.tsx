@@ -38,9 +38,6 @@ export default function SingIn() {
     email,
     password,
   }) => {
-    console.log('email', email)
-    console.log('senha', password)
-
     await signIn({ email, password })
   }
 

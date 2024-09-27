@@ -1,37 +1,37 @@
-"use client";
+'use client'
 
-import { useRouter, useSearchParams } from "next/navigation";
-import { Button } from "../ui/button";
+import { useRouter, useSearchParams } from 'next/navigation'
+import { Button } from '../ui/button'
 import {
   DialogContent,
   DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "../ui/dialog";
-import { useCallback } from "react";
+} from '../ui/dialog'
+import { useCallback } from 'react'
 
 export function ChooseUserRole() {
-  const router = useRouter();
+  const router = useRouter()
 
-  const searchParams = useSearchParams();
+  const searchParams = useSearchParams()
 
   const createQueryString = useCallback(
     (name: string, value: string) => {
-      const params = new URLSearchParams(searchParams.toString());
-      params.set(name, value);
+      const params = new URLSearchParams(searchParams.toString())
+      params.set(name, value)
 
-      return params.toString();
+      return params.toString()
     },
-    [searchParams]
-  );
+    [searchParams],
+  )
 
   function handleNavigateToSingupPageArtist() {
-    router.push(`/sing-up` + "?" + createQueryString("role", "ARTIST"));
+    router.push(`/sing-up` + '?' + createQueryString('role', 'ARTIST'))
   }
 
   function handleNavigateToSingupPageViewer() {
-    router.push(`/singup-up` + "?" + createQueryString("role", "VIEWER"));
+    router.push(`/singup-up` + '?' + createQueryString('role', 'VIEWER'))
   }
   return (
     <DialogContent className="h-60 lg:h-52 w-96 lg:w-full">
@@ -59,5 +59,5 @@ export function ChooseUserRole() {
         </Button>
       </DialogFooter>
     </DialogContent>
-  );
+  )
 }

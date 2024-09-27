@@ -62,8 +62,6 @@ export function AuthProvider({ children }: Props) {
         data: { user, token },
       } = await poty.post('/sing-in', { email, password })
 
-      console.log('data dentro do singin', user)
-
       // if (user.disabled) {
       //   toast({
       //     title: "Ops!",
@@ -145,8 +143,6 @@ export function AuthProvider({ children }: Props) {
 
   useEffect(() => {
     const { 'potyverse@token': token } = parseCookies()
-
-    console.log('token useEffect', token)
 
     setIsloading(true)
 

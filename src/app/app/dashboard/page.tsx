@@ -8,15 +8,8 @@ import { CardTips } from '@/components/Cards/cardTips'
 import { CardMyAvatar } from '@/components/Cards/cardMyAvatar'
 import { CardMyStage } from '@/components/Cards/cardMyStage'
 import { useAuth } from '@/contexts/AuthContext'
-import { useEffect } from 'react'
 
 export default function Dashboard() {
-  const { user } = useAuth()
-
-  useEffect(() => {
-    console.log('usuario dashboard', user)
-  }, [user])
-
   return (
     <div className="h-full px-8 py-6 space-y-6 pb-16 rotate-0 scale-100 transition-all">
       <CardSmallInfo />

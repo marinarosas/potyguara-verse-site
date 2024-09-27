@@ -15,7 +15,6 @@ import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
-  DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
@@ -32,12 +31,12 @@ export default function MyEvents() {
         <div className="flex items-center">
           <TabsList>
             <TabsTrigger value="all">Todos</TabsTrigger>
-            <TabsTrigger value="active">Ativos</TabsTrigger>
+            {/* <TabsTrigger value="active">Ativos</TabsTrigger>
             <TabsTrigger value="finished">Finalizados</TabsTrigger>
-            <TabsTrigger value="cancel">Cancelados</TabsTrigger>
+            <TabsTrigger value="cancel">Cancelados</TabsTrigger> */}
           </TabsList>
           <div className="ml-auto flex items-center gap-2">
-            <DropdownMenu>
+            {/* <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="outline" size="sm" className="h-7 gap-1">
                   <ListFilter className="h-3.5 w-3.5" />
@@ -55,7 +54,7 @@ export default function MyEvents() {
                 <DropdownMenuCheckboxItem>Rascunhos</DropdownMenuCheckboxItem>
                 <DropdownMenuCheckboxItem>Finalizados</DropdownMenuCheckboxItem>
               </DropdownMenuContent>
-            </DropdownMenu>
+            </DropdownMenu> */}
             {/* <Button size="sm" variant="outline" className="h-7 gap-1">
                   <File className="h-3.5 w-3.5" />
                   <span className="sr-only sm:not-sr-only sm:whitespace-nowrap">
@@ -83,7 +82,7 @@ export default function MyEvents() {
             </CardContent>
             <CardFooter>
               <div className="text-xs text--foreground pt-4">
-                Showing <strong>1-10</strong> of <strong>15</strong> products
+                Mostrando <strong>1-10</strong> of <strong>15</strong> eventos
               </div>
             </CardFooter>
           </Card>

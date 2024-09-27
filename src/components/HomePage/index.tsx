@@ -1,9 +1,9 @@
-"use client";
+'use client'
 
-import { Button } from "../ui/button";
-import { Dialog, DialogOverlay, DialogTrigger } from "@/components/ui/dialog";
-import { ChooseUserRole } from "../Singup/dialogChooseRole";
-import { Suspense } from "react";
+import { Button } from '../ui/button'
+import { Dialog, DialogOverlay, DialogTrigger } from '@/components/ui/dialog'
+import { ChooseUserRole } from '../Singup/dialogChooseRole'
+import { Suspense } from 'react'
 
 export function Homepage() {
   return (
@@ -12,17 +12,19 @@ export function Homepage() {
       className="h-screen flex justify-center gap-8 flex-col items-center transition-transform"
       style={{
         backgroundImage: `url(/BgSite_ImageAV.jpeg)`,
-        backgroundSize: "cover",
-        backgroundRepeat: "no-repeat",
-        backgroundPositionY: "center",
+        backgroundSize: 'cover',
+        backgroundRepeat: 'no-repeat',
+        backgroundPositionY: 'center',
       }}
     >
       <h1 className="flex justify-center text-center text-white font-bold text-4xl lg:text-3xl px-8 ">
-        Conheça a Potyguara Verse, uma nova
-        maneira de assitir eventos online, além de ser um universo de jogos!
+        Conheça a Potyguara Verse, uma nova maneira de assitir eventos online,
+        além de ser um universo de jogos!
       </h1>
       <div className="flex flex-col lg:flex-row gap-12">
-        <Button variant="default" size="lg" >Baixe a plataforma</Button>
+        <Button variant="default" size="lg">
+          Baixe a plataforma
+        </Button>
         <Dialog>
           <DialogTrigger asChild>
             <Button variant="secondary">Cadastre-se</Button>
@@ -34,5 +36,5 @@ export function Homepage() {
         </Dialog>
       </div>
     </div>
-  );
+  )
 }
