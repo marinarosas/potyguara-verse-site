@@ -12,27 +12,18 @@ import { Label } from '@/components/ui/label'
 import { useToast } from '@/components/ui/use-toast'
 import { useAuth } from '@/contexts/AuthContext'
 import { poty } from '@/services/api'
-import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from '@/components/ui/popover'
-import { Calendar } from '@/components/ui/calendar'
-import { CalendarIcon } from '@radix-ui/react-icons'
-import React, { useState } from 'react'
-import { format } from 'date-fns'
+import React, { useEffect, useState } from 'react'
 import { MdOutlineAddPhotoAlternate } from 'react-icons/md'
 import { Textarea } from '../ui/textarea'
+import { useListEventsByAuthorId } from '@/services/hooks/events/useListEventsByAuthorId'
 
 const eventFormSchema = z.object({
   title: z.string(),
   content: z.string(),
-  eventDate: z.date(),
+  eventDate: z.string(),
   price: z.coerce.number(),
   eventTime: z.string(),
-  slug: z.string(),
 })
 
 type EventFormSchema = z.infer<typeof eventFormSchema>
@@ -50,14 +41,32 @@ export function EventCreateDialog({ setIsCreateEventOpen }: Props) {
 
   const [attachmentsIds, setAttachmentsIds] = useState<string[] | []>([])
 
-  const { register, handleSubmit, reset, control } = useForm<EventFormSchema>({
+  const { mutateEvents } = useListEventsByAuthorId()
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+    control,
+  } = useForm<EventFormSchema>({
     resolver: zodResolver(eventFormSchema),
+  })
+
+  useEffect(() => {
+    console.log('data', date)
+    console.log('files', attachmentsIds)
   })
 
   const handleCreateEvent: SubmitHandler<
     z.infer<typeof eventFormSchema>
-  > = async ({ title, content, price, eventTime, slug }) => {
-    console.log('entoru')
+  > = async ({ title, content, price, eventDate, eventTime }) => {
+    console.log('entrou')
+
+    console.log('title', title)
+    console.log('content', content)
+    console.log('price', price)
+    console.log('eventTime', eventTime)
 
     if (user?.id === undefined) {
       return null
@@ -77,8 +86,7 @@ export function EventCreateDialog({ setIsCreateEventOpen }: Props) {
         content,
         price,
         eventTime,
-        eventDate: date,
-        slug,
+        eventDate,
         statusPayment: false,
         attachments: attachmentsIds,
       })
@@ -88,11 +96,11 @@ export function EventCreateDialog({ setIsCreateEventOpen }: Props) {
         description: 'Cadastro do evento criado com sucesso.',
       })
 
+      mutateEvents()
       reset()
-
       setIsCreateEventOpen(false)
     } catch {
-      console.log(error)
+      console.log(errors)
       toast({
         title: 'Ops! Algo deu errado.',
         description: 'O cadastro não foi criado, fale com a central.',
@@ -106,7 +114,7 @@ export function EventCreateDialog({ setIsCreateEventOpen }: Props) {
         <DialogTitle>Criar evento</DialogTitle>
       </DialogHeader>
 
-      <form onSubmit={handleSubmit(handleCreateEvent)} className="space-y-4">
+      <div className="space-y-4 text-foreground">
         <Button
           type="button"
           className="w-fit h-12 text-foreground flex gap-2 hover:text-primary hover:bg-transparent border-2 border-primary border-dashed"
@@ -123,16 +131,25 @@ export function EventCreateDialog({ setIsCreateEventOpen }: Props) {
             <div className="gap-2 space-y-2 ">
               <Label htmlFor="title">Título do evento</Label>
               <Input
-                id="title"
                 placeholder="Nome do evento"
                 type="text"
                 {...register('title')}
               />
+              {errors.title && <span>{errors.title.message}</span>}
             </div>
             <div className="gap-2 space-y-2 ">
-              <Label htmlFor="weekDays">Data do evento</Label>
-              <div className="w-ful max-w-68  flex flex-row flex-wrap gap-2">
-                <Popover>
+              <Label htmlFor="content">Descrição do evento</Label>
+              <div className="flex w-full flex-row gap-2">
+                <Textarea
+                  placeholder="Horário do evento"
+                  {...register('content')}
+                />
+                {errors.content && <span>{errors.content.message}</span>}
+              </div>
+              <div className="gap-2 space-y-2 ">
+                <Label htmlFor="weekDays">Data do evento</Label>
+                {/* <div className="w-ful max-w-68  flex flex-row flex-wrap gap-2"> */}
+                {/* <Popover>
                   <PopoverTrigger asChild>
                     <Button
                       variant={'outline'}
@@ -143,7 +160,7 @@ export function EventCreateDialog({ setIsCreateEventOpen }: Props) {
                     >
                       <CalendarIcon className="mr-2 h-4 w-4 opacity-50" />
                       {date ? (
-                        format(date, 'PPP')
+                        format(date, 'PPP', { locale: ptBR })
                       ) : (
                         <span>Escolha uma data</span>
                       )}
@@ -155,30 +172,27 @@ export function EventCreateDialog({ setIsCreateEventOpen }: Props) {
                       selected={date}
                       onSelect={setDate}
                       initialFocus
+                      locale={ptBR}
                     />
                   </PopoverContent>
-                </Popover>
-              </div>
-            </div>
-            <div className="gap-2 space-y-2 ">
-              <Label htmlFor="eventTime">Horário do evento</Label>
-              <div className="flex w-full flex-row gap-2">
+                </Popover> */}
                 <Input
-                  id="eventTime"
-                  placeholder="Horário do evento"
-                  type="time"
-                  {...register('eventTime')}
+                  placeholder="Data do evento"
+                  type="date"
+                  {...register('eventDate')}
                 />
+                {/* </div> */}
               </div>
               <div className="gap-2 space-y-2 ">
-                <Label htmlFor="content">Descrição do evento</Label>
+                <Label htmlFor="eventTime">Horário do evento</Label>
                 <div className="flex w-full flex-row gap-2">
-                  <Textarea
-                    id="content"
+                  <Input
                     placeholder="Horário do evento"
-                    {...register('content')}
+                    type="time"
+                    {...register('eventTime')}
                   />
                 </div>
+
                 {/* <div className="gap-2 space-y-2 ">
                 <Label htmlFor="weekDays">Grupo de contato</Label>
                 <Controller
@@ -216,7 +230,6 @@ export function EventCreateDialog({ setIsCreateEventOpen }: Props) {
                   <Label htmlFor="price">Valor do evento</Label>
                   <div className="flex w-full flex-row gap-2">
                     <Input
-                      id="price"
                       placeholder="Horário do evento"
                       {...register('price')}
                     />
@@ -236,11 +249,11 @@ export function EventCreateDialog({ setIsCreateEventOpen }: Props) {
         <Button
           // disabled={isLoadingCreateCampaign}
           className="w-full"
-          type="submit"
+          onClick={handleSubmit(handleCreateEvent)}
         >
           Criar
         </Button>
-      </form>
+      </div>
     </DialogContent>
   )
 }

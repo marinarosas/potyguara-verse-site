@@ -56,29 +56,29 @@ export function NavigationMenuHeader() {
 
   return (
     <NavigationMenu className="pl-8">
-      <NavigationMenuList>
-        <NavigationMenuItem>
-          <Link href="/app/dashboard" legacyBehavior passHref>
-            <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-              Ínicio
-            </NavigationMenuLink>
-          </Link>
-        </NavigationMenuItem>
+      {user.role === 'ARTIST' && (
+        <NavigationMenuList>
+          <NavigationMenuItem>
+            <Link href="/app/dashboard" legacyBehavior passHref>
+              <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                Ínicio
+              </NavigationMenuLink>
+            </Link>
+          </NavigationMenuItem>
 
-        <NavigationMenuItem>
-          <Link href="/app/my-events" legacyBehavior passHref>
-            <NavigationMenuLink
-              className={navigationMenuTriggerStyle()}
-              // onClick={() => {
-              //   handleNavigateToMyEventsPage();
-              // }}
-            >
-              Meus Eventos
-            </NavigationMenuLink>
-          </Link>
-        </NavigationMenuItem>
+          <NavigationMenuItem>
+            <Link href="/app/my-events" legacyBehavior passHref>
+              <NavigationMenuLink
+                className={navigationMenuTriggerStyle()}
+                // onClick={() => {
+                //   handleNavigateToMyEventsPage();
+                // }}
+              >
+                Meus Eventos
+              </NavigationMenuLink>
+            </Link>
+          </NavigationMenuItem>
 
-        {user.role === 'ARTIST' && (
           <NavigationMenuItem>
             <Link href="/app/my-avatar" legacyBehavior passHref>
               <NavigationMenuLink className={navigationMenuTriggerStyle()}>
@@ -86,9 +86,7 @@ export function NavigationMenuHeader() {
               </NavigationMenuLink>
             </Link>
           </NavigationMenuItem>
-        )}
 
-        {user.role === 'ARTIST' && (
           <NavigationMenuItem>
             <Link href="/docs" legacyBehavior passHref>
               <NavigationMenuLink className={navigationMenuTriggerStyle()}>
@@ -96,9 +94,7 @@ export function NavigationMenuHeader() {
               </NavigationMenuLink>
             </Link>
           </NavigationMenuItem>
-        )}
 
-        {user.role === 'ARTIST' && (
           <NavigationMenuItem>
             <Link href="/docs" legacyBehavior passHref>
               <NavigationMenuLink className={navigationMenuTriggerStyle()}>
@@ -106,39 +102,86 @@ export function NavigationMenuHeader() {
               </NavigationMenuLink>
             </Link>
           </NavigationMenuItem>
-        )}
 
-        <NavigationMenuItem>
-          <Link href="/app/store" legacyBehavior passHref>
-            <NavigationMenuLink
-              className={navigationMenuTriggerStyle()}
-              // onClick={() => {
-              //   handleNavigateToStorePage();
-              // }}
-            >
-              Loja
-            </NavigationMenuLink>
-          </Link>
-        </NavigationMenuItem>
+          <NavigationMenuItem>
+            <Link href="/app/store" legacyBehavior passHref>
+              <NavigationMenuLink
+                className={navigationMenuTriggerStyle()}
+                // onClick={() => {
+                //   handleNavigateToStorePage();
+                // }}
+              >
+                Loja
+              </NavigationMenuLink>
+            </Link>
+          </NavigationMenuItem>
 
-        <NavigationMenuItem>
-          <NavigationMenuTrigger>Outras opções</NavigationMenuTrigger>
-          <NavigationMenuContent>
-            <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] bg-muted-foreground text-foreground">
-              {components.map((component) => (
-                <ListItem
-                  key={component.title}
-                  title={component.title}
-                  href={component.href}
-                  className="text-foreground"
-                >
-                  {component.description}
-                </ListItem>
-              ))}
-            </ul>
-          </NavigationMenuContent>
-        </NavigationMenuItem>
-      </NavigationMenuList>
+          <NavigationMenuItem>
+            <NavigationMenuTrigger>Outras opções</NavigationMenuTrigger>
+            <NavigationMenuContent>
+              <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] bg-muted-foreground text-foreground">
+                {components.map((component) => (
+                  <ListItem
+                    key={component.title}
+                    title={component.title}
+                    href={component.href}
+                    className="text-foreground"
+                  >
+                    {component.description}
+                  </ListItem>
+                ))}
+              </ul>
+            </NavigationMenuContent>
+          </NavigationMenuItem>
+        </NavigationMenuList>
+      )}
+      {user.role === 'VIEWER' && (
+        <NavigationMenuList>
+          <NavigationMenuItem>
+            <Link href="/app/store" legacyBehavior passHref>
+              <NavigationMenuLink
+                className={navigationMenuTriggerStyle()}
+                // onClick={() => {
+                //   handleNavigateToStorePage();
+                // }}
+              >
+                Loja
+              </NavigationMenuLink>
+            </Link>
+          </NavigationMenuItem>
+
+          <NavigationMenuItem>
+            <Link href="/app/my-events" legacyBehavior passHref>
+              <NavigationMenuLink
+                className={navigationMenuTriggerStyle()}
+                // onClick={() => {
+                //   handleNavigateToMyEventsPage();
+                // }}
+              >
+                Meus Eventos
+              </NavigationMenuLink>
+            </Link>
+          </NavigationMenuItem>
+
+          <NavigationMenuItem>
+            <NavigationMenuTrigger>Outras opções</NavigationMenuTrigger>
+            <NavigationMenuContent>
+              <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] bg-muted-foreground text-foreground">
+                {components.map((component) => (
+                  <ListItem
+                    key={component.title}
+                    title={component.title}
+                    href={component.href}
+                    className="text-foreground"
+                  >
+                    {component.description}
+                  </ListItem>
+                ))}
+              </ul>
+            </NavigationMenuContent>
+          </NavigationMenuItem>
+        </NavigationMenuList>
+      )}
     </NavigationMenu>
   )
 }

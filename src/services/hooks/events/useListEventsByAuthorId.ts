@@ -1,16 +1,16 @@
 import { parseCookies } from 'nookies'
 import useSWR from 'swr'
 import { IEventShow } from '@/types/eventShow'
-import { poty } from '../api'
+import { poty } from '../../api'
 
 interface IResponse {
   events: IEventShow[]
 }
-export function useListEventsAll() {
+export function useListEventsByAuthorId() {
   const { 'potyverse@token': token } = parseCookies()
 
   const { data, error, isLoading, isValidating, mutate } = useSWR<IResponse>(
-    `/events`,
+    `/events/me`,
     (url) =>
       poty
         .get(url, {
