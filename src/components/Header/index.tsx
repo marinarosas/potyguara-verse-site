@@ -27,6 +27,7 @@ import {
 } from '@/components/ui/dropdown-menu'
 import Image from 'next/image'
 import LogoPotyguara from '../../../public/LogoRetangular.png'
+import { MoveRight } from 'lucide-react'
 
 const products = [
   {
@@ -68,7 +69,7 @@ export function Header() {
   // };
 
   function handleNavigateToLoginPage() {
-    router.push(`/login-page`)
+    router.push(`/sing-in`)
   }
 
   function handleNavigateToHomePage(path: string) {
@@ -208,7 +209,7 @@ export function Header() {
           </Popover> */}
         </Popover.Group>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end lg:space-x-4 h-20 items-center">
-          {/* <DropdownMenu>
+          <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button
                 className="lg:w-fit md:w-fit sm:w-fit"
@@ -231,13 +232,14 @@ export function Header() {
                 Dark
               </DropdownMenuItem>
             </DropdownMenuContent>
-          </DropdownMenu> */}
-          {/* <a
-            className="text-sm font-semibold leading-6 hover:text-primary hover:cursor-pointer"
+          </DropdownMenu>
+          <Button
+            variant="ghost"
+            className="flex gap-2 text-sm font-semibold leading-6 hover:text-primary hover:cursor-pointer"
             onClick={() => handleNavigateToLoginPage()}
           >
-            Log in <span aria-hidden="true">&rarr;</span>
-          </a> */}
+            Log in <MoveRight size={18} strokeWidth={1.25} />
+          </Button>
         </div>
       </nav>
 
@@ -291,7 +293,7 @@ export function Header() {
                 >
                   Contato
                 </a>
-                {/* <Disclosure as="div" className="-mx-3">
+                <Disclosure as="div" className="-mx-3">
                   {({ open }) => (
                     <>
                       <Disclosure.Button className="flex w-full items-center justify-between rounded-lg py-2 pl-3 pr-3.5 text-base font-semibold leading-7 hover:bg-gray-50 hover:text-background">
@@ -318,16 +320,16 @@ export function Header() {
                       </Disclosure.Panel>
                     </>
                   )}
-                </Disclosure> */}
+                </Disclosure>
               </div>
               <div className="flex pt-4 justify-between">
-                {/* <a
+                <a
                   href="#"
                   className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 hover:text-orange-md"
                   onClick={() => handleNavigateToLoginPage()}
                 >
                   Log in
-                </a> */}
+                </a>
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
                     <Button variant="outline" size="icon">

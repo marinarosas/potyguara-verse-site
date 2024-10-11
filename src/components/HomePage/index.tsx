@@ -21,7 +21,7 @@ export function Homepage() {
         Conheça a Potyguara Verse, uma nova
         maneira de assitir eventos online, além de ser um universo de jogos!
       </h1>
-      {/* <div className="flex flex-col lg:flex-row gap-12">
+      <div className="flex flex-col lg:flex-row gap-12">
         <Button variant="default" size="lg" >Baixe a plataforma</Button>
         <Dialog>
           <DialogTrigger asChild>
@@ -32,7 +32,7 @@ export function Homepage() {
             <ChooseUserRole />
           </Suspense>
         </Dialog>
-      </div> */}
+      </div>
     </div>
   );
 }

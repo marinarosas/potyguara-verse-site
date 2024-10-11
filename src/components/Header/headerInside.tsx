@@ -2,25 +2,18 @@
 
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
-import {
-  ChartPieIcon,
-  CursorArrowRaysIcon,
-  UserCircleIcon,
-} from '@heroicons/react/24/outline'
+import { ChartPieIcon, CursorArrowRaysIcon } from '@heroicons/react/24/outline'
 import { PhoneIcon, PlayCircleIcon } from '@heroicons/react/20/solid'
 import { useTheme } from 'next-themes'
 import {
   Dialog,
-  DialogClose,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogOverlay,
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog'
-import { useToast } from '@/components/ui/use-toast'
 
 import * as React from 'react'
 
@@ -29,15 +22,7 @@ import { Button } from '@/components/ui/button'
 
 import Link from 'next/link'
 // import { Icons } from "@/components/icons";
-import {
-  NavigationMenu,
-  NavigationMenuContent,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-  NavigationMenuTrigger,
-  navigationMenuTriggerStyle,
-} from '@/components/ui/navigation-menu'
+import { NavigationMenuLink } from '@/components/ui/navigation-menu'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -63,6 +48,7 @@ import LogoPotyguara from '../../../public/LogoRetangular.png'
 import BrasaoPreto from '../../../public/brasao_preto.png'
 import { NavigationMenuHeader } from './NavigationMenu'
 import { FormCreateEvent } from '../MyEvents/formCreateEvent'
+import { useAuth } from '@/contexts/AuthContext'
 
 const products = [
   {
@@ -85,6 +71,7 @@ const callsToAction = [
 
 export function HeaderInside() {
   const router = useRouter()
+  const { user, signOut } = useAuth()
 
   const { setTheme } = useTheme()
 
@@ -185,7 +172,8 @@ export function HeaderInside() {
           </DropdownMenuTrigger>
           <DropdownMenuContent className="w-56 mr-2 bg-muted-foreground text-foreground">
             <DropdownMenuLabel className="flex justify-between items-center">
-              Minha conta
+              {user.name}
+              {/* Minha conta */}
               <div className="flex justify-between items-center gap-1">
                 <Image
                   src={BrasaoPreto}
@@ -253,7 +241,7 @@ export function HeaderInside() {
               Política de privacidade
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
+            <DropdownMenuItem onClick={signOut}>
               Sair
               {/* <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut> */}
             </DropdownMenuItem>
