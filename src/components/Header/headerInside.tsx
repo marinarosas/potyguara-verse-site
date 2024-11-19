@@ -2,42 +2,17 @@
 
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
-import {
-  ChartPieIcon,
-  CursorArrowRaysIcon,
-  UserCircleIcon,
-} from '@heroicons/react/24/outline'
+import { ChartPieIcon, CursorArrowRaysIcon } from '@heroicons/react/24/outline'
 import { PhoneIcon, PlayCircleIcon } from '@heroicons/react/20/solid'
 import { useTheme } from 'next-themes'
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogOverlay,
-  DialogTitle,
-  DialogTrigger,
-} from '@/components/ui/dialog'
-import { useToast } from '@/components/ui/use-toast'
+import { Dialog, DialogTrigger } from '@/components/ui/dialog'
 
 import * as React from 'react'
 
 import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
 
-import Link from 'next/link'
-// import { Icons } from "@/components/icons";
-import {
-  NavigationMenu,
-  NavigationMenuContent,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-  NavigationMenuTrigger,
-  navigationMenuTriggerStyle,
-} from '@/components/ui/navigation-menu'
+import { NavigationMenuLink } from '@/components/ui/navigation-menu'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -62,7 +37,9 @@ import Image from 'next/image'
 import LogoPotyguara from '../../../public/LogoRetangular.png'
 import BrasaoPreto from '../../../public/brasao_preto.png'
 import { NavigationMenuHeader } from './NavigationMenu'
-import { FormCreateEvent } from '../MyEvents/formCreateEvent'
+import { useAuth } from '@/contexts/AuthContext'
+import { EventCreateDialog } from '../TableEvents/event-create-dialog'
+import { Plus } from 'lucide-react'
 
 const products = [
   {
@@ -85,10 +62,11 @@ const callsToAction = [
 
 export function HeaderInside() {
   const router = useRouter()
+  const { user, signOut } = useAuth()
 
   const { setTheme } = useTheme()
 
-  const [openDialogCreateEvent, setOpenDialogCreateEvent] = useState(false)
+  const [isCreateEventOpen, setIsCreateEventOpen] = useState(false)
 
   function handleNavigateToLoginPage() {
     router.push(`/app/login-page`)
@@ -117,37 +95,25 @@ export function HeaderInside() {
 
       {/* Coins side */}
       <div className="flex items-center justify-end gap-4 w-full">
-        <Dialog
-          open={openDialogCreateEvent}
-          onOpenChange={setOpenDialogCreateEvent}
-        >
-          <DialogTrigger asChild>
-            <Button className="text-white text-xs py-2.5 text-center items-center">
-              Criar evento
-            </Button>
-          </DialogTrigger>
-          <DialogOverlay className="bg-muted-foregorund opacity-90" />
-          <DialogContent className="h-5/6 max-w-4xl">
-            <DialogHeader>
-              <DialogTitle
-                onClick={() => {
-                  setOpenDialogCreateEvent(true)
-                }}
-              >
-                Criar evento
-              </DialogTitle>
-              <DialogDescription>
-                Crie seu evento aqui, quanto mais detalhes melhor a experiência
-                do seu fã.
-              </DialogDescription>
-            </DialogHeader>
+        <form className="flex items-center justify-between gap-2">
+          <div></div>
 
-            {/* Formulario evento */}
-            <FormCreateEvent
-              setOpenDialogCreateEvent={setOpenDialogCreateEvent}
-            />
-          </DialogContent>
-        </Dialog>
+          {user.role === 'ARTIST' && (
+            <Dialog
+              open={isCreateEventOpen}
+              onOpenChange={setIsCreateEventOpen}
+            >
+              <DialogTrigger asChild>
+                <Button type="button" variant="default">
+                  <Plus className="mr-2 h-4 w-4" />
+                  Criar Evento
+                </Button>
+              </DialogTrigger>
+
+              <EventCreateDialog setIsCreateEventOpen={setIsCreateEventOpen} />
+            </Dialog>
+          )}
+        </form>
 
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -185,7 +151,8 @@ export function HeaderInside() {
           </DropdownMenuTrigger>
           <DropdownMenuContent className="w-56 mr-2 bg-muted-foreground text-foreground">
             <DropdownMenuLabel className="flex justify-between items-center">
-              Minha conta
+              {user.name}
+              {/* Minha conta */}
               <div className="flex justify-between items-center gap-1">
                 <Image
                   src={BrasaoPreto}
@@ -253,7 +220,7 @@ export function HeaderInside() {
               Política de privacidade
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
+            <DropdownMenuItem onClick={signOut}>
               Sair
               {/* <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut> */}
             </DropdownMenuItem>

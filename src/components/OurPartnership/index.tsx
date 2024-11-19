@@ -6,19 +6,21 @@ import 'swiper/css/pagination'
 import { Pagination, EffectCoverflow } from 'swiper/modules'
 import './styles.css'
 import LogoImd from '../../../public/1A-Primaria-Gradiente.svg'
-import LogoAndrea from '../../../public/logoandrea.png'
 import LogoGameLab from '../../../public/LOGO VERT BRANCO@3x.png'
 import LogoSebrae from '../../../public/logo 50 anos  roxo.png'
 import LogoSudene from '../../../public/sudene.png'
 import LogoGuitaura from '../../../public/logoGuitaura.png'
+import LogoAndrea from '../../../public/LogoAndreaRosas.png'
+import LogoBesouro from '../../../public/BesouroLogoTransparente.png'
 import Image from 'next/image'
+import ReactPlayer from 'react-player'
 
 const slides = [
-  // {
-  //   image: BesouroLogo,
-  //   // title: "Besouro Cintilante",
-  //   // subtitle: 'É inegociável o cumprimento da regulação e de todos os nossos contratos e compromissos firmados.',
-  // },
+  {
+    image: LogoAndrea,
+    // title: "Besouro Cintilante",
+    // subtitle: 'É inegociável o cumprimento da regulação e de todos os nossos contratos e compromissos firmados.',
+  },
   {
     image: LogoImd,
     // title: "Metrópole Digital - IMD",
@@ -44,12 +46,16 @@ const slides = [
     // title: "Sudene",
     // subtitle: 'Humildade para entender que se pode aprender sempre mais e ousadia para buscar a evolução.',
   },
-  
+  {
+    image: LogoBesouro,
+    // title: "Sudene",
+    // subtitle: 'Humildade para entender que se pode aprender sempre mais e ousadia para buscar a evolução.',
+  },
 ]
 
 export default function OurPartnership() {
   return (
-    <>
+    <div className="bg-background">
       <div
         className="h-96 md:h-screen lg:h-screen bg-muted-foreground flex-col gap-4 items-center justify-center pt-10 -mb-20"
         id="ourpartnership"
@@ -105,6 +111,11 @@ export default function OurPartnership() {
           </Swiper>
         </div>
       </div>
-    </>
+      <div className="h-full w-full bg-background justify-center align-middle space-y-8 m-auto">
+        <div className="flex flex-col gap-8 items-center ">
+          <ReactPlayer url="https://youtu.be/v-M28eX_WvY" />
+        </div>
+      </div>
+    </div>
   )
 }

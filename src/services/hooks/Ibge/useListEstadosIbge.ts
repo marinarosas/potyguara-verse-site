@@ -1,42 +1,42 @@
-import useSWR from "swr";
-import { IEstadosIBGE } from "@/types/ibge";
-import axios from "axios";
+import useSWR from 'swr'
+import { IEstadosIBGE } from '@/types/ibge'
+import axios from 'axios'
 
-type IResponse = IEstadosIBGE[];
+type IResponse = IEstadosIBGE[]
 
 export function useListEstadosIBGE() {
-  const tenantId = process.env.NEXT_PUBLIC_TENANT_ID;
-  const apiMasterKey = process.env.NEXT_PUBLIC_API_MASTER_KEY;
+  const tenantId = process.env.NEXT_PUBLIC_TENANT_ID
+  const apiMasterKey = process.env.NEXT_PUBLIC_API_MASTER_KEY
 
   const axiosConfig = {
     headers: {
-      "Content-Type": "application/json",
-      "X-Tenant-ID": tenantId,
-      "X-API-Master-Key": apiMasterKey,
+      'Content-Type': 'application/json',
+      'X-Tenant-ID': tenantId,
+      'X-API-Master-Key': apiMasterKey,
     },
-  };
+  }
 
   const { data, error, isLoading, isValidating, mutate } = useSWR<IResponse>(
-    "https://servicodados.ibge.gov.br/api/v1/localidades/estados?orderBy=nome",
+    'https://servicodados.ibge.gov.br/api/v1/localidades/estados?orderBy=nome',
     (url: string) =>
       axios
         .get(
           `https://servicodados.ibge.gov.br/api/v1/localidades/estados?orderBy=nome`,
 
           {
-            id: "",
-            nome: "",
-            sigla: "",
+            id: '',
+            nome: '',
+            sigla: '',
             regiao: {
-              id: "",
-              nome: "",
-              sigla: ""
-            }
+              id: '',
+              nome: '',
+              sigla: '',
+            },
           },
-          axiosConfig
+          axiosConfig,
         )
-        .then((res) => res.data)
-  );
+        .then((res) => res.data),
+  )
 
   return {
     estados: data,
@@ -44,5 +44,5 @@ export function useListEstadosIBGE() {
     isLoading,
     isValidating,
     mutateEstados: mutate,
-  };
+  }
 }

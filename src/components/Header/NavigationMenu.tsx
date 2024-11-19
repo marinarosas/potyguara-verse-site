@@ -1,6 +1,6 @@
-"use client";
+'use client'
 
-import Link from "next/link";
+import Link from 'next/link'
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -9,40 +9,42 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
-} from "@/components/ui/navigation-menu";
-import { cn } from "@/lib/utils";
-import React from "react";
-import { useRouter } from "next/navigation";
+} from '@/components/ui/navigation-menu'
+import { cn } from '@/lib/utils'
+import React from 'react'
+import { useAuth } from '@/contexts/AuthContext'
 
 export function NavigationMenuHeader() {
   // const router = useRouter();
 
+  const { user } = useAuth()
+
   const components: { title: string; href: string; description: string }[] = [
     {
-      title: "Steam",
-      href: "/docs/primitives/alert-dialog",
+      title: 'Steam',
+      href: '/docs/primitives/alert-dialog',
       description:
-        "Entre em nossa comunidade steam e veja o que a galera ta falando do jogo.",
+        'Entre em nossa comunidade steam e veja o que a galera ta falando do jogo.',
     },
     {
-      title: "Meta Quest Store",
-      href: "/docs/primitives/hover-card",
+      title: 'Meta Quest Store',
+      href: '/docs/primitives/hover-card',
       description:
-        "Nossa plataforma a clique de você, venha experimentar o outro lado do jogo.",
+        'Nossa plataforma a clique de você, venha experimentar o outro lado do jogo.',
     },
     {
-      title: "Loja parceiras",
-      href: "/docs/primitives/progress",
+      title: 'Loja parceiras',
+      href: '/docs/primitives/progress',
       description:
-        "Quem não que um desconto? Venha conhecer nossos parceiros de perto.",
+        'Quem não que um desconto? Venha conhecer nossos parceiros de perto.',
     },
     {
-      title: "Configuração",
-      href: "/docs/primitives/tooltip",
+      title: 'Configuração',
+      href: '/docs/primitives/tooltip',
       description:
-        "Caso precise, configure a plataforma para melhor performance.",
+        'Caso precise, configure a plataforma para melhor performance.',
     },
-  ];
+  ]
 
   // function handleNavigateToMyEventsPage() {
   //   router.push(`/app/my-events`);
@@ -54,90 +56,139 @@ export function NavigationMenuHeader() {
 
   return (
     <NavigationMenu className="pl-8">
-      <NavigationMenuList>
-        <NavigationMenuItem>
-          <Link href="/app/dashboard" legacyBehavior passHref>
-            <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-              Ínicio
-            </NavigationMenuLink>
-          </Link>
-        </NavigationMenuItem>
+      {user.role === 'ARTIST' && (
+        <NavigationMenuList>
+          <NavigationMenuItem>
+            <Link href="/app/dashboard" legacyBehavior passHref>
+              <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                Ínicio
+              </NavigationMenuLink>
+            </Link>
+          </NavigationMenuItem>
 
-        <NavigationMenuItem>
-          <Link href="/app/my-events" legacyBehavior passHref>
-            <NavigationMenuLink
-              className={navigationMenuTriggerStyle()}
-              // onClick={() => {
-              //   handleNavigateToMyEventsPage();
-              // }}
-            >
-              Meus Eventos
-            </NavigationMenuLink>
-          </Link>
-        </NavigationMenuItem>
+          <NavigationMenuItem>
+            <Link href="/app/my-events" legacyBehavior passHref>
+              <NavigationMenuLink
+                className={navigationMenuTriggerStyle()}
+                // onClick={() => {
+                //   handleNavigateToMyEventsPage();
+                // }}
+              >
+                Meus Eventos
+              </NavigationMenuLink>
+            </Link>
+          </NavigationMenuItem>
 
-        <NavigationMenuItem>
-          <Link href="/docs" legacyBehavior passHref>
-            <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-              Meu avatar
-            </NavigationMenuLink>
-          </Link>
-        </NavigationMenuItem>
+          <NavigationMenuItem>
+            <Link href="/app/my-avatar" legacyBehavior passHref>
+              <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                Meu avatar
+              </NavigationMenuLink>
+            </Link>
+          </NavigationMenuItem>
 
-        <NavigationMenuItem>
-          <Link href="/docs" legacyBehavior passHref>
-            <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-              Meu Palco
-            </NavigationMenuLink>
-          </Link>
-        </NavigationMenuItem>
+          <NavigationMenuItem>
+            <Link href="/docs" legacyBehavior passHref>
+              <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                Meu Palco
+              </NavigationMenuLink>
+            </Link>
+          </NavigationMenuItem>
 
-        <NavigationMenuItem>
-          <Link href="/docs" legacyBehavior passHref>
-            <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-              Carteira
-            </NavigationMenuLink>
-          </Link>
-        </NavigationMenuItem>
+          <NavigationMenuItem>
+            <Link href="/docs" legacyBehavior passHref>
+              <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                Carteira
+              </NavigationMenuLink>
+            </Link>
+          </NavigationMenuItem>
 
-        <NavigationMenuItem>
-          <Link href="/app/store" legacyBehavior passHref>
-            <NavigationMenuLink
-              className={navigationMenuTriggerStyle()}
-              // onClick={() => {
-              //   handleNavigateToStorePage();
-              // }}
-            >
-              Loja
-            </NavigationMenuLink>
-          </Link>
-        </NavigationMenuItem>
+          <NavigationMenuItem>
+            <Link href="/app/store" legacyBehavior passHref>
+              <NavigationMenuLink
+                className={navigationMenuTriggerStyle()}
+                // onClick={() => {
+                //   handleNavigateToStorePage();
+                // }}
+              >
+                Loja
+              </NavigationMenuLink>
+            </Link>
+          </NavigationMenuItem>
 
-        <NavigationMenuItem>
-          <NavigationMenuTrigger>Outras opções</NavigationMenuTrigger>
-          <NavigationMenuContent>
-            <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] bg-muted-foreground text-foreground">
-              {components.map((component) => (
-                <ListItem
-                  key={component.title}
-                  title={component.title}
-                  href={component.href}
-                  className="text-foreground"
-                >
-                  {component.description}
-                </ListItem>
-              ))}
-            </ul>
-          </NavigationMenuContent>
-        </NavigationMenuItem>
-      </NavigationMenuList>
+          <NavigationMenuItem>
+            <NavigationMenuTrigger>Outras opções</NavigationMenuTrigger>
+            <NavigationMenuContent>
+              <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] bg-muted-foreground text-foreground">
+                {components.map((component) => (
+                  <ListItem
+                    key={component.title}
+                    title={component.title}
+                    href={component.href}
+                    className="text-foreground"
+                  >
+                    {component.description}
+                  </ListItem>
+                ))}
+              </ul>
+            </NavigationMenuContent>
+          </NavigationMenuItem>
+        </NavigationMenuList>
+      )}
+      {user.role === 'VIEWER' && (
+        <NavigationMenuList>
+          <NavigationMenuItem>
+            <Link href="/app/store" legacyBehavior passHref>
+              <NavigationMenuLink
+                className={navigationMenuTriggerStyle()}
+                // onClick={() => {
+                //   handleNavigateToStorePage();
+                // }}
+              >
+                Loja
+              </NavigationMenuLink>
+            </Link>
+          </NavigationMenuItem>
+
+          <NavigationMenuItem>
+            <Link href="/app/my-events" legacyBehavior passHref>
+              <NavigationMenuLink
+                className={navigationMenuTriggerStyle()}
+                // onClick={() => {
+                //   handleNavigateToMyEventsPage();
+                // }}
+              >
+                Meus Eventos
+              </NavigationMenuLink>
+            </Link>
+          </NavigationMenuItem>
+
+          <NavigationMenuItem>
+            <NavigationMenuTrigger>Outras opções</NavigationMenuTrigger>
+            <NavigationMenuContent>
+              <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] bg-muted-foreground text-foreground">
+                {components.map((component) => (
+                  <ListItem
+                    key={component.title}
+                    title={component.title}
+                    href={component.href}
+                    className="text-foreground"
+                  >
+                    {component.description}
+                  </ListItem>
+                ))}
+              </ul>
+            </NavigationMenuContent>
+          </NavigationMenuItem>
+        </NavigationMenuList>
+      )}
     </NavigationMenu>
-  );
+  )
 }
 
 const ListItem = React.forwardRef<
-  React.ElementRef<"a">,
-  React.ComponentPropsWithoutRef<"a">
+  React.ElementRef<'a'>,
+  React.ComponentPropsWithoutRef<'a'>
 >(({ className, title, children, ...props }, ref) => {
   return (
     <li>
@@ -145,8 +196,8 @@ const ListItem = React.forwardRef<
         <a
           ref={ref}
           className={cn(
-            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
-            className
+            'block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground',
+            className,
           )}
           {...props}
         >
@@ -157,6 +208,6 @@ const ListItem = React.forwardRef<
         </a>
       </NavigationMenuLink>
     </li>
-  );
-});
-ListItem.displayName = "ListItem";
+  )
+})
+ListItem.displayName = 'ListItem'

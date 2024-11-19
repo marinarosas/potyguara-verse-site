@@ -1,13 +1,13 @@
 'use client'
 
-import ProductCategory from "@/components/Store/productCategoryLine"
-import { StoreHighlight } from "@/components/Store/storeHighlight"
+import ProductCarouselLine from '@/components/ProductsCarousel'
+import { StoreHighlight } from './storeHighlight'
 
-export default function Store(){
-    return(
-       <div className="p-16 lg:p-8">
-        <StoreHighlight/>
-        <ProductCategory/>
-       </div>
-    )
+export default function Store() {
+  return (
+    <div className="flex flex-col gap-8 bg-background pt-8x mx-8">
+      <StoreHighlight />
+      <ProductCarouselLine />
+    </div>
+  )
 }

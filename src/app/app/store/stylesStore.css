@@ -1,0 +1,39 @@
+.splide__slide.app-carousel {
+    img {
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+      /* border: 0.5rem solid transparent;  */
+      transition: transform 0.3s ease-in-out, border 0.3s ease-in-out;
+      transform: scale(1);
+      transform-origin: center center;
+    }
+  }
+  
+  .splide__slide.app-carousel.is-active {
+    img {
+      transition: transform 0.3s ease-in-out, border 0.3s ease-in-out;
+      /* transform: scale(1.2); */
+    }
+  }
+
+  .splide__pagination__page{
+    background-color: #fff;
+  }
+
+  .splide__pagination__page.is-active {
+    background-color: #CCFF33;
+  }
+  
+  @media (max-width: 640px) {
+    .splide__slide.app-carousel img {
+      transition: none;
+      transform: none;
+      transform-origin: none;
+    }
+  
+    .splide__slide.app-carousel.is-active img {
+      transform: none;
+    }
+  }
+  
