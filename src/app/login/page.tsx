@@ -6,45 +6,70 @@ import { Dialog, DialogOverlay, DialogTrigger } from '@/components/ui/dialog'
 import Image from 'next/image'
 import LogoPotyguara from '../../../public/LogoRetangular.png'
 import { ChooseUserRole } from '@/components/Singup/dialogChooseRole'
-import { Suspense } from 'react'
-import { useAuth } from '@/contexts/AuthContext'
-import { z } from 'zod'
-import { SubmitHandler, useForm } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { Checkbox } from '@/components/ui/checkbox'
+import { Suspense, useState } from 'react'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-
-const signInFormSchema = z.object({
-  email: z.string().email(),
-  password: z.string(),
-})
-
-type SignInFormSchema = z.infer<typeof signInFormSchema>
+import { auth, googleProvider } from '../../config/firebase'
+import { signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth'
+import { FcGoogle } from 'react-icons/fc'
+import { useToast } from '@/components/ui/use-toast'
 
 export default function SingIn() {
   const router = useRouter()
-  const { signIn } = useAuth()
+  const { toast } = useToast()
 
-  const {
-    register,
-    handleSubmit,
-    formState: { isSubmitting },
-  } = useForm<SignInFormSchema>({
-    resolver: zodResolver(signInFormSchema),
-  })
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
 
-  const handleSignIn: SubmitHandler<SignInFormSchema> = async ({
-    email,
-    password,
-  }) => {
-    await signIn({ email, password })
+  const login = async () => {
+    try {
+      await signInWithEmailAndPassword(auth, email, password)
+
+      toast({
+        title: 'Usuário logado com sucesso!',
+        description: 'Agora você pode acessar a plataforma.',
+      })
+
+      router.push(`/app/dashboard`)
+    } catch (error) {
+      console.error(error)
+
+      toast({
+        title: 'Erro ao logar na plataforma.',
+        description: error.message,
+        variant: 'destructive',
+      })
+    }
+  }
+
+  const loginWithGoggle = async () => {
+    try {
+      await signInWithPopup(auth, googleProvider)
+
+      toast({
+        title: 'Usuário logado com sucesso!',
+        description: 'Agora você pode acessar a plataforma.',
+      })
+
+      router.push(`/app/dashboard`)
+    } catch (error) {
+      console.error(error)
+
+      toast({
+        title: 'Erro ao logar na plataforma.',
+        description: error.message,
+        variant: 'destructive',
+      })
+    }
   }
 
   function handleNavigateToHomePage() {
     router.push(`/`)
   }
 
+  function handleNavigateToSingupPage() {
+    router.push(`/singup`)
+  }
   return (
     <main className="h-screen text-foreground bg-muted-foreground">
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
@@ -62,14 +87,14 @@ export default function SingIn() {
           </h2>
         </div>
         <div className="mt-4 mx-auto w-full max-w-sm">
-          <form className="space-y-6" onSubmit={handleSubmit(handleSignIn)}>
+          <div className="space-y-6">
             <div className="space-y-2">
               <Label htmlFor="email">Seu e-mail</Label>
               <Input
                 placeholder="Informe o seu e-mail"
                 id="email"
                 type="email"
-                {...register('email')}
+                onChange={(e) => setEmail(e.target.value)}
               />
             </div>
             <div className="space-y-2">
@@ -78,40 +103,34 @@ export default function SingIn() {
                 placeholder="Informe sua senha"
                 id="password"
                 type="password"
-                {...register('password')}
+                onChange={(e) => setPassword(e.target.value)}
               />
             </div>
 
             <Button
-              type="submit"
-              disabled={isSubmitting}
+              onClick={login}
               className="flex w-full justify-center rounded-md px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
             >
               Entrar
             </Button>
-            <div className="flex items-center space-x-2">
-              <Checkbox id="conection" />
-              <label
-                htmlFor="conection"
-                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-              >
-                Fique conectado uma semana.
-              </label>
-            </div>
-          </form>
+            <Button
+              onClick={loginWithGoggle}
+              variant="outline"
+              className="flex w-full justify-center rounded-md gap-2 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+            >
+              <FcGoogle />
+              Entrar com Google
+            </Button>
+          </div>
           <p className="mt-10 text-center text-sm text-gray-500">
             Não é um membro?{' '}
-            <Dialog>
-              <DialogTrigger asChild>
-                <Button variant="ghost" className="hover:bg-transparent">
-                  Cadastre-se.
-                </Button>
-              </DialogTrigger>
-              <DialogOverlay className="bg-background opacity-90" />
-              <Suspense>
-                <ChooseUserRole />
-              </Suspense>
-            </Dialog>
+            <Button
+              variant="ghost"
+              className="hover:bg-transparent"
+              onClick={() => handleNavigateToSingupPage()}
+            >
+              Cadastre-se.
+            </Button>
           </p>
         </div>
       </div>

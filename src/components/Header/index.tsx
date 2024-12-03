@@ -1,8 +1,8 @@
 'use client'
 
 import { useRouter } from 'next/navigation'
-import { Fragment, useState } from 'react'
-import { Dialog, Disclosure, Popover, Transition } from '@headlessui/react'
+import { useState } from 'react'
+import { Dialog, Disclosure, Popover } from '@headlessui/react'
 import {
   Bars3Icon,
   ChartPieIcon,
@@ -69,7 +69,7 @@ export function Header() {
   // };
 
   function handleNavigateToLoginPage() {
-    router.push(`/sing-in`)
+    router.push(`/login`)
   }
 
   function handleNavigateToHomePage(path: string) {

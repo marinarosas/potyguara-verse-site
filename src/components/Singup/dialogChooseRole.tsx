@@ -27,11 +27,11 @@ export function ChooseUserRole() {
   )
 
   function handleNavigateToSingupPageArtist() {
-    router.push(`/sing-up` + '?' + createQueryString('role', 'ARTIST'))
+    router.push(`/singin` + '?' + createQueryString('role', 'ARTIST'))
   }
 
   function handleNavigateToSingupPageViewer() {
-    router.push(`/sing-up` + '?' + createQueryString('role', 'VIEWER'))
+    router.push(`/singin` + '?' + createQueryString('role', 'VIEWER'))
   }
   return (
     <DialogContent className="h-60 lg:h-52 w-96 lg:w-full">

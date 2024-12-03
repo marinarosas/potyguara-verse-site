@@ -1,13 +1,9 @@
 'use client'
 
-import { useRouter } from 'next/navigation'
-import { useListArtistAll } from '@/services/hooks/useListArtistAll'
-
 import { CardSmallInfo } from '@/components/Cards/smallCardInfo'
 import { CardTips } from '@/components/Cards/cardTips'
 import { CardMyAvatar } from '@/components/Cards/cardMyAvatar'
 import { CardMyStage } from '@/components/Cards/cardMyStage'
-import { useAuth } from '@/contexts/AuthContext'
 
 export default function Dashboard() {
   return (
