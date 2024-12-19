@@ -4,9 +4,9 @@ export interface IEventShow {
   content: string
   price: number
   eventDate: string
-  eventTime: string
+  // eventTime: string
   statuspayment: boolean
-  attachments: string[]
+  // attachments: string[]
   createdAt: string
   updatedAt: string
 }

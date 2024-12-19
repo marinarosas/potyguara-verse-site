@@ -1,5 +1,8 @@
-import { zodResolver } from '@hookform/resolvers/zod'
-import { SubmitHandler, useForm } from 'react-hook-form'
+import {
+  SubmitHandler,
+  UseFormHandleSubmit,
+  UseFormRegister,
+} from 'react-hook-form'
 import { z } from 'zod'
 
 import {
@@ -11,60 +14,53 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { useToast } from '@/components/ui/use-toast'
 import { Button } from '@/components/ui/button'
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { MdOutlineAddPhotoAlternate } from 'react-icons/md'
 import { Textarea } from '../ui/textarea'
-import { addDoc, collection } from 'firebase/firestore'
+import { doc, updateDoc } from 'firebase/firestore'
 import { auth, db } from '../../config/firebase'
 
-export const eventFormSchema = z.object({
+export const eventUpdateFormSchema = z.object({
   title: z.string(),
   content: z.string(),
   eventDate: z.string(),
   price: z.coerce.number(),
-  // eventTime: z.string(),
 })
 
-export type EventFormSchema = z.infer<typeof eventFormSchema>
+export type EventUpdateFormSchema = z.infer<typeof eventUpdateFormSchema>
 
 interface Props {
-  setIsCreateEventOpen: (value: boolean) => void
+  register: UseFormRegister<EventUpdateFormSchema>
+  handleSubmit: UseFormHandleSubmit<EventUpdateFormSchema>
+  eventId: string
+  errors: any
+  setIsUpdateEventOpen: (value: boolean) => void
 }
 
-export function EventCreateDialog({ setIsCreateEventOpen }: Props) {
+export function EventUpdateDialog({
+  register,
+  handleSubmit,
+  eventId,
+  errors,
+  setIsUpdateEventOpen,
+}: Props) {
   const { toast } = useToast()
 
   const user = auth?.currentUser
 
-  const eventsCollectionRef = collection(db, 'events')
-
   // const [date, setDate] = useState<Date>()
 
-  const [attachmentsIds, setAttachmentsIds] = useState<string[] | []>([])
-
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    reset,
-  } = useForm<EventFormSchema>({
-    resolver: zodResolver(eventFormSchema),
-  })
+  // const [attachmentsIds, setAttachmentsIds] = useState<string[] | []>([])
 
   // useEffect(() => {
   //   console.log('data', date)
   //   console.log('files', attachmentsIds)
   // })
 
-  const handleCreateEvent: SubmitHandler<
-    z.infer<typeof eventFormSchema>
+  const handleUpdateEvent: SubmitHandler<
+    z.infer<typeof eventUpdateFormSchema>
   > = async ({ title, content, price, eventDate }) => {
-    // console.log('entrou')
-
-    // console.log('title', title)
-    // console.log('content', content)
-    // console.log('price', price)
-    // console.log('eventTime', eventTime)
+    const eventDoc = doc(db, 'events', eventId)
 
     if (user === undefined) {
       return null
@@ -79,27 +75,24 @@ export function EventCreateDialog({ setIsCreateEventOpen }: Props) {
     // }
 
     try {
-      await addDoc(eventsCollectionRef, {
+      await updateDoc(eventDoc, {
         title,
         content,
         price,
         eventDate,
-        statusPayment: false,
-        userId: user?.uid,
       })
 
       toast({
-        title: 'Uhuu! Deu certo o cadastro.',
-        description: 'Cadastro do evento criado com sucesso.',
+        title: 'Uhuu! Deu certo.',
+        description: 'Atualização do evento feita com sucesso.',
       })
 
-      reset()
-      setIsCreateEventOpen(false)
+      setIsUpdateEventOpen(false)
     } catch {
       console.log(errors)
       toast({
         title: 'Ops! Algo deu errado.',
-        description: 'O cadastro não foi criado, fale com a central.',
+        description: 'O evento não foi atualizado, fale com a central.',
       })
     }
   }
@@ -107,7 +100,7 @@ export function EventCreateDialog({ setIsCreateEventOpen }: Props) {
   return (
     <DialogContent className="max-w-2xl">
       <DialogHeader>
-        <DialogTitle>Criar evento</DialogTitle>
+        <DialogTitle>Atualizar evento</DialogTitle>
       </DialogHeader>
 
       <div className="space-y-4 text-foreground">
@@ -245,9 +238,9 @@ export function EventCreateDialog({ setIsCreateEventOpen }: Props) {
         <Button
           // disabled={isLoadingCreateCampaign}
           className="w-full"
-          onClick={handleSubmit(handleCreateEvent)}
+          onClick={handleSubmit(handleUpdateEvent)}
         >
-          Criar
+          Atualizar
         </Button>
       </div>
     </DialogContent>

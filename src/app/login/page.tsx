@@ -2,17 +2,15 @@
 
 import { Button } from '@/components/ui/button'
 import { useRouter } from 'next/navigation'
-import { Dialog, DialogOverlay, DialogTrigger } from '@/components/ui/dialog'
 import Image from 'next/image'
 import LogoPotyguara from '../../../public/LogoRetangular.png'
-import { ChooseUserRole } from '@/components/Singup/dialogChooseRole'
-import { Suspense, useState } from 'react'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { auth, googleProvider } from '../../config/firebase'
 import { signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth'
 import { FcGoogle } from 'react-icons/fc'
 import { useToast } from '@/components/ui/use-toast'
+import { useState } from 'react'
 
 export default function SingIn() {
   const router = useRouter()

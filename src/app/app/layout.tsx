@@ -1,18 +1,19 @@
 'use client'
 
-import { ReactNode, useEffect } from 'react'
-import { useAuth } from '@/contexts/AuthContext'
+import { ReactNode } from 'react'
+import { auth } from '../../config/firebase'
 import { HeaderInside } from '@/components/Header/headerInside'
 import { FooterInside } from '@/components/Footer/footerInside'
 import { Toaster } from '@/components/ui/toaster'
 import Loading from './loading'
 
 export default function Layout({ children }: { children: ReactNode }) {
-  const { user } = useAuth()
+  // const { user } = useAuth()
 
+  const user = auth?.currentUser
   return (
     <>
-      {!user?.id ? (
+      {!user ? (
         <>
           <Loading />
         </>

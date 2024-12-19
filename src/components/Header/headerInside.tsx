@@ -40,6 +40,9 @@ import { NavigationMenuHeader } from './NavigationMenu'
 import { useAuth } from '@/contexts/AuthContext'
 import { EventCreateDialog } from '../TableEvents/event-create-dialog'
 import { Plus } from 'lucide-react'
+import { auth } from '@/config/firebase'
+import { signOut } from 'firebase/auth'
+import { useToast } from '../ui/use-toast'
 
 const products = [
   {
@@ -62,7 +65,9 @@ const callsToAction = [
 
 export function HeaderInside() {
   const router = useRouter()
-  const { user, signOut } = useAuth()
+  const { toast } = useToast()
+
+  const user = auth?.currentUser
 
   const { setTheme } = useTheme()
 
@@ -74,6 +79,27 @@ export function HeaderInside() {
 
   function handleNavigateToHomePage() {
     router.push(`/`)
+  }
+
+  const logout = async () => {
+    try {
+      await signOut(auth)
+
+      toast({
+        title: 'Usuário deslogado com sucesso!',
+        description: 'Agora você saiu da plataforma.',
+      })
+
+      router.push(`/`)
+    } catch (error) {
+      console.error(error)
+
+      toast({
+        title: 'Erro ao deslogar na plataforma.',
+        description: error.message,
+        variant: 'destructive',
+      })
+    }
   }
 
   return (
@@ -98,21 +124,18 @@ export function HeaderInside() {
         <form className="flex items-center justify-between gap-2">
           <div></div>
 
-          {user.role === 'ARTIST' && (
-            <Dialog
-              open={isCreateEventOpen}
-              onOpenChange={setIsCreateEventOpen}
-            >
-              <DialogTrigger asChild>
-                <Button type="button" variant="default">
-                  <Plus className="mr-2 h-4 w-4" />
-                  Criar Evento
-                </Button>
-              </DialogTrigger>
+          {/* {user === 'ARTIST' && ( */}
+          <Dialog open={isCreateEventOpen} onOpenChange={setIsCreateEventOpen}>
+            <DialogTrigger asChild>
+              <Button type="button" variant="default">
+                <Plus className="mr-2 h-4 w-4" />
+                Criar Evento
+              </Button>
+            </DialogTrigger>
 
-              <EventCreateDialog setIsCreateEventOpen={setIsCreateEventOpen} />
-            </Dialog>
-          )}
+            <EventCreateDialog setIsCreateEventOpen={setIsCreateEventOpen} />
+          </Dialog>
+          {/* )} */}
         </form>
 
         <DropdownMenu>
@@ -151,12 +174,12 @@ export function HeaderInside() {
           </DropdownMenuTrigger>
           <DropdownMenuContent className="w-56 mr-2 bg-muted-foreground text-foreground">
             <DropdownMenuLabel className="flex justify-between items-center">
-              {user.name}
+              {user?.displayName}
               {/* Minha conta */}
               <div className="flex justify-between items-center gap-1">
                 <Image
                   src={BrasaoPreto}
-                  alt="Iamgem da moeda"
+                  alt="Imagem da moeda"
                   height={100}
                   width={100}
                   className="w-6 h-auto"
@@ -220,7 +243,7 @@ export function HeaderInside() {
               Política de privacidade
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={signOut}>
+            <DropdownMenuItem onClick={logout}>
               Sair
               {/* <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut> */}
             </DropdownMenuItem>

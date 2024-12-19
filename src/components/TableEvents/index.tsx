@@ -3,31 +3,40 @@
 import {
   Table,
   TableBody,
+  TableCell,
   TableHead,
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
 
 import { EventTableRow } from './event-table-row'
-import { useListEventsByAuthorId } from '@/services/hooks/events/useListEventsByAuthorId'
+import { db } from '../../config/firebase'
+import { getDocs, collection } from 'firebase/firestore'
+import { useEffect, useState } from 'react'
+import { IEventShow } from '@/types/eventShow'
 
 export function TableEvents() {
-  const { events, error, isLoading, mutateEvents } = useListEventsByAuthorId()
+  const [eventList, setEventList] = useState<IEventShow[]>([])
 
-  // const [searchParams, setSearchParams] = useSearchParams()
+  const eventsCollectionRef = collection(db, 'events')
 
-  // const pageIndex = z.coerce
-  //   .number()
-  //   .transform((page) => page - 1)
-  //   .parse(searchParams.get('page') ?? '1')
+  useEffect(() => {
+    const getEventList = async () => {
+      try {
+        const data = await getDocs(eventsCollectionRef)
+        const filteredData = data.docs.map((doc) => ({
+          ...doc.data(),
+          id: doc.id,
+        })) as IEventShow[]
 
-  // function handlePaginate(pageIndex: number) {
-  //   setSearchParams((prev) => {
-  //     prev.set('page', String(pageIndex + 1))
+        setEventList(filteredData)
+      } catch (err) {
+        console.log(err)
+      }
+    }
 
-  //     return prev
-  //   })
-  // }
+    getEventList()
+  }, [eventsCollectionRef, setEventList])
 
   return (
     <div>
@@ -40,29 +49,28 @@ export function TableEvents() {
             <TableHead>Título</TableHead>
             <TableHead>Descrição</TableHead>
             <TableHead>Dia</TableHead>
-            <TableHead>Hora</TableHead>
             <TableHead>Preço</TableHead>
             <TableHead>Status Pagamento</TableHead>
+            <TableHead>Ações</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
-          {events?.events.map((event) => {
-            return <EventTableRow key={event.id} event={event} />
-          })}
+          {eventList?.length > 0 ? (
+            eventList.map((event) => (
+              <EventTableRow key={event.id} event={event} />
+            ))
+          ) : (
+            <TableRow>
+              <TableCell
+                colSpan={7}
+                className="flex justify-center p-8 w-full col-span-7 border-2"
+              >
+                Nenhum evento encontrado
+              </TableCell>
+            </TableRow>
+          )}
         </TableBody>
       </Table>
-      {/* {loading ? (
-        <></>
-      ) : error ? (
-        <></>
-      ) : services?.findManyService.meta ? (
-        <Pagination
-          pageIndex={services?.findManyService.meta.pageIndex}
-          totalCount={services?.findManyService.meta.totalCount}
-          perPage={services?.findManyService.meta.perPage}
-          onPageChange={handlePaginate}
-        />
-      ) : null} */}
     </div>
   )
 }
